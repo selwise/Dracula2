@@ -1,0 +1,65 @@
+# Unity generated folders
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Logs/
+/UserSettings/
+/MemoryCaptures/
+/Recordings/
+
+# Unity generated solution/project files
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# IDE/editor local state
+/.vs/
+/.vscode/
+/.idea/
+*.rsuser
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Crash and profiling output
+sysinfo.txt
+*.stackdump
+*.trace
+
+# Builds and exported players
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+*.x86
+*.x86_64
+
+# Unity template/tutorial content not used by this prototype
+/Assets/Readme.asset
+/Assets/Readme.asset.meta
+/Assets/TutorialInfo/
+/Assets/TutorialInfo.meta
+/Assets/Scenes/SampleScene.unity
+/Assets/Scenes/SampleScene.unity.meta
+
+# Keep Unity source-of-truth folders tracked.
+!/Assets/
+!/Packages/
+!/ProjectSettings/
