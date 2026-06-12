@@ -2,13 +2,31 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public static class CryptPrototypeBuilder
 {
     private const string ArtFolder = "Assets/Art/Crypt";
     private const string ScenePath = "Assets/Scenes/CryptPrototype.unity";
+    private const string PaintedBackgroundPath = ArtFolder + "/crypt_room_painted_background.png";
+    private const string PaintedForegroundOccludersPath = ArtFolder + "/crypt_room_foreground_occluders.png";
+    private const string PaintedCoffinOccludersPath = ArtFolder + "/crypt_room_coffin_occluders.png";
+    private const string RoomLayerBackWallsPath = ArtFolder + "/crypt_room_layer_back_walls.png";
+    private const string RoomLayerFloorDressingPath = ArtFolder + "/crypt_room_layer_floor_dressing.png";
+    private const string RoomLayerCoffinPlatformPath = ArtFolder + "/crypt_room_layer_coffin_platform.png";
+    private const string RoomLayerForegroundRailPath = ArtFolder + "/crypt_room_layer_foreground_rail.png";
+    private const string PaintedCandleGlowPath = ArtFolder + "/crypt_room_candle_glow_overlay.png";
+    private const string PaintedCandleHeatPath = ArtFolder + "/crypt_room_candle_heat_overlay.png";
+    private const string PaintedShadowGradePath = ArtFolder + "/crypt_room_shadow_grade_overlay.png";
+    private const string PaintedSigilPulsePath = ArtFolder + "/crypt_room_sigil_pulse_overlay.png";
+    private const string PaintedCoffinPropPath = ArtFolder + "/coffin.png";
+    private const float PaintedCoffinPropScale = 0.225f;
+    private const string PromptPanelPath = ArtFolder + "/ui_gothic_prompt_panel.png";
+    private const string HudShellPath = ArtFolder + "/ui_gothic_hud_shell.png";
     private const int Ppu = 32;
+    private const float PaintedBackgroundPpu = 114.06f;
+    private const float CharacterPpu = 64f;
 
     private static readonly Color32 ClearColor = new Color32(0, 0, 0, 0);
     private static readonly Color32 Ink = new Color32(5, 6, 9, 255);
@@ -30,11 +48,37 @@ public static class CryptPrototypeBuilder
 
     private delegate void TexturePainter(Texture2D texture);
 
+    private static bool regenerateSprites;
+
     [MenuItem("Dracula/Build Crypt Prototype")]
     public static void BuildCryptPrototype()
     {
-        EnsureFolders();
+        BuildCryptPrototype(regenerateExistingSprites: false);
+    }
 
+    [MenuItem("Dracula/Regenerate Placeholder Sprites And Build Crypt Prototype")]
+    public static void RegeneratePlaceholderSpritesAndBuildCryptPrototype()
+    {
+        BuildCryptPrototype(regenerateExistingSprites: true);
+    }
+
+    private static void BuildCryptPrototype(bool regenerateExistingSprites)
+    {
+        EnsureFolders();
+        regenerateSprites = regenerateExistingSprites;
+
+        try
+        {
+            BuildCryptPrototypeScene();
+        }
+        finally
+        {
+            regenerateSprites = false;
+        }
+    }
+
+    private static void BuildCryptPrototypeScene()
+    {
         Sprite floor = CreateSprite("crypt_floor_tile", 64, 32, new Vector2(0.5f, 0.5f), DrawFloorTile);
         Sprite crackedFloor = CreateSprite("crypt_floor_cracked_tile", 64, 32, new Vector2(0.5f, 0.5f), DrawCrackedFloorTile);
         Sprite darkFloor = CreateSprite("crypt_floor_dark_tile", 64, 32, new Vector2(0.5f, 0.5f), DrawDarkFloorTile);
@@ -55,6 +99,10 @@ public static class CryptPrototypeBuilder
         Sprite wallRelief = CreateSprite("crypt_wall_relief", 58, 84, new Vector2(0.5f, 0f), DrawWallRelief);
         Sprite coffinGlow = CreateSprite("coffin_glow", 160, 88, new Vector2(0.5f, 0.33f), DrawCoffinGlow);
         Sprite coffin = CreateSprite("coffin_iso", 120, 76, new Vector2(0.5f, 0.31f), DrawCoffin);
+        Sprite sealEffect0 = CreateSprite("coffin_seal_effect_0", 160, 88, new Vector2(0.5f, 0.5f), DrawCoffinGlow);
+        Sprite sealEffect1 = CreateSprite("coffin_seal_effect_1", 160, 88, new Vector2(0.5f, 0.5f), DrawCoffinGlow);
+        Sprite sealEffect2 = CreateSprite("coffin_seal_effect_2", 160, 88, new Vector2(0.5f, 0.5f), DrawCoffinGlow);
+        Sprite sealEffect3 = CreateSprite("coffin_seal_effect_3", 160, 88, new Vector2(0.5f, 0.5f), DrawCoffinGlow);
         Sprite urn = CreateSprite("crypt_funeral_urn", 38, 50, new Vector2(0.5f, 0f), DrawUrn);
         Sprite brokenUrn = CreateSprite("crypt_broken_urn", 54, 34, new Vector2(0.5f, 0.25f), DrawBrokenUrn);
         Sprite candles = CreateSprite("crypt_candelabra", 44, 44, new Vector2(0.5f, 0f), DrawCandles);
@@ -62,13 +110,25 @@ public static class CryptPrototypeBuilder
         Sprite chain = CreateSprite("crypt_chain", 24, 72, new Vector2(0.5f, 1f), DrawChain);
         Sprite rug = CreateSprite("crypt_rug_runner", 96, 48, new Vector2(0.5f, 0.5f), DrawRug);
         Sprite rubble = CreateSprite("crypt_carved_rubble", 66, 34, new Vector2(0.5f, 0.35f), DrawRubble);
-        Sprite shadow = CreateSprite("dracula_shadow", 44, 14, new Vector2(0.5f, 0.5f), DrawShadow);
-        Sprite down0 = CreateSprite("dracula_down_0", 40, 64, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 0); });
-        Sprite down1 = CreateSprite("dracula_down_1", 40, 64, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 1); });
-        Sprite up0 = CreateSprite("dracula_up_0", 40, 64, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 0); });
-        Sprite up1 = CreateSprite("dracula_up_1", 40, 64, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 1); });
-        Sprite side0 = CreateSprite("dracula_side_0", 40, 64, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 0); });
-        Sprite side1 = CreateSprite("dracula_side_1", 40, 64, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 1); });
+        Sprite shadow = CreateSprite("dracula_shadow", 88, 28, new Vector2(0.5f, 0.5f), DrawShadow, CharacterPpu);
+        Sprite down0 = CreateSprite("dracula_down_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 0); }, CharacterPpu);
+        Sprite down1 = CreateSprite("dracula_down_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 1); }, CharacterPpu);
+        Sprite down2 = CreateSprite("dracula_down_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 2); }, CharacterPpu);
+        Sprite down3 = CreateSprite("dracula_down_3", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 3); }, CharacterPpu);
+        Sprite down4 = CreateSprite("dracula_down_4", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 4); }, CharacterPpu);
+        Sprite down5 = CreateSprite("dracula_down_5", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 5); }, CharacterPpu);
+        Sprite up0 = CreateSprite("dracula_up_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 0); }, CharacterPpu);
+        Sprite up1 = CreateSprite("dracula_up_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 1); }, CharacterPpu);
+        Sprite up2 = CreateSprite("dracula_up_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 2); }, CharacterPpu);
+        Sprite up3 = CreateSprite("dracula_up_3", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 3); }, CharacterPpu);
+        Sprite up4 = CreateSprite("dracula_up_4", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 4); }, CharacterPpu);
+        Sprite up5 = CreateSprite("dracula_up_5", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 5); }, CharacterPpu);
+        Sprite side0 = CreateSprite("dracula_side_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 0); }, CharacterPpu);
+        Sprite side1 = CreateSprite("dracula_side_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 1); }, CharacterPpu);
+        Sprite side2 = CreateSprite("dracula_side_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 2); }, CharacterPpu);
+        Sprite side3 = CreateSprite("dracula_side_3", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 3); }, CharacterPpu);
+        Sprite side4 = CreateSprite("dracula_side_4", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 4); }, CharacterPpu);
+        Sprite side5 = CreateSprite("dracula_side_5", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 5); }, CharacterPpu);
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = "CryptPrototype";
@@ -77,70 +137,146 @@ public static class CryptPrototypeBuilder
         GameObject room = new GameObject("Isometric Crypt Room");
         room.transform.SetParent(root.transform);
 
+        ConfigureLightingEnvironment();
         CreateCamera();
         CreateLight();
 
-        GameObject backWall = CreateSpriteObject("Back Wall With Exit", wall, new Vector3(1.18f, 3.05f, 0f), -80, room.transform);
-        backWall.transform.localScale = Vector3.one;
-
-        CreateSpriteObject("Left Side Wall Rear", leftWall, new Vector3(-1.98f, 1.72f, 0f), -70, room.transform);
-        CreateSpriteObject("Left Side Wall Front", leftWall, new Vector3(-4.22f, 0.36f, 0f), -69, room.transform);
-        CreateSpriteObject("Right Side Wall Rear", rightWall, new Vector3(4.36f, 1.72f, 0f), -70, room.transform);
-        CreateSpriteObject("Right Side Wall Front", rightWall, new Vector3(6.42f, 0.36f, 0f), -69, room.transform);
-
-        CreateSpriteObject("Left Pillar", pillar, new Vector3(-4.12f, 2.64f, 0f), -40, room.transform);
-        CreateSpriteObject("Center Left Pillar", pillar, new Vector3(-1.12f, 2.64f, 0f), -39, room.transform);
-        CreateSpriteObject("Exit Pillar Left", pillar, new Vector3(3.55f, 2.64f, 0f), -35, room.transform);
-        CreateSpriteObject("Exit Pillar Right", pillar, new Vector3(4.95f, 2.64f, 0f), -35, room.transform);
-        CreateSpriteObject("Right Pillar", pillar, new Vector3(6.45f, 2.64f, 0f), -40, room.transform);
-        CreateWallReliefs(room.transform, wallRelief);
-
-        for (int y = 0; y < 7; y++)
+        Vector3 coffinPosition;
+        Vector3 exitPosition;
+        SpriteRenderer interactionGlowRenderer = null;
+        SpriteRenderer interactionEffectRenderer = null;
+        SpriteRenderer candleGlowRenderer = null;
+        SpriteRenderer candleHeatRenderer = null;
+        SpriteRenderer shadowGradeRenderer = null;
+        SpriteRenderer sigilPulseRenderer = null;
+        if (File.Exists(PaintedBackgroundPath))
         {
-            for (int x = 0; x < 10; x++)
+            CreatePaintedRoom(room.transform, out candleGlowRenderer, out candleHeatRenderer, out shadowGradeRenderer, out sigilPulseRenderer);
+            coffinPosition = new Vector3(2.58f, 0.74f, 0f);
+            exitPosition = new Vector3(-3.65f, 1.25f, 0f);
+            Sprite coffinPropSprite = File.Exists(PaintedCoffinPropPath)
+                ? LoadSprite(PaintedCoffinPropPath, new Vector2(0.5f, 0.36f), PaintedBackgroundPpu)
+                : coffin;
+            GameObject coffinProp = CreateSpriteObject("Coffin Prop", coffinPropSprite, coffinPosition, 270, room.transform);
+            coffinProp.transform.localScale = Vector3.one * (File.Exists(PaintedCoffinPropPath) ? PaintedCoffinPropScale : 0.72f);
+
+            GameObject interactionGlow = CreateSpriteObject("Coffin Interaction Glow", coffinGlow, coffinPosition + new Vector3(0f, -0.04f, 0f), 96, room.transform);
+            interactionGlow.transform.localScale = Vector3.one * 0.72f;
+            interactionGlowRenderer = interactionGlow.GetComponent<SpriteRenderer>();
+            interactionGlowRenderer.color = new Color(1f, 1f, 1f, 0f);
+            GameObject interactionEffect = CreateSpriteObject("Coffin Seal Effect", sealEffect0, coffinPosition + new Vector3(0f, -0.02f, 0f), 132, room.transform);
+            interactionEffect.transform.localScale = Vector3.one * 0.72f;
+            interactionEffectRenderer = interactionEffect.GetComponent<SpriteRenderer>();
+            interactionEffectRenderer.color = new Color(1f, 1f, 1f, 0f);
+            interactionEffectRenderer.enabled = false;
+        }
+        else
+        {
+            GameObject backWall = CreateSpriteObject("Back Wall With Exit", wall, new Vector3(1.18f, 3.05f, 0f), -80, room.transform);
+            backWall.transform.localScale = Vector3.one;
+
+            CreateSpriteObject("Left Side Wall Rear", leftWall, new Vector3(-1.98f, 1.72f, 0f), -70, room.transform);
+            CreateSpriteObject("Left Side Wall Front", leftWall, new Vector3(-4.22f, 0.36f, 0f), -69, room.transform);
+            CreateSpriteObject("Right Side Wall Rear", rightWall, new Vector3(4.36f, 1.72f, 0f), -70, room.transform);
+            CreateSpriteObject("Right Side Wall Front", rightWall, new Vector3(6.42f, 0.36f, 0f), -69, room.transform);
+
+            CreateSpriteObject("Left Pillar", pillar, new Vector3(-4.12f, 2.64f, 0f), -40, room.transform);
+            CreateSpriteObject("Center Left Pillar", pillar, new Vector3(-1.12f, 2.64f, 0f), -39, room.transform);
+            CreateSpriteObject("Exit Pillar Left", pillar, new Vector3(3.55f, 2.64f, 0f), -35, room.transform);
+            CreateSpriteObject("Exit Pillar Right", pillar, new Vector3(4.95f, 2.64f, 0f), -35, room.transform);
+            CreateSpriteObject("Right Pillar", pillar, new Vector3(6.45f, 2.64f, 0f), -40, room.transform);
+            CreateWallReliefs(room.transform, wallRelief);
+
+            for (int y = 0; y < 7; y++)
             {
-                Vector3 position = IsoPosition(x, y);
-                Sprite tileSprite = PickFloorSprite(x, y, floor, crackedFloor, darkFloor, exitTile);
-                GameObject tile = CreateSpriteObject("Floor Tile " + x + "," + y, tileSprite, position, -20 + x + y, room.transform);
-                tile.transform.localScale = Vector3.one;
+                for (int x = 0; x < 10; x++)
+                {
+                    Vector3 position = IsoPosition(x, y);
+                    Sprite tileSprite = PickFloorSprite(x, y, floor, crackedFloor, darkFloor, exitTile);
+                    GameObject tile = CreateSpriteObject("Floor Tile " + x + "," + y, tileSprite, position, -20 + x + y, room.transform);
+                    tile.transform.localScale = Vector3.one;
+                }
             }
+
+            CreateSpriteObject("Floor Edge Shadow", floorShadow, new Vector3(1.16f, 0.56f, 0f), 20, room.transform);
+            CreateSpriteObject("Floor Scuffs And Dust", floorScuffs, new Vector3(1.16f, 0.56f, 0f), 58, room.transform);
+            CreateSpriteObject("Floor Tomb Inlays", floorTombInsets, new Vector3(1.16f, 0.56f, 0f), 60, room.transform);
+            CreateSpriteObject("Wall Floor Base Alignment", wallFloorBase, new Vector3(1.16f, 0.56f, 0f), 64, room.transform);
+            GameObject exitStepObject = CreateSpriteObject("Exit Raised Steps", exitSteps, new Vector3(4.22f, 2.38f, 0f), 65, room.transform);
+            exitStepObject.transform.localScale = Vector3.one * 0.62f;
+            CreateSpriteObject("Rug Runner", rug, new Vector3(0.75f, -0.68f, 0f), 72, room.transform);
+            coffinPosition = IsoPosition(3, 2);
+            exitPosition = new Vector3(4.24f, 2.78f, 0f);
+            CreateSpriteObject("Coffin Red Spill", coffinGlow, coffinPosition + new Vector3(0f, -0.04f, 0f), 95, room.transform);
+            CreateSpriteObject("Coffin", coffin, coffinPosition + new Vector3(0f, -0.03f, 0f), 130, room.transform);
+            CreateCoffinDressing(room.transform, candles, coffinPosition);
+
+            CreateWallDressing(room.transform, torch: candles, chain: chain);
+            CreateFloorDressing(room.transform, urn, brokenUrn, candles, bones, rubble);
+            CreateLightingOverlays(room.transform, vignette, exitGlow, candlePool);
+            CreateSpriteObject("Foreground Broken Masonry", foregroundLedge, new Vector3(1.15f, -2.94f, 0f), 254, room.transform);
         }
 
-        CreateSpriteObject("Floor Edge Shadow", floorShadow, new Vector3(1.16f, 0.56f, 0f), 20, room.transform);
-        CreateSpriteObject("Floor Scuffs And Dust", floorScuffs, new Vector3(1.16f, 0.56f, 0f), 58, room.transform);
-        CreateSpriteObject("Floor Tomb Inlays", floorTombInsets, new Vector3(1.16f, 0.56f, 0f), 60, room.transform);
-        CreateSpriteObject("Wall Floor Base Alignment", wallFloorBase, new Vector3(1.16f, 0.56f, 0f), 64, room.transform);
-        GameObject exitStepObject = CreateSpriteObject("Exit Raised Steps", exitSteps, new Vector3(4.22f, 2.38f, 0f), 65, room.transform);
-        exitStepObject.transform.localScale = Vector3.one * 0.62f;
-        CreateSpriteObject("Rug Runner", rug, new Vector3(0.75f, -0.68f, 0f), 72, room.transform);
-        Vector3 coffinPosition = IsoPosition(3, 2);
-        CreateSpriteObject("Coffin Red Spill", coffinGlow, coffinPosition + new Vector3(0f, -0.04f, 0f), 95, room.transform);
-        CreateSpriteObject("Coffin", coffin, coffinPosition + new Vector3(0f, -0.03f, 0f), 130, room.transform);
-        CreateCoffinDressing(room.transform, candles, coffinPosition);
-
-        CreateWallDressing(room.transform, torch: candles, chain: chain);
-        CreateFloorDressing(room.transform, urn, brokenUrn, candles, bones, rubble);
-        CreateLightingOverlays(room.transform, vignette, exitGlow, candlePool);
-        CreateSpriteObject("Foreground Broken Masonry", foregroundLedge, new Vector3(1.15f, -2.94f, 0f), 254, room.transform);
+        CreateWalkBoundaryColliders(room.transform);
 
         GameObject exit = new GameObject("Exit Trigger");
         exit.transform.SetParent(room.transform);
-        exit.transform.position = new Vector3(4.24f, 2.78f, 0f);
+        exit.transform.position = exitPosition;
         BoxCollider2D exitCollider = exit.AddComponent<BoxCollider2D>();
         exitCollider.isTrigger = true;
         exitCollider.size = new Vector2(1.15f, 0.75f);
 
-        GameObject player = CreateSpriteObject("Dracula", down0, new Vector3(0.25f, -1.72f, 0f), 220, root.transform);
+        GameObject player = CreateSpriteObject("Dracula", down0, new Vector3(0.25f, -1.35f, 0f), 318, root.transform);
+        Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
+        playerBody.bodyType = RigidbodyType2D.Dynamic;
+        playerBody.gravityScale = 0f;
+        playerBody.freezeRotation = true;
+        playerBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        playerBody.interpolation = RigidbodyInterpolation2D.Interpolate;
+        CapsuleCollider2D playerCollider = player.AddComponent<CapsuleCollider2D>();
+        playerCollider.direction = CapsuleDirection2D.Horizontal;
+        playerCollider.size = new Vector2(0.42f, 0.28f);
+        playerCollider.offset = new Vector2(0f, 0.16f);
         DraculaWalker walker = player.AddComponent<DraculaWalker>();
         walker.spriteRenderer = player.GetComponent<SpriteRenderer>();
-        walker.walkDown = new Sprite[] { down0, down1 };
-        walker.walkUp = new Sprite[] { up0, up1 };
-        walker.walkSide = new Sprite[] { side0, side1 };
-        walker.minBounds = new Vector2(-4.75f, -2.18f);
+        walker.body = playerBody;
+        walker.walkDown = new Sprite[] { down0, down1, down2, down3, down4, down5 };
+        walker.walkUp = new Sprite[] { up0, up1, up2, up3, up4, up5 };
+        walker.walkSide = new Sprite[] { side0, side1, side2, side3, side4, side5 };
+        walker.frameTime = 0.115f;
+        walker.baseSortingOrder = 280;
+        walker.ySortMultiplier = 28f;
+        walker.minSortingOrder = 180;
+        walker.maxSortingOrder = 340;
+        walker.minBounds = new Vector2(-4.75f, -1.72f);
         walker.maxBounds = new Vector2(6.85f, 3.18f);
+
+        CryptPrototypeInteraction interaction = player.AddComponent<CryptPrototypeInteraction>();
+        interaction.coffinPosition = coffinPosition;
+        interaction.coffinGlowRenderer = interactionGlowRenderer;
+        interaction.coffinEffectRenderer = interactionEffectRenderer;
+        interaction.coffinEffectFrames = new Sprite[] { sealEffect0, sealEffect1, sealEffect2, sealEffect3 };
+        interaction.promptPanelTexture = File.Exists(PromptPanelPath) ? LoadTexture(PromptPanelPath) : null;
+        interaction.promptBottomOffset = File.Exists(HudShellPath) ? 280f : 94f;
 
         GameObject playerShadow = CreateSpriteObject("Shadow", shadow, Vector3.zero, 198, player.transform);
         playerShadow.transform.localPosition = new Vector3(0f, 0.08f, 0f);
+
+        CryptAmbientAnimator ambientAnimator = root.AddComponent<CryptAmbientAnimator>();
+        ambientAnimator.flickerRenderers = new SpriteRenderer[0];
+        ambientAnimator.sigilRenderer = sigilPulseRenderer;
+        CreateCandleLightingRig(root.transform, new SpriteRenderer[] { candleGlowRenderer, candleHeatRenderer }, shadowGradeRenderer);
+
+        if (File.Exists(HudShellPath))
+        {
+            GameObject hud = new GameObject("Reference Style HUD");
+            hud.transform.SetParent(root.transform);
+            CryptHudOverlay hudOverlay = hud.AddComponent<CryptHudOverlay>();
+            hudOverlay.frameTexture = LoadTexture(HudShellPath);
+            hudOverlay.visible = true;
+            hudOverlay.visibleInEditMode = true;
+            hudOverlay.editModeOpacity = 1f;
+        }
 
         Selection.activeGameObject = player;
         EditorSceneManager.MarkSceneDirty(scene);
@@ -169,11 +305,11 @@ public static class CryptPrototypeBuilder
         GameObject cameraObject = new GameObject("Main Camera");
         Camera camera = cameraObject.AddComponent<Camera>();
         camera.orthographic = true;
-        camera.orthographicSize = 5.05f;
+        camera.orthographicSize = 3.82f;
         camera.clearFlags = CameraClearFlags.SolidColor;
         camera.backgroundColor = new Color(0.035f, 0.038f, 0.048f, 1f);
         cameraObject.tag = "MainCamera";
-        cameraObject.transform.position = new Vector3(1.15f, 0.75f, -10f);
+        cameraObject.transform.position = new Vector3(0.78f, 0.28f, -10f);
         cameraObject.AddComponent<AudioListener>();
         return cameraObject;
     }
@@ -183,10 +319,22 @@ public static class CryptPrototypeBuilder
         GameObject lightObject = new GameObject("Directional Light");
         Light light = lightObject.AddComponent<Light>();
         light.type = LightType.Directional;
-        light.intensity = 0.55f;
-        light.color = new Color(0.82f, 0.88f, 1f, 1f);
+        light.intensity = 0.24f;
+        light.color = new Color(0.52f, 0.68f, 0.92f, 1f);
+        light.shadows = LightShadows.Soft;
+        light.shadowStrength = 0.32f;
         lightObject.transform.rotation = Quaternion.Euler(55f, -35f, 0f);
         return lightObject;
+    }
+
+    private static void ConfigureLightingEnvironment()
+    {
+        RenderSettings.ambientMode = AmbientMode.Trilight;
+        RenderSettings.ambientSkyColor = new Color(0.08f, 0.105f, 0.15f, 1f);
+        RenderSettings.ambientEquatorColor = new Color(0.035f, 0.045f, 0.058f, 1f);
+        RenderSettings.ambientGroundColor = new Color(0.012f, 0.011f, 0.014f, 1f);
+        RenderSettings.ambientIntensity = 0.68f;
+        RenderSettings.reflectionIntensity = 0.08f;
     }
 
     private static GameObject CreateSpriteObject(string name, Sprite sprite, Vector3 position, int sortingOrder, Transform parent)
@@ -198,6 +346,230 @@ public static class CryptPrototypeBuilder
         renderer.sprite = sprite;
         renderer.sortingOrder = sortingOrder;
         return obj;
+    }
+
+    private static void CreatePaintedRoom(Transform room, out SpriteRenderer candleGlowRenderer, out SpriteRenderer candleHeatRenderer, out SpriteRenderer shadowGradeRenderer, out SpriteRenderer sigilPulseRenderer)
+    {
+        candleGlowRenderer = null;
+        candleHeatRenderer = null;
+        shadowGradeRenderer = null;
+        sigilPulseRenderer = null;
+        bool useLayeredRoom = HasLayeredRoom();
+        if (useLayeredRoom)
+        {
+            CreatePaintedLayer("Painted Back Walls Layer", RoomLayerBackWallsPath, -220, room);
+            CreatePaintedLayer("Painted Floor Dressing Layer", RoomLayerFloorDressingPath, -185, room);
+        }
+        else
+        {
+            CreatePaintedLayer("Painted Crypt Room Background", PaintedBackgroundPath, -200, room);
+        }
+
+        if (File.Exists(PaintedShadowGradePath))
+        {
+            Sprite shadowGrade = LoadSprite(PaintedShadowGradePath, new Vector2(0.5f, 0.5f), PaintedBackgroundPpu);
+            GameObject shadowGradeObject = CreateSpriteObject("Painted Shadow Grade Overlay", shadowGrade, new Vector3(1.15f, 0.75f, 0f), -120, room);
+            shadowGradeRenderer = shadowGradeObject.GetComponent<SpriteRenderer>();
+            shadowGradeRenderer.color = new Color(1f, 1f, 1f, 0.88f);
+        }
+
+        if (File.Exists(PaintedCandleHeatPath))
+        {
+            Sprite candleHeat = LoadSprite(PaintedCandleHeatPath, new Vector2(0.5f, 0.5f), PaintedBackgroundPpu);
+            GameObject candleHeatObject = CreateSpriteObject("Painted Candle Heat Overlay", candleHeat, new Vector3(1.15f, 0.75f, 0f), 156, room);
+            candleHeatRenderer = candleHeatObject.GetComponent<SpriteRenderer>();
+            candleHeatRenderer.color = new Color(1f, 1f, 1f, 0.52f);
+        }
+
+        if (File.Exists(PaintedCandleGlowPath))
+        {
+            Sprite candleGlow = LoadSprite(PaintedCandleGlowPath, new Vector2(0.5f, 0.5f), PaintedBackgroundPpu);
+            GameObject candleGlowObject = CreateSpriteObject("Painted Candle Flicker Overlay", candleGlow, new Vector3(1.15f, 0.75f, 0f), 160, room);
+            candleGlowRenderer = candleGlowObject.GetComponent<SpriteRenderer>();
+            candleGlowRenderer.color = new Color(1f, 1f, 1f, 0.62f);
+        }
+
+        if (File.Exists(PaintedSigilPulsePath))
+        {
+            Sprite sigilPulse = LoadSprite(PaintedSigilPulsePath, new Vector2(0.5f, 0.5f), PaintedBackgroundPpu);
+            GameObject sigilPulseObject = CreateSpriteObject("Painted Sigil Pulse Overlay", sigilPulse, new Vector3(1.15f, 0.75f, 0f), 164, room);
+            sigilPulseRenderer = sigilPulseObject.GetComponent<SpriteRenderer>();
+            sigilPulseRenderer.color = new Color(1f, 1f, 1f, 0.68f);
+        }
+
+        string coffinPath = useLayeredRoom ? RoomLayerCoffinPlatformPath : PaintedCoffinOccludersPath;
+        if (File.Exists(coffinPath))
+        {
+            string coffinName = useLayeredRoom ? "Painted Coffin Platform Layer" : "Painted Coffin Depth Occluder";
+            CreatePaintedLayer(coffinName, coffinPath, 198, room);
+        }
+
+        string foregroundPath = useLayeredRoom ? RoomLayerForegroundRailPath : PaintedForegroundOccludersPath;
+        if (File.Exists(foregroundPath))
+        {
+            string foregroundName = useLayeredRoom ? "Painted Foreground Rail Layer" : "Painted Foreground Rail Occluders";
+            CreatePaintedLayer(foregroundName, foregroundPath, 282, room);
+        }
+    }
+
+    private static bool HasLayeredRoom()
+    {
+        return File.Exists(RoomLayerBackWallsPath)
+            && File.Exists(RoomLayerFloorDressingPath)
+            && File.Exists(RoomLayerCoffinPlatformPath)
+            && File.Exists(RoomLayerForegroundRailPath);
+    }
+
+    private static GameObject CreatePaintedLayer(string name, string path, int sortingOrder, Transform parent)
+    {
+        Sprite sprite = LoadSprite(path, new Vector2(0.5f, 0.5f), PaintedBackgroundPpu);
+        GameObject obj = CreateSpriteObject(name, sprite, new Vector3(1.15f, 0.75f, 0f), sortingOrder, parent);
+        obj.transform.localScale = Vector3.one;
+        return obj;
+    }
+
+    private static void CreateWalkBoundaryColliders(Transform room)
+    {
+        GameObject boundary = new GameObject("Walk Boundary Colliders");
+        boundary.transform.SetParent(room);
+
+        CreateEdgeBoundary(boundary.transform, "Back Wall Walk Limit", new Vector2[]
+        {
+            new Vector2(-5.08f, -0.64f),
+            new Vector2(-4.22f, 0.24f),
+            new Vector2(-1.02f, 2.03f),
+            new Vector2(1.12f, 2.53f),
+            new Vector2(3.44f, 2.08f),
+            new Vector2(6.38f, 0.66f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Right Wall Walk Limit", new Vector2[]
+        {
+            new Vector2(6.98f, 0.14f),
+            new Vector2(7.04f, -0.72f),
+            new Vector2(6.72f, -1.18f),
+            new Vector2(5.96f, -1.38f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Lower Left Rail Walk Limit", new Vector2[]
+        {
+            new Vector2(-5.14f, -0.64f),
+            new Vector2(-4.72f, -1.24f),
+            new Vector2(-3.22f, -1.46f),
+            new Vector2(-1.32f, -1.58f),
+            new Vector2(-0.42f, -1.54f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Lower Right Rail Walk Limit", new Vector2[]
+        {
+            new Vector2(0.72f, -1.90f),
+            new Vector2(2.30f, -1.80f),
+            new Vector2(4.40f, -1.48f),
+            new Vector2(6.78f, -1.08f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Coffin Platform Back Edge", new Vector2[]
+        {
+            new Vector2(1.10f, 0.18f),
+            new Vector2(2.58f, 1.03f),
+            new Vector2(4.24f, 0.24f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Coffin Platform Right Edge", new Vector2[]
+        {
+            new Vector2(4.24f, 0.24f),
+            new Vector2(4.44f, -0.16f),
+            new Vector2(3.06f, -0.80f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Coffin Platform Left Edge", new Vector2[]
+        {
+            new Vector2(1.10f, 0.18f),
+            new Vector2(0.98f, -0.18f),
+            new Vector2(1.30f, -0.38f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Coffin Platform Front Lip Left Of Stairs", new Vector2[]
+        {
+            new Vector2(1.30f, -0.38f),
+            new Vector2(1.52f, -0.46f)
+        });
+
+        CreateEdgeBoundary(boundary.transform, "Coffin Platform Front Lip Right Of Stairs", new Vector2[]
+        {
+            new Vector2(2.36f, -0.74f),
+            new Vector2(3.06f, -0.80f)
+        });
+
+        CreatePolygonBoundary(boundary.transform, "Coffin Prop Collider", new Vector2[]
+        {
+            new Vector2(1.59f, 0.58f),
+            new Vector2(1.93f, 1.03f),
+            new Vector2(3.23f, 1.05f),
+            new Vector2(3.57f, 0.69f),
+            new Vector2(3.36f, 0.33f),
+            new Vector2(1.86f, 0.29f)
+        });
+    }
+
+    private static EdgeCollider2D CreateEdgeBoundary(Transform parent, string name, Vector2[] points)
+    {
+        GameObject colliderObject = new GameObject(name);
+        colliderObject.transform.SetParent(parent);
+        EdgeCollider2D collider = colliderObject.AddComponent<EdgeCollider2D>();
+        collider.edgeRadius = 0.035f;
+        collider.points = points;
+        return collider;
+    }
+
+    private static PolygonCollider2D CreatePolygonBoundary(Transform parent, string name, Vector2[] points)
+    {
+        GameObject colliderObject = new GameObject(name);
+        colliderObject.transform.SetParent(parent);
+        PolygonCollider2D collider = colliderObject.AddComponent<PolygonCollider2D>();
+        collider.points = points;
+        return collider;
+    }
+
+    private static void CreateCandleLightingRig(Transform parent, SpriteRenderer[] glowRenderers, SpriteRenderer shadowGradeRenderer)
+    {
+        GameObject rig = new GameObject("Realtime Candle Light Rig");
+        rig.transform.SetParent(parent);
+
+        Light[] candleLights = new Light[]
+        {
+            CreateCandlePointLight(rig.transform, "Rear Door Candle Light", new Vector3(-2.34f, 1.88f, -2.2f), 0.72f, 2.55f),
+            CreateCandlePointLight(rig.transform, "Center Candelabra Light", new Vector3(0.15f, 1.93f, -2.2f), 1.1f, 3.35f),
+            CreateCandlePointLight(rig.transform, "Right Candelabra Light", new Vector3(4.42f, 1.16f, -2.2f), 1.0f, 3.2f),
+            CreateCandlePointLight(rig.transform, "Sigil Candle Circle Light", new Vector3(0.22f, -1.04f, -2.2f), 1.18f, 3.55f)
+        };
+
+        CryptCandleLightFlicker flicker = rig.AddComponent<CryptCandleLightFlicker>();
+        flicker.candleLights = candleLights;
+        flicker.glowRenderers = glowRenderers;
+        flicker.shadowGradeRenderer = shadowGradeRenderer;
+        flicker.flickerSpeed = 3.9f;
+        flicker.lightIntensityPulse = 0.32f;
+        flicker.lightRangePulse = 0.18f;
+        flicker.glowAlphaPulse = 0.18f;
+        flicker.glowScalePulse = 0.018f;
+        flicker.shadowBreath = 0.045f;
+    }
+
+    private static Light CreateCandlePointLight(Transform parent, string name, Vector3 position, float intensity, float range)
+    {
+        GameObject lightObject = new GameObject(name);
+        lightObject.transform.SetParent(parent);
+        lightObject.transform.position = position;
+
+        Light light = lightObject.AddComponent<Light>();
+        light.type = LightType.Point;
+        light.color = new Color(1f, 0.54f, 0.18f, 1f);
+        light.intensity = intensity;
+        light.range = range;
+        light.shadows = LightShadows.None;
+        light.renderMode = LightRenderMode.ForcePixel;
+        return light;
     }
 
     private static Vector3 IsoPosition(int x, int y)
@@ -299,9 +671,16 @@ public static class CryptPrototypeBuilder
         return 185 - Mathf.RoundToInt(y * 20f) + offset;
     }
 
-    private static Sprite CreateSprite(string name, int width, int height, Vector2 pivot, TexturePainter painter)
+    private static Sprite CreateSprite(string name, int width, int height, Vector2 pivot, TexturePainter painter, float pixelsPerUnit = Ppu)
     {
         string path = ArtFolder + "/" + name + ".png";
+        if (!regenerateSprites && File.Exists(path))
+        {
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+            ConfigureSpriteImporter(path, pivot, pixelsPerUnit);
+            return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        }
+
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         texture.filterMode = FilterMode.Point;
         Clear(texture);
@@ -311,12 +690,43 @@ public static class CryptPrototypeBuilder
         Object.DestroyImmediate(texture);
 
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        ConfigureSpriteImporter(path, pivot, pixelsPerUnit);
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    private static Sprite LoadSprite(string path, Vector2 pivot, float pixelsPerUnit)
+    {
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        ConfigureSpriteImporter(path, pivot, pixelsPerUnit);
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    private static Texture2D LoadTexture(string path)
+    {
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (importer != null)
+        {
+            importer.textureType = TextureImporterType.Default;
+            importer.alphaIsTransparency = true;
+            importer.mipmapEnabled = false;
+            importer.filterMode = FilterMode.Point;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+        }
+
+        return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+    }
+
+    private static void ConfigureSpriteImporter(string path, Vector2 pivot, float pixelsPerUnit)
+    {
         TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
         if (importer != null)
         {
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
-            importer.spritePixelsPerUnit = Ppu;
+            importer.spritePixelsPerUnit = pixelsPerUnit;
             importer.spritePivot = pivot;
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = true;
@@ -325,8 +735,6 @@ public static class CryptPrototypeBuilder
             importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.SaveAndReimport();
         }
-
-        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
     private static void DrawFloorTile(Texture2D texture)

@@ -2,20 +2,29 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public sealed class DraculaWalker : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 2.45f;
-    public Vector2 minBounds = new Vector2(-3.75f, -2.05f);
+    public Vector2 minBounds = new Vector2(-3.75f, -1.45f);
     public Vector2 maxBounds = new Vector2(5.2f, 1.35f);
 
     [Header("Animation")]
     public SpriteRenderer spriteRenderer;
+    public Rigidbody2D body;
     public Transform visualRoot;
     public Sprite[] walkDown;
     public Sprite[] walkUp;
     public Sprite[] walkSide;
     public float frameTime = 0.16f;
+
+    [Header("Depth Sorting")]
+    public int baseSortingOrder = 280;
+    public float ySortMultiplier = 28f;
+    public int minSortingOrder = 180;
+    public int maxSortingOrder = 340;
 
     private enum Facing
     {
@@ -38,21 +47,37 @@ public sealed class DraculaWalker : MonoBehaviour
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+        if (body == null)
+        {
+            body = GetComponent<Rigidbody2D>();
+        }
+
+        if (body != null)
+        {
+            body.gravityScale = 0f;
+            body.freezeRotation = true;
+        }
+
         if (visualRoot != null && visualRoot != transform)
         {
             visualStartLocalPosition = visualRoot.localPosition;
         }
 
         ApplyFrame(0);
+        UpdateSortOrder();
     }
 
     private void Update()
     {
         ReadKeyboard();
-        Move();
         UpdateFacing();
         Animate();
         UpdateSortOrder();
+    }
+
+    private void FixedUpdate()
+    {
+        Move(Time.fixedDeltaTime);
     }
 
     private void ReadKeyboard()
@@ -87,7 +112,7 @@ public sealed class DraculaWalker : MonoBehaviour
         moveInput = Vector2.ClampMagnitude(moveInput, 1f);
     }
 
-    private void Move()
+    private void Move(float deltaTime)
     {
         if (moveInput.sqrMagnitude <= 0.0001f)
         {
@@ -95,10 +120,18 @@ public sealed class DraculaWalker : MonoBehaviour
         }
 
         Vector3 position = transform.position;
-        position += new Vector3(moveInput.x, moveInput.y, 0f) * (moveSpeed * Time.deltaTime);
+        position += new Vector3(moveInput.x, moveInput.y, 0f) * (moveSpeed * deltaTime);
         position.x = Mathf.Clamp(position.x, minBounds.x, maxBounds.x);
         position.y = Mathf.Clamp(position.y, minBounds.y, maxBounds.y);
-        transform.position = position;
+
+        if (body != null && Application.isPlaying)
+        {
+            body.MovePosition(new Vector2(position.x, position.y));
+        }
+        else
+        {
+            transform.position = position;
+        }
     }
 
     private void UpdateFacing()
@@ -146,7 +179,7 @@ public sealed class DraculaWalker : MonoBehaviour
 
         if (visualRoot != null && visualRoot != transform)
         {
-            float bob = moving ? (currentFrame == 0 ? 0.025f : -0.01f) : Mathf.Sin(Time.time * 2.2f) * 0.004f;
+            float bob = moving ? (currentFrame % 2 == 0 ? 0.018f : -0.01f) : Mathf.Sin(Time.time * 2.2f) * 0.004f;
             visualRoot.localPosition = visualStartLocalPosition + new Vector3(0f, bob, 0f);
         }
     }
@@ -187,6 +220,7 @@ public sealed class DraculaWalker : MonoBehaviour
             return;
         }
 
-        spriteRenderer.sortingOrder = 200 - Mathf.RoundToInt(transform.position.y * 20f);
+        int order = baseSortingOrder - Mathf.RoundToInt(transform.position.y * ySortMultiplier);
+        spriteRenderer.sortingOrder = Mathf.Clamp(order, minSortingOrder, maxSortingOrder);
     }
 }
