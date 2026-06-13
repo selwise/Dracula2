@@ -27,6 +27,7 @@ public static class CryptPrototypeBuilder
     private const int Ppu = 32;
     private const float PaintedBackgroundPpu = 114.06f;
     private const float CharacterPpu = 64f;
+    private const float DraculaV4DownPpu = 175.625f;
 
     private static readonly Color32 ClearColor = new Color32(0, 0, 0, 0);
     private static readonly Color32 Ink = new Color32(5, 6, 9, 255);
@@ -111,18 +112,18 @@ public static class CryptPrototypeBuilder
         Sprite rug = CreateSprite("crypt_rug_runner", 96, 48, new Vector2(0.5f, 0.5f), DrawRug);
         Sprite rubble = CreateSprite("crypt_carved_rubble", 66, 34, new Vector2(0.5f, 0.35f), DrawRubble);
         Sprite shadow = CreateSprite("dracula_shadow", 88, 28, new Vector2(0.5f, 0.5f), DrawShadow, CharacterPpu);
-        Sprite down0 = CreateSprite("dracula_down_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 0); }, CharacterPpu);
-        Sprite down1 = CreateSprite("dracula_down_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 1); }, CharacterPpu);
-        Sprite down2 = CreateSprite("dracula_down_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 2); }, CharacterPpu);
-        Sprite down3 = CreateSprite("dracula_down_3", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 3); }, CharacterPpu);
-        Sprite down4 = CreateSprite("dracula_down_4", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 4); }, CharacterPpu);
-        Sprite down5 = CreateSprite("dracula_down_5", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 0, 5); }, CharacterPpu);
-        Sprite up0 = CreateSprite("dracula_up_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 0); }, CharacterPpu);
-        Sprite up1 = CreateSprite("dracula_up_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 1); }, CharacterPpu);
-        Sprite up2 = CreateSprite("dracula_up_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 2); }, CharacterPpu);
-        Sprite up3 = CreateSprite("dracula_up_3", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 3); }, CharacterPpu);
-        Sprite up4 = CreateSprite("dracula_up_4", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 4); }, CharacterPpu);
-        Sprite up5 = CreateSprite("dracula_up_5", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 1, 5); }, CharacterPpu);
+        Sprite down0 = LoadSprite(ArtFolder + "/draculav4_down_0.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
+        Sprite down1 = LoadSprite(ArtFolder + "/draculav4_down_1.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
+        Sprite down2 = LoadSprite(ArtFolder + "/draculav4_down_2.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
+        Sprite down3 = LoadSprite(ArtFolder + "/draculav4_down_3.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
+        Sprite down4 = LoadSprite(ArtFolder + "/draculav4_down_4.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
+        Sprite down5 = LoadSprite(ArtFolder + "/draculav4_down_5.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
+        Sprite up0 = LoadSprite(ArtFolder + "/draculav3_up_0.png", new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite up1 = LoadSprite(ArtFolder + "/draculav3_up_1.png", new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite up2 = LoadSprite(ArtFolder + "/draculav3_up_2.png", new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite up3 = LoadSprite(ArtFolder + "/draculav3_up_3.png", new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite up4 = LoadSprite(ArtFolder + "/draculav3_up_4.png", new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite up5 = LoadSprite(ArtFolder + "/draculav3_up_5.png", new Vector2(0.5f, 0f), CharacterPpu);
         Sprite side0 = CreateSprite("dracula_side_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 0); }, CharacterPpu);
         Sprite side1 = CreateSprite("dracula_side_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 1); }, CharacterPpu);
         Sprite side2 = CreateSprite("dracula_side_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 2); }, CharacterPpu);
@@ -153,7 +154,7 @@ public static class CryptPrototypeBuilder
         {
             CreatePaintedRoom(room.transform, out candleGlowRenderer, out candleHeatRenderer, out shadowGradeRenderer, out sigilPulseRenderer);
             coffinPosition = new Vector3(2.58f, 0.74f, 0f);
-            exitPosition = new Vector3(-3.65f, 1.25f, 0f);
+            exitPosition = new Vector3(-3.58f, 1.36f, 0f);
             Sprite coffinPropSprite = File.Exists(PaintedCoffinPropPath)
                 ? LoadSprite(PaintedCoffinPropPath, new Vector2(0.5f, 0.36f), PaintedBackgroundPpu)
                 : coffin;
@@ -219,12 +220,12 @@ public static class CryptPrototypeBuilder
 
         CreateWalkBoundaryColliders(room.transform);
 
-        GameObject exit = new GameObject("Exit Trigger");
+        GameObject exit = new GameObject("Main Arch Exit Trigger");
         exit.transform.SetParent(room.transform);
         exit.transform.position = exitPosition;
         BoxCollider2D exitCollider = exit.AddComponent<BoxCollider2D>();
         exitCollider.isTrigger = true;
-        exitCollider.size = new Vector2(1.15f, 0.75f);
+        exitCollider.size = new Vector2(0.78f, 0.78f);
 
         GameObject player = CreateSpriteObject("Dracula", down0, new Vector3(0.25f, -1.35f, 0f), 318, root.transform);
         Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
@@ -248,8 +249,8 @@ public static class CryptPrototypeBuilder
         walker.ySortMultiplier = 28f;
         walker.minSortingOrder = 180;
         walker.maxSortingOrder = 340;
-        walker.minBounds = new Vector2(-4.75f, -1.72f);
-        walker.maxBounds = new Vector2(6.85f, 3.18f);
+        walker.minBounds = new Vector2(-4.78f, -1.66f);
+        walker.maxBounds = new Vector2(6.48f, 2.74f);
 
         CryptPrototypeInteraction interaction = player.AddComponent<CryptPrototypeInteraction>();
         interaction.coffinPosition = coffinPosition;
@@ -357,8 +358,7 @@ public static class CryptPrototypeBuilder
         bool useLayeredRoom = HasLayeredRoom();
         if (useLayeredRoom)
         {
-            CreatePaintedLayer("Painted Back Walls Layer", RoomLayerBackWallsPath, -220, room);
-            CreatePaintedLayer("Painted Floor Dressing Layer", RoomLayerFloorDressingPath, -185, room);
+            CreatePaintedLayer("Painted Base Room Layer", PaintedBackgroundPath, -220, room);
         }
         else
         {
@@ -397,11 +397,9 @@ public static class CryptPrototypeBuilder
             sigilPulseRenderer.color = new Color(1f, 1f, 1f, 0.68f);
         }
 
-        string coffinPath = useLayeredRoom ? RoomLayerCoffinPlatformPath : PaintedCoffinOccludersPath;
-        if (File.Exists(coffinPath))
+        if (!useLayeredRoom && File.Exists(PaintedCoffinOccludersPath))
         {
-            string coffinName = useLayeredRoom ? "Painted Coffin Platform Layer" : "Painted Coffin Depth Occluder";
-            CreatePaintedLayer(coffinName, coffinPath, 198, room);
+            CreatePaintedLayer("Painted Coffin Depth Occluder", PaintedCoffinOccludersPath, 198, room);
         }
 
         string foregroundPath = useLayeredRoom ? RoomLayerForegroundRailPath : PaintedForegroundOccludersPath;
@@ -433,39 +431,35 @@ public static class CryptPrototypeBuilder
         GameObject boundary = new GameObject("Walk Boundary Colliders");
         boundary.transform.SetParent(room);
 
-        CreateEdgeBoundary(boundary.transform, "Back Wall Walk Limit", new Vector2[]
+        CreateEdgeBoundary(boundary.transform, "Sealed Back Wall Walk Limit", new Vector2[]
         {
-            new Vector2(-5.08f, -0.64f),
-            new Vector2(-4.22f, 0.24f),
-            new Vector2(-1.02f, 2.03f),
-            new Vector2(1.12f, 2.53f),
-            new Vector2(3.44f, 2.08f),
-            new Vector2(6.38f, 0.66f)
+            new Vector2(-5.00f, -0.58f),
+            new Vector2(-4.26f, 0.20f),
+            new Vector2(-1.08f, 1.98f),
+            new Vector2(1.10f, 2.46f),
+            new Vector2(3.38f, 2.02f),
+            new Vector2(6.18f, 0.62f)
         });
 
-        CreateEdgeBoundary(boundary.transform, "Right Wall Walk Limit", new Vector2[]
+        CreateEdgeBoundary(boundary.transform, "Sealed Right Wall Walk Limit", new Vector2[]
         {
-            new Vector2(6.98f, 0.14f),
-            new Vector2(7.04f, -0.72f),
-            new Vector2(6.72f, -1.18f),
-            new Vector2(5.96f, -1.38f)
+            new Vector2(6.22f, 0.58f),
+            new Vector2(6.48f, 0.05f),
+            new Vector2(6.46f, -0.68f),
+            new Vector2(6.12f, -1.08f),
+            new Vector2(5.42f, -1.32f)
         });
 
-        CreateEdgeBoundary(boundary.transform, "Lower Left Rail Walk Limit", new Vector2[]
+        CreateEdgeBoundary(boundary.transform, "Sealed Lower Rail Walk Limit", new Vector2[]
         {
-            new Vector2(-5.14f, -0.64f),
-            new Vector2(-4.72f, -1.24f),
-            new Vector2(-3.22f, -1.46f),
-            new Vector2(-1.32f, -1.58f),
-            new Vector2(-0.42f, -1.54f)
-        });
-
-        CreateEdgeBoundary(boundary.transform, "Lower Right Rail Walk Limit", new Vector2[]
-        {
-            new Vector2(0.72f, -1.90f),
-            new Vector2(2.30f, -1.80f),
-            new Vector2(4.40f, -1.48f),
-            new Vector2(6.78f, -1.08f)
+            new Vector2(-5.08f, -0.62f),
+            new Vector2(-4.72f, -1.18f),
+            new Vector2(-3.28f, -1.42f),
+            new Vector2(-1.18f, -1.52f),
+            new Vector2(0.62f, -1.64f),
+            new Vector2(2.34f, -1.72f),
+            new Vector2(4.42f, -1.44f),
+            new Vector2(5.48f, -1.28f)
         });
 
         CreateEdgeBoundary(boundary.transform, "Coffin Platform Back Edge", new Vector2[]
