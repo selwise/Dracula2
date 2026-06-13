@@ -9,6 +9,8 @@ public static class CryptPrototypeBuilder
 {
     private const string ArtFolder = "Assets/Art/Crypt";
     private const string ScenePath = "Assets/Scenes/CryptPrototype.unity";
+    private const string Bg2BackgroundPath = ArtFolder + "/bg2_downscaled.png";
+    private const string Bg2CoffinOccluderPath = ArtFolder + "/bg2_coffin_occluder.png";
     private const string PaintedBackgroundPath = ArtFolder + "/crypt_room_painted_background.png";
     private const string PaintedForegroundOccludersPath = ArtFolder + "/crypt_room_foreground_occluders.png";
     private const string PaintedCoffinOccludersPath = ArtFolder + "/crypt_room_coffin_occluders.png";
@@ -150,16 +152,20 @@ public static class CryptPrototypeBuilder
         SpriteRenderer candleHeatRenderer = null;
         SpriteRenderer shadowGradeRenderer = null;
         SpriteRenderer sigilPulseRenderer = null;
-        if (File.Exists(PaintedBackgroundPath))
+        if (HasPaintedRoom())
         {
             CreatePaintedRoom(room.transform, out candleGlowRenderer, out candleHeatRenderer, out shadowGradeRenderer, out sigilPulseRenderer);
-            coffinPosition = new Vector3(2.58f, 0.74f, 0f);
-            exitPosition = new Vector3(-3.58f, 1.36f, 0f);
-            Sprite coffinPropSprite = File.Exists(PaintedCoffinPropPath)
-                ? LoadSprite(PaintedCoffinPropPath, new Vector2(0.5f, 0.36f), PaintedBackgroundPpu)
-                : coffin;
-            GameObject coffinProp = CreateSpriteObject("Coffin Prop", coffinPropSprite, coffinPosition, 270, room.transform);
-            coffinProp.transform.localScale = Vector3.one * (File.Exists(PaintedCoffinPropPath) ? PaintedCoffinPropScale : 0.72f);
+            bool useBg2Room = UsesBg2Room();
+            coffinPosition = useBg2Room ? new Vector3(1.62f, -0.72f, 0f) : new Vector3(2.58f, 0.74f, 0f);
+            exitPosition = useBg2Room ? new Vector3(-1.94f, 1.48f, 0f) : new Vector3(-3.58f, 1.36f, 0f);
+            if (!useBg2Room)
+            {
+                Sprite coffinPropSprite = File.Exists(PaintedCoffinPropPath)
+                    ? LoadSprite(PaintedCoffinPropPath, new Vector2(0.5f, 0.36f), PaintedBackgroundPpu)
+                    : coffin;
+                GameObject coffinProp = CreateSpriteObject("Coffin Prop", coffinPropSprite, coffinPosition, 270, room.transform);
+                coffinProp.transform.localScale = Vector3.one * (File.Exists(PaintedCoffinPropPath) ? PaintedCoffinPropScale : 0.72f);
+            }
 
             GameObject interactionGlow = CreateSpriteObject("Coffin Interaction Glow", coffinGlow, coffinPosition + new Vector3(0f, -0.04f, 0f), 96, room.transform);
             interactionGlow.transform.localScale = Vector3.one * 0.72f;
@@ -227,7 +233,8 @@ public static class CryptPrototypeBuilder
         exitCollider.isTrigger = true;
         exitCollider.size = new Vector2(0.78f, 0.78f);
 
-        GameObject player = CreateSpriteObject("Dracula", down0, new Vector3(0.25f, -1.35f, 0f), 318, root.transform);
+        Vector3 playerPosition = UsesBg2Room() ? new Vector3(0.42f, -1.74f, 0f) : new Vector3(0.25f, -1.35f, 0f);
+        GameObject player = CreateSpriteObject("Dracula", down0, playerPosition, 318, root.transform);
         Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
         playerBody.bodyType = RigidbodyType2D.Dynamic;
         playerBody.gravityScale = 0f;
@@ -249,8 +256,8 @@ public static class CryptPrototypeBuilder
         walker.ySortMultiplier = 28f;
         walker.minSortingOrder = 180;
         walker.maxSortingOrder = 340;
-        walker.minBounds = new Vector2(-4.78f, -1.66f);
-        walker.maxBounds = new Vector2(6.48f, 2.74f);
+        walker.minBounds = UsesBg2Room() ? new Vector2(-5.35f, -3.28f) : new Vector2(-4.78f, -1.66f);
+        walker.maxBounds = UsesBg2Room() ? new Vector2(7.12f, 2.10f) : new Vector2(6.48f, 2.74f);
 
         CryptPrototypeInteraction interaction = player.AddComponent<CryptPrototypeInteraction>();
         interaction.coffinPosition = coffinPosition;
@@ -268,7 +275,7 @@ public static class CryptPrototypeBuilder
         ambientAnimator.sigilRenderer = sigilPulseRenderer;
         CreateCandleLightingRig(root.transform, new SpriteRenderer[] { candleGlowRenderer, candleHeatRenderer }, shadowGradeRenderer);
 
-        if (File.Exists(HudShellPath))
+        if (!UsesBg2Room() && File.Exists(HudShellPath))
         {
             GameObject hud = new GameObject("Reference Style HUD");
             hud.transform.SetParent(root.transform);
@@ -306,11 +313,11 @@ public static class CryptPrototypeBuilder
         GameObject cameraObject = new GameObject("Main Camera");
         Camera camera = cameraObject.AddComponent<Camera>();
         camera.orthographic = true;
-        camera.orthographicSize = 3.82f;
+        camera.orthographicSize = UsesBg2Room() ? 4.4f : 3.82f;
         camera.clearFlags = CameraClearFlags.SolidColor;
         camera.backgroundColor = new Color(0.035f, 0.038f, 0.048f, 1f);
         cameraObject.tag = "MainCamera";
-        cameraObject.transform.position = new Vector3(0.78f, 0.28f, -10f);
+        cameraObject.transform.position = UsesBg2Room() ? new Vector3(1.15f, 0.75f, -10f) : new Vector3(0.78f, 0.28f, -10f);
         cameraObject.AddComponent<AudioListener>();
         return cameraObject;
     }
@@ -355,6 +362,16 @@ public static class CryptPrototypeBuilder
         candleHeatRenderer = null;
         shadowGradeRenderer = null;
         sigilPulseRenderer = null;
+        if (UsesBg2Room())
+        {
+            CreatePaintedLayer("BG2 Room Base Layer", Bg2BackgroundPath, -220, room);
+            if (File.Exists(Bg2CoffinOccluderPath))
+            {
+                CreatePaintedLayer("BG2 Coffin Occluder Layer", Bg2CoffinOccluderPath, 286, room);
+            }
+            return;
+        }
+
         bool useLayeredRoom = HasLayeredRoom();
         if (useLayeredRoom)
         {
@@ -410,6 +427,16 @@ public static class CryptPrototypeBuilder
         }
     }
 
+    private static bool HasPaintedRoom()
+    {
+        return UsesBg2Room() || File.Exists(PaintedBackgroundPath);
+    }
+
+    private static bool UsesBg2Room()
+    {
+        return File.Exists(Bg2BackgroundPath);
+    }
+
     private static bool HasLayeredRoom()
     {
         return File.Exists(RoomLayerBackWallsPath)
@@ -430,6 +457,12 @@ public static class CryptPrototypeBuilder
     {
         GameObject boundary = new GameObject("Walk Boundary Colliders");
         boundary.transform.SetParent(room);
+
+        if (UsesBg2Room())
+        {
+            CreateBg2WalkBoundaryColliders(boundary.transform);
+            return;
+        }
 
         CreateEdgeBoundary(boundary.transform, "Sealed Back Wall Walk Limit", new Vector2[]
         {
@@ -503,6 +536,80 @@ public static class CryptPrototypeBuilder
             new Vector2(3.57f, 0.69f),
             new Vector2(3.36f, 0.33f),
             new Vector2(1.86f, 0.29f)
+        });
+    }
+
+    private static void CreateBg2WalkBoundaryColliders(Transform parent)
+    {
+        CreateEdgeBoundary(parent, "BG2 Room Outer Walk Perimeter", new Vector2[]
+        {
+            new Vector2(-5.43f, 0.22f),
+            new Vector2(-5.43f, -1.30f),
+            new Vector2(-4.14f, -1.72f),
+            new Vector2(-2.52f, -2.30f),
+            new Vector2(-0.60f, -3.18f),
+            new Vector2(1.12f, -3.82f),
+            new Vector2(2.84f, -3.18f),
+            new Vector2(4.40f, -2.54f),
+            new Vector2(6.14f, -1.84f),
+            new Vector2(7.10f, -1.18f),
+            new Vector2(7.45f, 0.22f),
+            new Vector2(6.26f, 0.30f),
+            new Vector2(5.08f, 0.18f),
+            new Vector2(4.12f, 0.18f),
+            new Vector2(3.18f, 0.56f),
+            new Vector2(2.18f, 1.08f),
+            new Vector2(1.05f, 1.48f),
+            new Vector2(0.05f, 1.58f),
+            new Vector2(-1.04f, 1.44f),
+            new Vector2(-2.18f, 0.98f),
+            new Vector2(-3.18f, 0.36f),
+            new Vector2(-4.40f, 0.10f),
+            new Vector2(-5.43f, 0.22f)
+        });
+
+        CreateEdgeBoundary(parent, "BG2 Raised Platform Back Edge", new Vector2[]
+        {
+            new Vector2(-1.84f, -0.72f),
+            new Vector2(-0.25f, -0.05f),
+            new Vector2(1.92f, 0.18f),
+            new Vector2(4.08f, -0.54f)
+        });
+
+        CreateEdgeBoundary(parent, "BG2 Raised Platform Right Edge", new Vector2[]
+        {
+            new Vector2(4.08f, -0.54f),
+            new Vector2(3.94f, -1.38f),
+            new Vector2(3.10f, -1.88f)
+        });
+
+        CreateEdgeBoundary(parent, "BG2 Raised Platform Left Edge", new Vector2[]
+        {
+            new Vector2(-1.84f, -0.72f),
+            new Vector2(-1.76f, -1.06f),
+            new Vector2(-1.24f, -1.24f)
+        });
+
+        CreateEdgeBoundary(parent, "BG2 Raised Platform Front Lip Left Of Stairs", new Vector2[]
+        {
+            new Vector2(-1.24f, -1.24f),
+            new Vector2(-0.76f, -1.44f)
+        });
+
+        CreateEdgeBoundary(parent, "BG2 Raised Platform Front Lip Right Of Stairs", new Vector2[]
+        {
+            new Vector2(1.30f, -2.34f),
+            new Vector2(3.10f, -1.88f)
+        });
+
+        CreatePolygonBoundary(parent, "BG2 Painted Coffin Collider", new Vector2[]
+        {
+            new Vector2(0.18f, 0.04f),
+            new Vector2(1.14f, 0.46f),
+            new Vector2(2.88f, 0.02f),
+            new Vector2(3.18f, -0.28f),
+            new Vector2(2.02f, -0.82f),
+            new Vector2(0.26f, -0.34f)
         });
     }
 
