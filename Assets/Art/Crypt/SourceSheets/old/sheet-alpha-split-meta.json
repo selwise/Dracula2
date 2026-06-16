@@ -1,0 +1,23 @@
+{
+  "source_sheet": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\sheet-alpha.png",
+  "frames": 12,
+  "cell_size": [
+    1280,
+    720
+  ],
+  "frame_paths": [
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_00.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_01.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_02.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_03.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_04.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_05.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_06.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_07.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_08.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_09.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_10.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkDownAlpha12\\dracula_down_alpha12_11.png"
+  ],
+  "note": "Split exactly from sheet-alpha.png; no pixel processing."
+}

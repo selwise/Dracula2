@@ -1,0 +1,556 @@
+{
+  "key": "walk_right",
+  "title": "Walk Right (Left Mirrors This)",
+  "runtime_use": "walkSide",
+  "frame_dir": "Assets/Art/Crypt/DraculaWalkRightAlpha24",
+  "frame_count": 24,
+  "expected_frame_count": 24,
+  "sheet": "Assets/Art/Crypt/SourceSheets/RuntimePatchSheets/runtime_dracula_walk_right_sheet.png",
+  "preview": "Assets/Art/Crypt/SourceSheets/RuntimePatchSheets/runtime_dracula_walk_right_preview.png",
+  "sheet_size": [
+    4320,
+    5120
+  ],
+  "cell_size": [
+    720,
+    1280
+  ],
+  "columns": 6,
+  "rows": 4,
+  "all_frame_sizes": [
+    [
+      720,
+      1280
+    ]
+  ],
+  "cell_map": [
+    {
+      "index": 0,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_00.png",
+      "cell_xy": [
+        0,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        56,
+        202,
+        462,
+        1094
+      ]
+    },
+    {
+      "index": 1,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_01.png",
+      "cell_xy": [
+        720,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        68,
+        202,
+        488,
+        1094
+      ]
+    },
+    {
+      "index": 2,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_02.png",
+      "cell_xy": [
+        1440,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        72,
+        207,
+        543,
+        1094
+      ]
+    },
+    {
+      "index": 3,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_03.png",
+      "cell_xy": [
+        2160,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        70,
+        216,
+        583,
+        1094
+      ]
+    },
+    {
+      "index": 4,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_04.png",
+      "cell_xy": [
+        2880,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        78,
+        214,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 5,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_05.png",
+      "cell_xy": [
+        3600,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        94,
+        208,
+        502,
+        1092
+      ]
+    },
+    {
+      "index": 6,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_06.png",
+      "cell_xy": [
+        0,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        118,
+        201,
+        466,
+        1092
+      ]
+    },
+    {
+      "index": 7,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_07.png",
+      "cell_xy": [
+        720,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        125,
+        202,
+        487,
+        1092
+      ]
+    },
+    {
+      "index": 8,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_08.png",
+      "cell_xy": [
+        1440,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        118,
+        208,
+        554,
+        1092
+      ]
+    },
+    {
+      "index": 9,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_09.png",
+      "cell_xy": [
+        2160,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        99,
+        217,
+        582,
+        1094
+      ]
+    },
+    {
+      "index": 10,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_10.png",
+      "cell_xy": [
+        2880,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        75,
+        214,
+        540,
+        1095
+      ]
+    },
+    {
+      "index": 11,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_11.png",
+      "cell_xy": [
+        3600,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        64,
+        208,
+        508,
+        1095
+      ]
+    },
+    {
+      "index": 12,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_12.png",
+      "cell_xy": [
+        0,
+        2560
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        58,
+        201,
+        463,
+        1095
+      ]
+    },
+    {
+      "index": 13,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_13.png",
+      "cell_xy": [
+        720,
+        2560
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        70,
+        202,
+        489,
+        1095
+      ]
+    },
+    {
+      "index": 14,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_14.png",
+      "cell_xy": [
+        1440,
+        2560
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        75,
+        208,
+        544,
+        1094
+      ]
+    },
+    {
+      "index": 15,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_15.png",
+      "cell_xy": [
+        2160,
+        2560
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        72,
+        218,
+        576,
+        1094
+      ]
+    },
+    {
+      "index": 16,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_16.png",
+      "cell_xy": [
+        2880,
+        2560
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        82,
+        213,
+        528,
+        1094
+      ]
+    },
+    {
+      "index": 17,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_17.png",
+      "cell_xy": [
+        3600,
+        2560
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        97,
+        207,
+        496,
+        1092
+      ]
+    },
+    {
+      "index": 18,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_18.png",
+      "cell_xy": [
+        0,
+        3840
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        121,
+        201,
+        468,
+        1092
+      ]
+    },
+    {
+      "index": 19,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_19.png",
+      "cell_xy": [
+        720,
+        3840
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        125,
+        202,
+        487,
+        1092
+      ]
+    },
+    {
+      "index": 20,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_20.png",
+      "cell_xy": [
+        1440,
+        3840
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        120,
+        208,
+        553,
+        1092
+      ]
+    },
+    {
+      "index": 21,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_21.png",
+      "cell_xy": [
+        2160,
+        3840
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        98,
+        217,
+        581,
+        1095
+      ]
+    },
+    {
+      "index": 22,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_22.png",
+      "cell_xy": [
+        2880,
+        3840
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        74,
+        215,
+        540,
+        1095
+      ]
+    },
+    {
+      "index": 23,
+      "source_file": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_23.png",
+      "cell_xy": [
+        3600,
+        3840
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        62,
+        209,
+        508,
+        1095
+      ]
+    }
+  ]
+}

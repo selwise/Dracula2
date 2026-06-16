@@ -1,0 +1,29 @@
+{
+  "created_utc": "2026-06-16T08:31:01Z",
+  "decision": "Side idle rebuilt from neutral right-walk frame 00 to preserve walk-cycle size, canvas, pose language, and import scale.",
+  "source_walk_frame": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkRightAlpha24\\dracula_right_alpha24_00.png",
+  "source_size": [
+    720,
+    1280
+  ],
+  "source_mode": "RGBA",
+  "operation": "Copied walk frame 00 unchanged into all 12 side-idle runtime frames. No alpha keying, no black removal, no crop, no resize.",
+  "replaced_previous_runtime_idle_source": "D:/right.png repeated still was rejected because it used a different 576x1024 canvas and did not match the walk-cycle size.",
+  "runtime_output_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12",
+  "frames": [
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_00.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_01.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_02.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_03.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_04.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_05.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_06.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_07.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_08.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_09.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_10.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_11.png"
+  ],
+  "preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_right_from_walk_frame_00_repeated_preview_2row.png",
+  "source_copy": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_right_from_walk_neutral_frame_00_source.png"
+}

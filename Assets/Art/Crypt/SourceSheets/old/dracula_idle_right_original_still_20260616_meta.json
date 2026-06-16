@@ -1,0 +1,27 @@
+{
+  "created_utc": "2026-06-16T07:45:15Z",
+  "source": "D:\\right.png",
+  "source_mode": "RGBA",
+  "source_size": [
+    576,
+    1024
+  ],
+  "operation": "Copied original RGBA still unchanged into all 12 side-idle frames; no background keying, no black removal, no cropping.",
+  "runtime_output_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12",
+  "frames": [
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_00.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_01.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_02.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_03.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_04.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_05.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_06.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_07.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_08.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_09.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_10.png",
+    "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleRightAlpha12\\dracula_idle_right_alpha12_11.png"
+  ],
+  "preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_right_original_still_repeated_preview_2row.png",
+  "source_copy": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_right_original_still_source.png"
+}

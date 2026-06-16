@@ -1,0 +1,41 @@
+{
+  "source_video": "D:\\right.mp4",
+  "source_fps": 24.0,
+  "source_frame_count": 240,
+  "frames": [
+    175,
+    178,
+    180,
+    183,
+    186,
+    188,
+    191,
+    194,
+    196,
+    199,
+    202,
+    204,
+    207,
+    210,
+    212,
+    215,
+    218,
+    220,
+    223,
+    226,
+    228,
+    231,
+    234,
+    236
+  ],
+  "cell_size": [
+    720,
+    1280
+  ],
+  "keyed_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkRightAlpha24",
+  "raw_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_24_raw_frames",
+  "raw_sheet_4row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_24_raw_magenta_sheet_4row.png",
+  "keyed_preview_4row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_24_keyed_preview_4row.png",
+  "loop_preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_24_keyed_loop.gif",
+  "note": "24-frame side walk from stable 175->239-ish source loop. Left is mirrored in Unity."
+}

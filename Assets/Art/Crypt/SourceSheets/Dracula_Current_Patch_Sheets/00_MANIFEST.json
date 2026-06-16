@@ -1,0 +1,137 @@
+{
+  "created_utc": "2026-06-16T08:54:33Z",
+  "folder": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets",
+  "purpose": "Clearly marked editable Dracula spritesheets for manual alpha/paint patching. Sheets are generated from current runtime frame folders loaded by CryptPrototypeBuilder.",
+  "important_rules": [
+    "Edit *_sheet.png files, not *_preview.png files.",
+    "Do not run automated alpha repair or black/dark keying unless Selene explicitly asks.",
+    "Side left is mirrored from side right in runtime; there is no separate left sheet.",
+    "Side idle is intentionally not included in this patch-sheet set for now."
+  ],
+  "side_idle_placeholder": {
+    "source_ready_png": "D:/dracula-right.png",
+    "runtime_canvas_copy": "Assets/Art/Crypt/SourceSheets/dracula_idle_right_ready_alpha_on_walk_canvas.png",
+    "runtime_frames": "Assets/Art/Crypt/DraculaIdleRightAlpha12",
+    "note": "Current side-idle placeholder; slight white rim accepted for now. Ignored for this patch-sheet set."
+  },
+  "side_walk_start_frame": {
+    "runtime_frame_00": "Assets/Art/Crypt/DraculaWalkRightAlpha24/dracula_right_alpha24_00.png",
+    "note": "This is the first frame of the active side-walk strip."
+  },
+  "sheets": [
+    {
+      "order": "01",
+      "key": "down_walk",
+      "label": "Down Walk",
+      "runtime_use": "DraculaWalker.walkDown",
+      "frame_count": 12,
+      "cell_size": [
+        1280,
+        720
+      ],
+      "sheet_size": [
+        7680,
+        1440
+      ],
+      "sheet": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/01_down_walk_sheet.png",
+      "preview": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/01_down_walk_preview.png",
+      "map": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/01_down_walk_map.json",
+      "note": "Current down walk. 12 frames."
+    },
+    {
+      "order": "02",
+      "key": "down_to_idle",
+      "label": "Down ToIdle",
+      "runtime_use": "DraculaWalker.toIdleDown",
+      "frame_count": 24,
+      "cell_size": [
+        1280,
+        720
+      ],
+      "sheet_size": [
+        7680,
+        2880
+      ],
+      "sheet": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/02_down_to_idle_sheet.png",
+      "preview": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/02_down_to_idle_preview.png",
+      "map": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/02_down_to_idle_map.json",
+      "note": "Plays once after stopping from front/down movement, then idle down loops."
+    },
+    {
+      "order": "03",
+      "key": "down_idle",
+      "label": "Down Idle",
+      "runtime_use": "DraculaWalker.idleDown",
+      "frame_count": 24,
+      "cell_size": [
+        1280,
+        720
+      ],
+      "sheet_size": [
+        7680,
+        2880
+      ],
+      "sheet": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/03_down_idle_sheet.png",
+      "preview": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/03_down_idle_preview.png",
+      "map": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/03_down_idle_map.json",
+      "note": "Front-facing idle loop."
+    },
+    {
+      "order": "04",
+      "key": "side_walk",
+      "label": "Side Walk Right",
+      "runtime_use": "DraculaWalker.walkSide",
+      "frame_count": 24,
+      "cell_size": [
+        720,
+        1280
+      ],
+      "sheet_size": [
+        4320,
+        5120
+      ],
+      "sheet": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/04_side_walk_sheet.png",
+      "preview": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/04_side_walk_preview.png",
+      "map": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/04_side_walk_map.json",
+      "note": "Right walk. Left walk mirrors this with SpriteRenderer.flipX."
+    },
+    {
+      "order": "05",
+      "key": "up_walk",
+      "label": "Up Walk",
+      "runtime_use": "DraculaWalker.walkUp",
+      "frame_count": 24,
+      "cell_size": [
+        1280,
+        720
+      ],
+      "sheet_size": [
+        7680,
+        2880
+      ],
+      "sheet": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/05_up_walk_sheet.png",
+      "preview": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/05_up_walk_preview.png",
+      "map": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/05_up_walk_map.json",
+      "note": "Back/up walk."
+    },
+    {
+      "order": "06",
+      "key": "up_idle",
+      "label": "Up Idle",
+      "runtime_use": "DraculaWalker.idleUp",
+      "frame_count": 12,
+      "cell_size": [
+        1280,
+        720
+      ],
+      "sheet_size": [
+        7680,
+        1440
+      ],
+      "sheet": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/06_up_idle_sheet.png",
+      "preview": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/06_up_idle_preview.png",
+      "map": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets/06_up_idle_map.json",
+      "note": "Back/up idle loop."
+    }
+  ]
+}

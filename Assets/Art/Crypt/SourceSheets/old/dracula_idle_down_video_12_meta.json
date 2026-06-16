@@ -1,0 +1,159 @@
+{
+  "source_video_downloads": "C:\\Users\\Selene\\Downloads\\Vampire_standing_still_cape_sett\u2026_202606151458.mp4",
+  "processing_copy": "C:\\Gamedev\\Dracula2\\Temp\\video_work\\dracula_idle_source.mp4",
+  "source_fps": 24.0,
+  "source_frame_count": 240,
+  "cell_size": [
+    1280,
+    720
+  ],
+  "background": "magenta video background retained in raw sheets; keyed alpha frames are generated only for Unity test integration",
+  "settle": {
+    "frames": [
+      0,
+      8,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64,
+      72,
+      80,
+      88
+    ],
+    "keyed_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleDownSettleAlpha12",
+    "raw_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_settle_video_12_raw_frames",
+    "raw_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_settle_video_12_raw_magenta_sheet_2row.png",
+    "keyed_alpha_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_settle_video_12_keyed_alpha_sheet_2row.png",
+    "raw_preview_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_settle_video_12_raw_magenta_preview_2row.png",
+    "keyed_preview_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_settle_video_12_keyed_preview_2row.png",
+    "loop_preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_settle_video_12_keyed_loop.gif"
+  },
+  "loop": {
+    "frames": [
+      96,
+      108,
+      120,
+      132,
+      144,
+      156,
+      168,
+      180,
+      192,
+      204,
+      216,
+      228
+    ],
+    "keyed_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleDownAlpha12",
+    "raw_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_loop_video_12_raw_frames",
+    "raw_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_loop_video_12_raw_magenta_sheet_2row.png",
+    "keyed_alpha_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_loop_video_12_keyed_alpha_sheet_2row.png",
+    "raw_preview_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_loop_video_12_raw_magenta_preview_2row.png",
+    "keyed_preview_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_loop_video_12_keyed_preview_2row.png",
+    "loop_preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_loop_video_12_keyed_loop.gif"
+  },
+  "note": "Settle strip starts at frame 0 with cape open and lands near cape-down. Loop strip uses later quiet frames so idle does not replay the cape flare forever.",
+  "keying_note": "Second pass removes magenta background and generated magenta floor-shadow smear from keyed alpha frames. Raw magenta sheets remain untouched.",
+  "active_idle_override": {
+    "mode": "new_subtle_video_idle",
+    "source_video": "D:\\draculaidlenew.mp4",
+    "source_fps": 24.0,
+    "source_frame_count": 192,
+    "frames": [
+      0,
+      8,
+      16,
+      64,
+      72,
+      80,
+      96,
+      112,
+      128,
+      144,
+      160,
+      176
+    ],
+    "output_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaIdleDownAlpha12",
+    "raw_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_new_video_12_raw_frames",
+    "raw_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_new_video_12_raw_magenta_sheet_2row.png",
+    "keyed_preview_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_new_video_12_keyed_preview_2row.png",
+    "loop_preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_idle_down_new_video_12_keyed_loop.gif",
+    "note": "Active runtime idle uses the new low-motion idle video, sampled sparsely and with top-touching frames avoided, then played slowly.",
+    "bbox": [
+      [
+        446,
+        1,
+        832,
+        717
+      ],
+      [
+        446,
+        1,
+        832,
+        717
+      ],
+      [
+        444,
+        1,
+        833,
+        717
+      ],
+      [
+        435,
+        2,
+        842,
+        717
+      ],
+      [
+        437,
+        6,
+        842,
+        717
+      ],
+      [
+        440,
+        8,
+        839,
+        717
+      ],
+      [
+        446,
+        2,
+        832,
+        717
+      ],
+      [
+        444,
+        2,
+        834,
+        717
+      ],
+      [
+        438,
+        2,
+        840,
+        717
+      ],
+      [
+        439,
+        1,
+        840,
+        717
+      ],
+      [
+        449,
+        1,
+        829,
+        717
+      ],
+      [
+        447,
+        1,
+        832,
+        717
+      ]
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "note": "Stricter idle cleanup: front and side lock head/upper torso from frame 0. Up idle sourced from subtle freeze-camera video and upper body locked.",
+  "side_static_until": 705,
+  "side_blend_until": 830,
+  "down_static_until": 310,
+  "down_blend_until": 430,
+  "up_source": "C:\\Users\\Selene\\Downloads\\Subtle_idle_animation_freeze_camera_202606152258.mp4",
+  "up_source_fps": 24.0,
+  "up_source_frames": 240,
+  "up_source_size": [
+    1280,
+    720
+  ],
+  "up_selected_frames": [
+    0,
+    20,
+    40,
+    60,
+    80,
+    100,
+    120,
+    140,
+    160,
+    180,
+    200,
+    220
+  ],
+  "up_static_until": 320,
+  "up_blend_until": 450
+}

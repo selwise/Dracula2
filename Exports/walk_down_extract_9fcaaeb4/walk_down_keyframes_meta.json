@@ -1,0 +1,66 @@
+{
+  "source_video": "D:\\9fcaaeb4-c9f2-41e1-bbfc-cc03a7cf9e93.mp4",
+  "fps": 24.0,
+  "source_size": [
+    1280,
+    720
+  ],
+  "candidate_loop": {
+    "start_frame": 58,
+    "repeat_frame": 122,
+    "period_frames": 64
+  },
+  "keyframes": [
+    58,
+    66,
+    74,
+    82,
+    90,
+    98,
+    106,
+    114
+  ],
+  "keyframe_times_seconds": [
+    2.4167,
+    2.75,
+    3.0833,
+    3.4167,
+    3.75,
+    4.0833,
+    4.4167,
+    4.75
+  ],
+  "crop_box_xyxy": [
+    340,
+    0,
+    940,
+    720
+  ],
+  "cropped_frame_size": [
+    600,
+    720
+  ],
+  "background": "raw magenta retained; no keying or alpha processing applied",
+  "full_frame_paths": [
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_00_f058.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_01_f066.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_02_f074.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_03_f082.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_04_f090.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_05_f098.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_06_f106.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_full_raw\\walk_down_key_07_f114.png"
+  ],
+  "cropped_frame_paths": [
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_00_f058.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_01_f066.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_02_f074.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_03_f082.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_04_f090.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_05_f098.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_06_f106.png",
+    "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\keyframes_cropped_raw\\walk_down_key_07_f114.png"
+  ],
+  "spritesheet_path": "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\walk_down_keys_cropped_raw_sheet.png",
+  "preview_path": "C:\\Gamedev\\Dracula2\\Temp\\walk_down_extract_9fcaaeb4\\walk_down_keys_preview.png"
+}

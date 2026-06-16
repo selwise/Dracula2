@@ -1,0 +1,292 @@
+{
+  "key": "idle_right",
+  "title": "Idle Right Placeholder (Left Mirrors This)",
+  "runtime_use": "idleSide",
+  "frame_dir": "Assets/Art/Crypt/DraculaIdleRightAlpha12",
+  "frame_count": 12,
+  "expected_frame_count": 12,
+  "sheet": "Assets/Art/Crypt/SourceSheets/RuntimePatchSheets/runtime_dracula_idle_right_sheet.png",
+  "preview": "Assets/Art/Crypt/SourceSheets/RuntimePatchSheets/runtime_dracula_idle_right_preview.png",
+  "sheet_size": [
+    4320,
+    2560
+  ],
+  "cell_size": [
+    720,
+    1280
+  ],
+  "columns": 6,
+  "rows": 2,
+  "all_frame_sizes": [
+    [
+      720,
+      1280
+    ]
+  ],
+  "cell_map": [
+    {
+      "index": 0,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_00.png",
+      "cell_xy": [
+        0,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 1,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_01.png",
+      "cell_xy": [
+        720,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 2,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_02.png",
+      "cell_xy": [
+        1440,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 3,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_03.png",
+      "cell_xy": [
+        2160,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 4,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_04.png",
+      "cell_xy": [
+        2880,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 5,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_05.png",
+      "cell_xy": [
+        3600,
+        0
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 6,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_06.png",
+      "cell_xy": [
+        0,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 7,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_07.png",
+      "cell_xy": [
+        720,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 8,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_08.png",
+      "cell_xy": [
+        1440,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 9,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_09.png",
+      "cell_xy": [
+        2160,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 10,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_10.png",
+      "cell_xy": [
+        2880,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    },
+    {
+      "index": 11,
+      "source_file": "Assets/Art/Crypt/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_11.png",
+      "cell_xy": [
+        3600,
+        1280
+      ],
+      "cell_size": [
+        720,
+        1280
+      ],
+      "image_size": [
+        720,
+        1280
+      ],
+      "alpha_bbox": [
+        8,
+        199,
+        536,
+        1094
+      ]
+    }
+  ]
+}

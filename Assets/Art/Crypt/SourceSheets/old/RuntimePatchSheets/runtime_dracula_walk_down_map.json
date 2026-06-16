@@ -1,0 +1,292 @@
+{
+  "key": "walk_down",
+  "title": "Walk Down",
+  "runtime_use": "walkDown",
+  "frame_dir": "Assets/Art/Crypt/DraculaWalkDownAlpha12",
+  "frame_count": 12,
+  "expected_frame_count": 12,
+  "sheet": "Assets/Art/Crypt/SourceSheets/RuntimePatchSheets/runtime_dracula_walk_down_sheet.png",
+  "preview": "Assets/Art/Crypt/SourceSheets/RuntimePatchSheets/runtime_dracula_walk_down_preview.png",
+  "sheet_size": [
+    7680,
+    1440
+  ],
+  "cell_size": [
+    1280,
+    720
+  ],
+  "columns": 6,
+  "rows": 2,
+  "all_frame_sizes": [
+    [
+      1280,
+      720
+    ]
+  ],
+  "cell_map": [
+    {
+      "index": 0,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_00.png",
+      "cell_xy": [
+        0,
+        0
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        286,
+        0,
+        848,
+        720
+      ]
+    },
+    {
+      "index": 1,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_01.png",
+      "cell_xy": [
+        1280,
+        0
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        296,
+        0,
+        903,
+        712
+      ]
+    },
+    {
+      "index": 2,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_02.png",
+      "cell_xy": [
+        2560,
+        0
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        400,
+        12,
+        1015,
+        720
+      ]
+    },
+    {
+      "index": 3,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_03.png",
+      "cell_xy": [
+        3840,
+        0
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        476,
+        0,
+        1078,
+        720
+      ]
+    },
+    {
+      "index": 4,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_04.png",
+      "cell_xy": [
+        5120,
+        0
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        438,
+        0,
+        978,
+        712
+      ]
+    },
+    {
+      "index": 5,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_05.png",
+      "cell_xy": [
+        6400,
+        0
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        350,
+        12,
+        950,
+        720
+      ]
+    },
+    {
+      "index": 6,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_06.png",
+      "cell_xy": [
+        0,
+        720
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        285,
+        0,
+        862,
+        720
+      ]
+    },
+    {
+      "index": 7,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_07.png",
+      "cell_xy": [
+        1280,
+        720
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        304,
+        0,
+        920,
+        711
+      ]
+    },
+    {
+      "index": 8,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_08.png",
+      "cell_xy": [
+        2560,
+        720
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        394,
+        14,
+        1030,
+        720
+      ]
+    },
+    {
+      "index": 9,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_09.png",
+      "cell_xy": [
+        3840,
+        720
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        470,
+        0,
+        1080,
+        720
+      ]
+    },
+    {
+      "index": 10,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_10.png",
+      "cell_xy": [
+        5120,
+        720
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        425,
+        0,
+        983,
+        713
+      ]
+    },
+    {
+      "index": 11,
+      "source_file": "Assets/Art/Crypt/DraculaWalkDownAlpha12/dracula_down_alpha12_11.png",
+      "cell_xy": [
+        6400,
+        720
+      ],
+      "cell_size": [
+        1280,
+        720
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "alpha_bbox": [
+        349,
+        13,
+        956,
+        720
+      ]
+    }
+  ]
+}

@@ -11,6 +11,14 @@ public static class CryptPrototypeBuilder
     private const string ScenePath = "Assets/Scenes/CryptPrototype.unity";
     private const string Bg2BackgroundPath = ArtFolder + "/bg2_downscaled.png";
     private const string Bg2CoffinOccluderPath = ArtFolder + "/bg2_coffin_occluder.png";
+    private const string Bg2ManualCollidersPrefabPath = "Assets/Prefabs/Crypt/BG2ManualWalkColliders.prefab";
+    private const string DraculaDownAlpha12Prefix = ArtFolder + "/DraculaWalkDownAlpha12/dracula_down_alpha12_";
+    private const string DraculaRightAlpha24Prefix = ArtFolder + "/DraculaWalkRightAlpha24/dracula_right_alpha24_";
+    private const string DraculaUpAlpha24Prefix = ArtFolder + "/DraculaWalkUpAlpha24/dracula_up_alpha24_";
+    private const string DraculaIdleDownAlpha24Prefix = ArtFolder + "/DraculaIdleDownAlpha24/dracula_idle_down_alpha24_";
+    private const string DraculaIdleUpAlpha12Prefix = ArtFolder + "/DraculaIdleUpAlpha12/dracula_idle_up_alpha12_";
+    private const string DraculaIdleRightAlpha12Prefix = ArtFolder + "/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_";
+    private const string DraculaToIdleDownAlpha24Prefix = ArtFolder + "/DraculaToIdleDownAlpha24/dracula_to_idle_down_alpha24_";
     private const string PaintedBackgroundPath = ArtFolder + "/crypt_room_painted_background.png";
     private const string PaintedForegroundOccludersPath = ArtFolder + "/crypt_room_foreground_occluders.png";
     private const string PaintedCoffinOccludersPath = ArtFolder + "/crypt_room_coffin_occluders.png";
@@ -28,8 +36,23 @@ public static class CryptPrototypeBuilder
     private const string HudShellPath = ArtFolder + "/ui_gothic_hud_shell.png";
     private const int Ppu = 32;
     private const float PaintedBackgroundPpu = 114.06f;
+    private const float Bg2BackgroundPpu = 124.2f;
     private const float CharacterPpu = 64f;
-    private const float DraculaV4DownPpu = 175.625f;
+    private const int DraculaWalkFrameCount = 12;
+    private const int DraculaSideWalkFrameCount = 24;
+    private const int DraculaUpWalkFrameCount = 24;
+    private const int DraculaDownIdleFrameCount = 24;
+    private const int DraculaUpIdleFrameCount = 12;
+    private const int DraculaToIdleFrameCount = 24;
+    private const int DraculaSideIdleFrameCount = 12;
+    private const float DraculaDownAlpha12Ppu = 458f;
+    private const float DraculaRightAlphaPpu = 568f;
+    private const float DraculaReferenceScale = 1.55f;
+    private const float DraculaWalkFrameTime = 0.16f;
+    private const float DraculaSideWalkFrameTime = 0.08f;
+    private const float DraculaUpWalkFrameTime = 0.108f;
+    private const float DraculaIdleFrameTime = 0.18f;
+    private const float DraculaToIdleFrameTime = 0.055f;
 
     private static readonly Color32 ClearColor = new Color32(0, 0, 0, 0);
     private static readonly Color32 Ink = new Color32(5, 6, 9, 255);
@@ -114,24 +137,13 @@ public static class CryptPrototypeBuilder
         Sprite rug = CreateSprite("crypt_rug_runner", 96, 48, new Vector2(0.5f, 0.5f), DrawRug);
         Sprite rubble = CreateSprite("crypt_carved_rubble", 66, 34, new Vector2(0.5f, 0.35f), DrawRubble);
         Sprite shadow = CreateSprite("dracula_shadow", 88, 28, new Vector2(0.5f, 0.5f), DrawShadow, CharacterPpu);
-        Sprite down0 = LoadSprite(ArtFolder + "/draculav4_down_0.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
-        Sprite down1 = LoadSprite(ArtFolder + "/draculav4_down_1.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
-        Sprite down2 = LoadSprite(ArtFolder + "/draculav4_down_2.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
-        Sprite down3 = LoadSprite(ArtFolder + "/draculav4_down_3.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
-        Sprite down4 = LoadSprite(ArtFolder + "/draculav4_down_4.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
-        Sprite down5 = LoadSprite(ArtFolder + "/draculav4_down_5.png", new Vector2(0.5f, 0f), DraculaV4DownPpu);
-        Sprite up0 = LoadSprite(ArtFolder + "/draculav3_up_0.png", new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite up1 = LoadSprite(ArtFolder + "/draculav3_up_1.png", new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite up2 = LoadSprite(ArtFolder + "/draculav3_up_2.png", new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite up3 = LoadSprite(ArtFolder + "/draculav3_up_3.png", new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite up4 = LoadSprite(ArtFolder + "/draculav3_up_4.png", new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite up5 = LoadSprite(ArtFolder + "/draculav3_up_5.png", new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite side0 = CreateSprite("dracula_side_0", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 0); }, CharacterPpu);
-        Sprite side1 = CreateSprite("dracula_side_1", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 1); }, CharacterPpu);
-        Sprite side2 = CreateSprite("dracula_side_2", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 2); }, CharacterPpu);
-        Sprite side3 = CreateSprite("dracula_side_3", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 3); }, CharacterPpu);
-        Sprite side4 = CreateSprite("dracula_side_4", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 4); }, CharacterPpu);
-        Sprite side5 = CreateSprite("dracula_side_5", 80, 128, new Vector2(0.5f, 0f), delegate(Texture2D t) { DrawDracula(t, 2, 5); }, CharacterPpu);
+        Sprite[] downFrames = LoadSpriteSequence(DraculaDownAlpha12Prefix, DraculaWalkFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
+        Sprite[] idleDownFrames = LoadSpriteSequence(DraculaIdleDownAlpha24Prefix, DraculaDownIdleFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
+        Sprite[] toIdleDownFrames = LoadSpriteSequence(DraculaToIdleDownAlpha24Prefix, DraculaToIdleFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
+        Sprite[] upFrames = LoadSpriteSequence(DraculaUpAlpha24Prefix, DraculaUpWalkFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
+        Sprite[] idleUpFrames = LoadSpriteSequence(DraculaIdleUpAlpha12Prefix, DraculaUpIdleFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
+        Sprite[] sideFrames = LoadSpriteSequence(DraculaRightAlpha24Prefix, DraculaSideWalkFrameCount, new Vector2(0.5f, 0.144f), DraculaRightAlphaPpu);
+        Sprite[] idleSideFrames = LoadSpriteSequence(DraculaIdleRightAlpha12Prefix, DraculaSideIdleFrameCount, new Vector2(0.5f, 0.144f), DraculaRightAlphaPpu);
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = "CryptPrototype";
@@ -156,8 +168,8 @@ public static class CryptPrototypeBuilder
         {
             CreatePaintedRoom(room.transform, out candleGlowRenderer, out candleHeatRenderer, out shadowGradeRenderer, out sigilPulseRenderer);
             bool useBg2Room = UsesBg2Room();
-            coffinPosition = useBg2Room ? new Vector3(1.62f, -0.72f, 0f) : new Vector3(2.58f, 0.74f, 0f);
-            exitPosition = useBg2Room ? new Vector3(-1.94f, 1.48f, 0f) : new Vector3(-3.58f, 1.36f, 0f);
+            coffinPosition = useBg2Room ? new Vector3(2.43f, -0.72f, 0f) : new Vector3(2.58f, 0.74f, 0f);
+            exitPosition = useBg2Room ? new Vector3(-0.88f, 1.36f, 0f) : new Vector3(-3.58f, 1.36f, 0f);
             if (!useBg2Room)
             {
                 Sprite coffinPropSprite = File.Exists(PaintedCoffinPropPath)
@@ -234,30 +246,41 @@ public static class CryptPrototypeBuilder
         exitCollider.size = new Vector2(0.78f, 0.78f);
 
         Vector3 playerPosition = UsesBg2Room() ? new Vector3(0.42f, -1.74f, 0f) : new Vector3(0.25f, -1.35f, 0f);
-        GameObject player = CreateSpriteObject("Dracula", down0, playerPosition, 318, root.transform);
+        GameObject player = CreateSpriteObject("Dracula", downFrames[0], playerPosition, 318, root.transform);
+        player.transform.localScale = new Vector3(DraculaReferenceScale, DraculaReferenceScale, 1f);
         Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
         playerBody.bodyType = RigidbodyType2D.Dynamic;
         playerBody.gravityScale = 0f;
         playerBody.freezeRotation = true;
         playerBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         playerBody.interpolation = RigidbodyInterpolation2D.Interpolate;
-        CapsuleCollider2D playerCollider = player.AddComponent<CapsuleCollider2D>();
-        playerCollider.direction = CapsuleDirection2D.Horizontal;
-        playerCollider.size = new Vector2(0.42f, 0.28f);
-        playerCollider.offset = new Vector2(0f, 0.16f);
+        GameObject groundContact = new GameObject("Ground Contact Collider - edit size/position here");
+        groundContact.transform.SetParent(player.transform, false);
+        groundContact.transform.localPosition = new Vector3(0f, -1.08f / DraculaReferenceScale, 0f);
+        BoxCollider2D playerCollider = groundContact.AddComponent<BoxCollider2D>();
+        playerCollider.size = new Vector2(0.72f / DraculaReferenceScale, 0.22f / DraculaReferenceScale);
         DraculaWalker walker = player.AddComponent<DraculaWalker>();
         walker.spriteRenderer = player.GetComponent<SpriteRenderer>();
         walker.body = playerBody;
-        walker.walkDown = new Sprite[] { down0, down1, down2, down3, down4, down5 };
-        walker.walkUp = new Sprite[] { up0, up1, up2, up3, up4, up5 };
-        walker.walkSide = new Sprite[] { side0, side1, side2, side3, side4, side5 };
-        walker.frameTime = 0.115f;
+        walker.walkDown = downFrames;
+        walker.walkUp = upFrames;
+        walker.walkSide = sideFrames;
+        walker.idleDown = idleDownFrames;
+        walker.idleUp = idleUpFrames;
+        walker.idleSide = idleSideFrames;
+        walker.toIdleDown = toIdleDownFrames;
+        walker.frameTime = DraculaWalkFrameTime;
+        walker.sideFrameTime = DraculaSideWalkFrameTime;
+        walker.upFrameTime = DraculaUpWalkFrameTime;
+        walker.idleFrameTime = DraculaIdleFrameTime;
+        walker.toIdleFrameTime = DraculaToIdleFrameTime;
         walker.baseSortingOrder = 280;
         walker.ySortMultiplier = 28f;
         walker.minSortingOrder = 180;
         walker.maxSortingOrder = 340;
-        walker.minBounds = UsesBg2Room() ? new Vector2(-5.35f, -3.28f) : new Vector2(-4.78f, -1.66f);
-        walker.maxBounds = UsesBg2Room() ? new Vector2(7.12f, 2.10f) : new Vector2(6.48f, 2.74f);
+        walker.minBounds = UsesBg2Room() ? new Vector2(-8.5f, -3.4f) : new Vector2(-4.78f, -1.66f);
+        walker.maxBounds = UsesBg2Room() ? new Vector2(9.5f, 1.4f) : new Vector2(6.48f, 2.74f);
+        walker.walkBoundary = null;
 
         CryptPrototypeInteraction interaction = player.AddComponent<CryptPrototypeInteraction>();
         interaction.coffinPosition = coffinPosition;
@@ -447,7 +470,10 @@ public static class CryptPrototypeBuilder
 
     private static GameObject CreatePaintedLayer(string name, string path, int sortingOrder, Transform parent)
     {
-        Sprite sprite = LoadSprite(path, new Vector2(0.5f, 0.5f), PaintedBackgroundPpu);
+        float pixelsPerUnit = path == Bg2BackgroundPath || path == Bg2CoffinOccluderPath
+            ? Bg2BackgroundPpu
+            : PaintedBackgroundPpu;
+        Sprite sprite = LoadSprite(path, new Vector2(0.5f, 0.5f), pixelsPerUnit);
         GameObject obj = CreateSpriteObject(name, sprite, new Vector3(1.15f, 0.75f, 0f), sortingOrder, parent);
         obj.transform.localScale = Vector3.one;
         return obj;
@@ -541,76 +567,42 @@ public static class CryptPrototypeBuilder
 
     private static void CreateBg2WalkBoundaryColliders(Transform parent)
     {
-        CreateEdgeBoundary(parent, "BG2 Room Outer Walk Perimeter", new Vector2[]
+        GameObject manualPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(Bg2ManualCollidersPrefabPath);
+        if (manualPrefab != null)
         {
-            new Vector2(-5.43f, 0.22f),
-            new Vector2(-5.43f, -1.30f),
-            new Vector2(-4.14f, -1.72f),
-            new Vector2(-2.52f, -2.30f),
-            new Vector2(-0.60f, -3.18f),
-            new Vector2(1.12f, -3.82f),
-            new Vector2(2.84f, -3.18f),
-            new Vector2(4.40f, -2.54f),
-            new Vector2(6.14f, -1.84f),
-            new Vector2(7.10f, -1.18f),
-            new Vector2(7.45f, 0.22f),
-            new Vector2(6.26f, 0.30f),
-            new Vector2(5.08f, 0.18f),
-            new Vector2(4.12f, 0.18f),
-            new Vector2(3.18f, 0.56f),
-            new Vector2(2.18f, 1.08f),
-            new Vector2(1.05f, 1.48f),
-            new Vector2(0.05f, 1.58f),
-            new Vector2(-1.04f, 1.44f),
-            new Vector2(-2.18f, 0.98f),
-            new Vector2(-3.18f, 0.36f),
-            new Vector2(-4.40f, 0.10f),
-            new Vector2(-5.43f, 0.22f)
-        });
+            GameObject instance = PrefabUtility.InstantiatePrefab(manualPrefab) as GameObject;
+            instance.name = "BG2 Manual Walk Barrier Colliders";
+            instance.transform.SetParent(parent, false);
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localScale = Vector3.one;
+            return;
+        }
 
-        CreateEdgeBoundary(parent, "BG2 Raised Platform Back Edge", new Vector2[]
-        {
-            new Vector2(-1.84f, -0.72f),
-            new Vector2(-0.25f, -0.05f),
-            new Vector2(1.92f, 0.18f),
-            new Vector2(4.08f, -0.54f)
-        });
+        CreateBg2ManualColliderFallback(parent);
+    }
 
-        CreateEdgeBoundary(parent, "BG2 Raised Platform Right Edge", new Vector2[]
-        {
-            new Vector2(4.08f, -0.54f),
-            new Vector2(3.94f, -1.38f),
-            new Vector2(3.10f, -1.88f)
-        });
+    private static void CreateBg2ManualColliderFallback(Transform parent)
+    {
+        CreateManualBoxBoundary(parent, "01 Back Wall Barrier - move down/up", new Vector2(-1.35f, 1.08f), new Vector2(8.9f, 0.34f), 0f);
+        CreateManualBoxBoundary(parent, "02 Right Wall Barrier - move right/left", new Vector2(5.90f, -0.02f), new Vector2(0.36f, 5.2f), -47f);
+        CreateManualBoxBoundary(parent, "03 Lower Rail Barrier - move up/down", new Vector2(0.80f, -2.56f), new Vector2(11.6f, 0.34f), 0f);
+        CreateManualBoxBoundary(parent, "04 Lower Left Corner Barrier", new Vector2(-5.95f, -1.58f), new Vector2(2.0f, 0.34f), -50f);
+        CreateManualBoxBoundary(parent, "05 Lower Right Corner Barrier", new Vector2(6.85f, -1.98f), new Vector2(2.2f, 0.34f), 18f);
+        CreateManualBoxBoundary(parent, "06 Door Left Post Barrier", new Vector2(-1.74f, 0.76f), new Vector2(0.34f, 0.92f), 0f);
+        CreateManualBoxBoundary(parent, "07 Door Right Post Barrier", new Vector2(-0.04f, 0.76f), new Vector2(0.34f, 0.92f), 0f);
+        CreateManualBoxBoundary(parent, "08 Left Wall Barrier", new Vector2(-6.60f, -0.58f), new Vector2(0.34f, 3.0f), -48f);
+    }
 
-        CreateEdgeBoundary(parent, "BG2 Raised Platform Left Edge", new Vector2[]
-        {
-            new Vector2(-1.84f, -0.72f),
-            new Vector2(-1.76f, -1.06f),
-            new Vector2(-1.24f, -1.24f)
-        });
-
-        CreateEdgeBoundary(parent, "BG2 Raised Platform Front Lip Left Of Stairs", new Vector2[]
-        {
-            new Vector2(-1.24f, -1.24f),
-            new Vector2(-0.76f, -1.44f)
-        });
-
-        CreateEdgeBoundary(parent, "BG2 Raised Platform Front Lip Right Of Stairs", new Vector2[]
-        {
-            new Vector2(1.30f, -2.34f),
-            new Vector2(3.10f, -1.88f)
-        });
-
-        CreatePolygonBoundary(parent, "BG2 Painted Coffin Collider", new Vector2[]
-        {
-            new Vector2(0.18f, 0.04f),
-            new Vector2(1.14f, 0.46f),
-            new Vector2(2.88f, 0.02f),
-            new Vector2(3.18f, -0.28f),
-            new Vector2(2.02f, -0.82f),
-            new Vector2(0.26f, -0.34f)
-        });
+    private static BoxCollider2D CreateManualBoxBoundary(Transform parent, string name, Vector2 position, Vector2 size, float zRotation)
+    {
+        GameObject colliderObject = new GameObject(name);
+        colliderObject.transform.SetParent(parent, false);
+        colliderObject.transform.localPosition = new Vector3(position.x, position.y, 0f);
+        colliderObject.transform.localRotation = Quaternion.Euler(0f, 0f, zRotation);
+        BoxCollider2D collider = colliderObject.AddComponent<BoxCollider2D>();
+        collider.size = size;
+        return collider;
     }
 
     private static EdgeCollider2D CreateEdgeBoundary(Transform parent, string name, Vector2[] points)
@@ -802,6 +794,17 @@ public static class CryptPrototypeBuilder
         return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
+    private static Sprite[] LoadSpriteSequence(string pathPrefix, int frameCount, Vector2 pivot, float pixelsPerUnit)
+    {
+        Sprite[] frames = new Sprite[frameCount];
+        for (int i = 0; i < frameCount; i++)
+        {
+            frames[i] = LoadSprite(pathPrefix + i.ToString("00") + ".png", pivot, pixelsPerUnit);
+        }
+
+        return frames;
+    }
+
     private static Texture2D LoadTexture(string path)
     {
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
@@ -833,6 +836,7 @@ public static class CryptPrototypeBuilder
             importer.alphaIsTransparency = true;
             importer.filterMode = FilterMode.Point;
             importer.wrapMode = TextureWrapMode.Clamp;
+            importer.maxTextureSize = 4096;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.SaveAndReimport();
         }

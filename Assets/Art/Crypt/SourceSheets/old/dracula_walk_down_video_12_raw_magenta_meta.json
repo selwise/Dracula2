@@ -1,0 +1,50 @@
+{
+  "source_video": "D:\\9fcaaeb4-c9f2-41e1-bbfc-cc03a7cf9e93.mp4",
+  "source_fps": 24.0,
+  "loop_candidate": {
+    "start_frame": 58,
+    "repeat_frame": 122,
+    "period_frames": 64
+  },
+  "frames": [
+    58,
+    63,
+    69,
+    74,
+    79,
+    85,
+    90,
+    95,
+    101,
+    106,
+    111,
+    117
+  ],
+  "cell_size": [
+    1280,
+    720
+  ],
+  "sheet_size": [
+    15360,
+    720
+  ],
+  "sheet_path": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_down_video_12_raw_magenta_sheet.png",
+  "preview_path": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_down_video_12_raw_magenta_preview.png",
+  "loop_gif_path": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_down_video_12_raw_magenta_loop.gif",
+  "individual_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_down_video_12_full_frames",
+  "background": "raw magenta video background retained; no crop, no keying, no alpha processing",
+  "sheet_2row_path": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_down_video_12_raw_magenta_sheet_2row.png",
+  "preview_2row_path": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_down_video_12_raw_magenta_preview_2row.png",
+  "sheet_2row_layout": {
+    "columns": 6,
+    "rows": 2,
+    "cell_size": [
+      1280,
+      720
+    ],
+    "sheet_size": [
+      7680,
+      1440
+    ]
+  }
+}

@@ -1,0 +1,338 @@
+[
+  {
+    "frame": "00",
+    "bbox": [
+      56,
+      202,
+      462,
+      1094
+    ],
+    "bbox_size": [
+      406,
+      892
+    ],
+    "bottom_contact_width": 366
+  },
+  {
+    "frame": "01",
+    "bbox": [
+      68,
+      202,
+      488,
+      1094
+    ],
+    "bbox_size": [
+      420,
+      892
+    ],
+    "bottom_contact_width": 362
+  },
+  {
+    "frame": "02",
+    "bbox": [
+      72,
+      207,
+      543,
+      1094
+    ],
+    "bbox_size": [
+      471,
+      887
+    ],
+    "bottom_contact_width": 460
+  },
+  {
+    "frame": "03",
+    "bbox": [
+      70,
+      216,
+      583,
+      1094
+    ],
+    "bbox_size": [
+      513,
+      878
+    ],
+    "bottom_contact_width": 494
+  },
+  {
+    "frame": "04",
+    "bbox": [
+      78,
+      214,
+      536,
+      1094
+    ],
+    "bbox_size": [
+      458,
+      880
+    ],
+    "bottom_contact_width": 415
+  },
+  {
+    "frame": "05",
+    "bbox": [
+      94,
+      208,
+      502,
+      1092
+    ],
+    "bbox_size": [
+      408,
+      884
+    ],
+    "bottom_contact_width": 374
+  },
+  {
+    "frame": "06",
+    "bbox": [
+      118,
+      201,
+      466,
+      1092
+    ],
+    "bbox_size": [
+      348,
+      891
+    ],
+    "bottom_contact_width": 303
+  },
+  {
+    "frame": "07",
+    "bbox": [
+      125,
+      202,
+      487,
+      1092
+    ],
+    "bbox_size": [
+      362,
+      890
+    ],
+    "bottom_contact_width": 316
+  },
+  {
+    "frame": "08",
+    "bbox": [
+      118,
+      208,
+      554,
+      1092
+    ],
+    "bbox_size": [
+      436,
+      884
+    ],
+    "bottom_contact_width": 407
+  },
+  {
+    "frame": "09",
+    "bbox": [
+      99,
+      217,
+      582,
+      1094
+    ],
+    "bbox_size": [
+      483,
+      877
+    ],
+    "bottom_contact_width": 444
+  },
+  {
+    "frame": "10",
+    "bbox": [
+      75,
+      214,
+      540,
+      1095
+    ],
+    "bbox_size": [
+      465,
+      881
+    ],
+    "bottom_contact_width": 430
+  },
+  {
+    "frame": "11",
+    "bbox": [
+      64,
+      208,
+      508,
+      1095
+    ],
+    "bbox_size": [
+      444,
+      887
+    ],
+    "bottom_contact_width": 410
+  },
+  {
+    "frame": "12",
+    "bbox": [
+      58,
+      201,
+      463,
+      1095
+    ],
+    "bbox_size": [
+      405,
+      894
+    ],
+    "bottom_contact_width": 361
+  },
+  {
+    "frame": "13",
+    "bbox": [
+      70,
+      202,
+      489,
+      1095
+    ],
+    "bbox_size": [
+      419,
+      893
+    ],
+    "bottom_contact_width": 365
+  },
+  {
+    "frame": "14",
+    "bbox": [
+      75,
+      208,
+      544,
+      1094
+    ],
+    "bbox_size": [
+      469,
+      886
+    ],
+    "bottom_contact_width": 462
+  },
+  {
+    "frame": "15",
+    "bbox": [
+      72,
+      218,
+      576,
+      1094
+    ],
+    "bbox_size": [
+      504,
+      876
+    ],
+    "bottom_contact_width": 494
+  },
+  {
+    "frame": "16",
+    "bbox": [
+      82,
+      213,
+      528,
+      1094
+    ],
+    "bbox_size": [
+      446,
+      881
+    ],
+    "bottom_contact_width": 411
+  },
+  {
+    "frame": "17",
+    "bbox": [
+      97,
+      207,
+      496,
+      1092
+    ],
+    "bbox_size": [
+      399,
+      885
+    ],
+    "bottom_contact_width": 369
+  },
+  {
+    "frame": "18",
+    "bbox": [
+      121,
+      201,
+      468,
+      1092
+    ],
+    "bbox_size": [
+      347,
+      891
+    ],
+    "bottom_contact_width": 298
+  },
+  {
+    "frame": "19",
+    "bbox": [
+      125,
+      202,
+      487,
+      1092
+    ],
+    "bbox_size": [
+      362,
+      890
+    ],
+    "bottom_contact_width": 317
+  },
+  {
+    "frame": "20",
+    "bbox": [
+      120,
+      208,
+      553,
+      1092
+    ],
+    "bbox_size": [
+      433,
+      884
+    ],
+    "bottom_contact_width": 404
+  },
+  {
+    "frame": "21",
+    "bbox": [
+      98,
+      217,
+      581,
+      1095
+    ],
+    "bbox_size": [
+      483,
+      878
+    ],
+    "bottom_contact_width": 443
+  },
+  {
+    "frame": "22",
+    "bbox": [
+      74,
+      215,
+      540,
+      1095
+    ],
+    "bbox_size": [
+      466,
+      880
+    ],
+    "bottom_contact_width": 431
+  },
+  {
+    "frame": "23",
+    "bbox": [
+      62,
+      209,
+      508,
+      1095
+    ],
+    "bbox_size": [
+      446,
+      886
+    ],
+    "bottom_contact_width": 411
+  }
+]

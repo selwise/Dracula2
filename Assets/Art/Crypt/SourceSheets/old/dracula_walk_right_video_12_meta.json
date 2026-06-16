@@ -1,0 +1,27 @@
+{
+  "source_video": "D:\\right.mp4",
+  "frames": [
+    175,
+    180,
+    186,
+    191,
+    196,
+    202,
+    207,
+    212,
+    218,
+    223,
+    228,
+    234
+  ],
+  "cell_size": [
+    720,
+    1280
+  ],
+  "raw_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_12_raw_frames",
+  "keyed_frame_dir": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\DraculaWalkRightAlpha12",
+  "raw_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_12_raw_magenta_sheet_2row.png",
+  "keyed_preview_sheet_2row": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_12_keyed_preview_sheet_2row.png",
+  "loop_preview": "C:\\Gamedev\\Dracula2\\Assets\\Art\\Crypt\\SourceSheets\\dracula_walk_right_video_12_keyed_loop.gif",
+  "note": "Right walk selected from stable 175->239-ish loop. Magenta background keyed only for in-game test."
+}
