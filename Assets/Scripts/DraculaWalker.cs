@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public sealed class DraculaWalker : MonoBehaviour
 {
     [Header("Movement")]
+    public bool inputEnabled = true;
     public float moveSpeed = 2.45f;
     public Vector2 minBounds = new Vector2(-3.75f, -1.45f);
     public Vector2 maxBounds = new Vector2(5.2f, 1.35f);
@@ -21,12 +22,10 @@ public sealed class DraculaWalker : MonoBehaviour
     public Sprite[] idleDown;
     public Sprite[] idleUp;
     public Sprite[] idleSide;
-    public Sprite[] toIdleDown;
     public float frameTime = 0.16f;
     public float sideFrameTime = 0.08f;
     public float upFrameTime = 0.108f;
     public float idleFrameTime = 0.18f;
-    public float toIdleFrameTime = 0.10f;
 
     [Header("Depth Sorting")]
     public int baseSortingOrder = 280;
@@ -48,7 +47,6 @@ public sealed class DraculaWalker : MonoBehaviour
     private float frameTimer;
     private int sideSign = 1;
     private bool wasMoving;
-    private bool playingToIdle;
 
     private void Awake()
     {
@@ -81,7 +79,7 @@ public sealed class DraculaWalker : MonoBehaviour
     {
         ReadKeyboard();
         UpdateFacing();
-        Animate();
+        Animate(Time.unscaledDeltaTime);
         UpdateSortOrder();
     }
 
@@ -93,6 +91,11 @@ public sealed class DraculaWalker : MonoBehaviour
     private void ReadKeyboard()
     {
         moveInput = Vector2.zero;
+        if (!inputEnabled)
+        {
+            return;
+        }
+
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
         {
@@ -259,14 +262,13 @@ public sealed class DraculaWalker : MonoBehaviour
         facing = moveInput.y > 0f ? Facing.Up : Facing.Down;
     }
 
-    private void Animate()
+    private void Animate(float deltaTime)
     {
         bool moving = moveInput.sqrMagnitude > 0.0001f;
         if (moving)
         {
             if (!wasMoving)
             {
-                playingToIdle = false;
                 currentFrame = 0;
                 frameTimer = 0f;
             }
@@ -278,7 +280,7 @@ public sealed class DraculaWalker : MonoBehaviour
                 return;
             }
 
-            frameTimer += Time.deltaTime;
+            frameTimer += deltaTime;
             float activeFrameTime = GetMovementFrameTime();
             if (frameTimer >= activeFrameTime)
             {
@@ -292,13 +294,12 @@ public sealed class DraculaWalker : MonoBehaviour
         {
             if (wasMoving)
             {
-                playingToIdle = facing == Facing.Down && toIdleDown != null && toIdleDown.Length > 0;
                 currentFrame = 0;
                 frameTimer = 0f;
                 wasMoving = false;
             }
 
-            Sprite[] frames = playingToIdle ? toIdleDown : GetIdleFrames();
+            Sprite[] frames = GetIdleFrames();
             if (frames == null || frames.Length == 0)
             {
                 frames = GetMovementFrames();
@@ -309,26 +310,15 @@ public sealed class DraculaWalker : MonoBehaviour
                 return;
             }
 
-            frameTimer += Time.deltaTime;
-            float activeFrameTime = playingToIdle ? toIdleFrameTime : idleFrameTime;
-            if (frameTimer >= activeFrameTime)
+            frameTimer += deltaTime;
+            if (frameTimer >= idleFrameTime)
             {
                 frameTimer = 0f;
                 currentFrame++;
-                if (playingToIdle && currentFrame >= frames.Length)
-                {
-                    playingToIdle = false;
-                    currentFrame = 0;
-                    frames = GetIdleFrames();
-                }
-
-                if (!playingToIdle)
-                {
-                    currentFrame %= frames.Length;
-                }
+                currentFrame %= frames.Length;
             }
 
-            ApplyFrame(frames, Mathf.Clamp(currentFrame, 0, frames.Length - 1), !playingToIdle && GetIdleFlipX());
+            ApplyFrame(frames, Mathf.Clamp(currentFrame, 0, frames.Length - 1), GetIdleFlipX());
         }
 
         if (visualRoot != null && visualRoot != transform)

@@ -8,17 +8,15 @@ using UnityEngine.SceneManagement;
 public static class CryptPrototypeBuilder
 {
     private const string ArtFolder = "Assets/Art/Crypt";
+    private const string DraculaCharacterArtFolder = "Assets/Art/Characters/Dracula";
     private const string ScenePath = "Assets/Scenes/CryptPrototype.unity";
     private const string Bg2BackgroundPath = ArtFolder + "/bg2_downscaled.png";
     private const string Bg2CoffinOccluderPath = ArtFolder + "/bg2_coffin_occluder.png";
     private const string Bg2ManualCollidersPrefabPath = "Assets/Prefabs/Crypt/BG2ManualWalkColliders.prefab";
-    private const string DraculaDownAlpha12Prefix = ArtFolder + "/DraculaWalkDownAlpha12/dracula_down_alpha12_";
-    private const string DraculaRightAlpha24Prefix = ArtFolder + "/DraculaWalkRightAlpha24/dracula_right_alpha24_";
-    private const string DraculaUpAlpha24Prefix = ArtFolder + "/DraculaWalkUpAlpha24/dracula_up_alpha24_";
-    private const string DraculaIdleDownAlpha24Prefix = ArtFolder + "/DraculaIdleDownAlpha24/dracula_idle_down_alpha24_";
-    private const string DraculaIdleUpAlpha12Prefix = ArtFolder + "/DraculaIdleUpAlpha12/dracula_idle_up_alpha12_";
-    private const string DraculaIdleRightAlpha12Prefix = ArtFolder + "/DraculaIdleRightAlpha12/dracula_idle_right_alpha12_";
-    private const string DraculaToIdleDownAlpha24Prefix = ArtFolder + "/DraculaToIdleDownAlpha24/dracula_to_idle_down_alpha24_";
+    private const string CentralDemonDoorVoidPath = ArtFolder + "/central_demon_door_void.png";
+    private const string DraculaIdleDownRedVestBootsSheetPath =
+        DraculaCharacterArtFolder + "/IdleDownRedVestBoots/dracula_idle_down_red_vest_boots_sheet.png";
+    private const string DraculaIdleDownRedVestBootsSpritePrefix = "dracula_idle_down_red_vest_boots_";
     private const string PaintedBackgroundPath = ArtFolder + "/crypt_room_painted_background.png";
     private const string PaintedForegroundOccludersPath = ArtFolder + "/crypt_room_foreground_occluders.png";
     private const string PaintedCoffinOccludersPath = ArtFolder + "/crypt_room_coffin_occluders.png";
@@ -38,21 +36,18 @@ public static class CryptPrototypeBuilder
     private const float PaintedBackgroundPpu = 114.06f;
     private const float Bg2BackgroundPpu = 124.2f;
     private const float CharacterPpu = 64f;
-    private const int DraculaWalkFrameCount = 12;
-    private const int DraculaSideWalkFrameCount = 24;
-    private const int DraculaUpWalkFrameCount = 24;
-    private const int DraculaDownIdleFrameCount = 24;
-    private const int DraculaUpIdleFrameCount = 12;
-    private const int DraculaToIdleFrameCount = 24;
-    private const int DraculaSideIdleFrameCount = 12;
-    private const float DraculaDownAlpha12Ppu = 458f;
-    private const float DraculaRightAlphaPpu = 568f;
+    private const int DraculaDownIdleFrameCount = 16;
+    private const int DraculaDownIdleSheetColumns = 4;
+    private const int DraculaDownIdleSheetRows = 4;
+    private const int DraculaDownIdleCellSize = 256;
+    private const float DraculaIdleDownRedVestBootsPpu = 157f;
     private const float DraculaReferenceScale = 1.55f;
     private const float DraculaWalkFrameTime = 0.16f;
     private const float DraculaSideWalkFrameTime = 0.08f;
     private const float DraculaUpWalkFrameTime = 0.108f;
     private const float DraculaIdleFrameTime = 0.18f;
-    private const float DraculaToIdleFrameTime = 0.055f;
+    private const int SpriteAlignmentCustom = 9;
+    private const int SpriteMeshTypeFullRect = 0;
 
     private static readonly Color32 ClearColor = new Color32(0, 0, 0, 0);
     private static readonly Color32 Ink = new Color32(5, 6, 9, 255);
@@ -137,13 +132,22 @@ public static class CryptPrototypeBuilder
         Sprite rug = CreateSprite("crypt_rug_runner", 96, 48, new Vector2(0.5f, 0.5f), DrawRug);
         Sprite rubble = CreateSprite("crypt_carved_rubble", 66, 34, new Vector2(0.5f, 0.35f), DrawRubble);
         Sprite shadow = CreateSprite("dracula_shadow", 88, 28, new Vector2(0.5f, 0.5f), DrawShadow, CharacterPpu);
-        Sprite[] downFrames = LoadSpriteSequence(DraculaDownAlpha12Prefix, DraculaWalkFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
-        Sprite[] idleDownFrames = LoadSpriteSequence(DraculaIdleDownAlpha24Prefix, DraculaDownIdleFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
-        Sprite[] toIdleDownFrames = LoadSpriteSequence(DraculaToIdleDownAlpha24Prefix, DraculaToIdleFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
-        Sprite[] upFrames = LoadSpriteSequence(DraculaUpAlpha24Prefix, DraculaUpWalkFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
-        Sprite[] idleUpFrames = LoadSpriteSequence(DraculaIdleUpAlpha12Prefix, DraculaUpIdleFrameCount, new Vector2(0.5f, 0f), DraculaDownAlpha12Ppu);
-        Sprite[] sideFrames = LoadSpriteSequence(DraculaRightAlpha24Prefix, DraculaSideWalkFrameCount, new Vector2(0.5f, 0.144f), DraculaRightAlphaPpu);
-        Sprite[] idleSideFrames = LoadSpriteSequence(DraculaIdleRightAlpha12Prefix, DraculaSideIdleFrameCount, new Vector2(0.5f, 0.144f), DraculaRightAlphaPpu);
+        Sprite castleMap = CreateSprite("castle_map_playfield", 1600, 900, new Vector2(0.5f, 0.5f), DrawCastleMapPlayfield, CastleRoomLayout.CastleMapPpu);
+        Sprite servantWing = CreateSprite("renfield_servant_wing_placeholder", 960, 520, new Vector2(0.5f, 0.5f), DrawServantWingRoom, Bg2BackgroundPpu);
+        Sprite renfieldSprite = CreateSprite("renfield_placeholder", 44, 72, new Vector2(0.5f, 0f), DrawRenfield, CharacterPpu);
+        Sprite taskMarker = CreateSprite("renfield_task_marker", 42, 48, new Vector2(0.5f, 0.12f), DrawRenfieldTaskMarker, CharacterPpu);
+        Sprite centralDemonDoorVoid = LoadSprite(CentralDemonDoorVoidPath, new Vector2(0.5f, 0.5f), Bg2BackgroundPpu);
+        Sprite[] idleDownFrames = LoadGridSpriteSheet(
+            DraculaIdleDownRedVestBootsSheetPath,
+            DraculaIdleDownRedVestBootsSpritePrefix,
+            DraculaDownIdleFrameCount,
+            DraculaDownIdleSheetColumns,
+            DraculaDownIdleSheetRows,
+            DraculaDownIdleCellSize,
+            DraculaDownIdleCellSize,
+            new Vector2(0.5f, 0f),
+            DraculaIdleDownRedVestBootsPpu);
+        Sprite[] emptyCharacterFrames = new Sprite[0];
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = "CryptPrototype";
@@ -153,11 +157,11 @@ public static class CryptPrototypeBuilder
         room.transform.SetParent(root.transform);
 
         ConfigureLightingEnvironment();
-        CreateCamera();
+        GameObject cameraObject = CreateCamera();
+        Camera sceneCamera = cameraObject.GetComponent<Camera>();
         CreateLight();
 
         Vector3 coffinPosition;
-        Vector3 exitPosition;
         SpriteRenderer interactionGlowRenderer = null;
         SpriteRenderer interactionEffectRenderer = null;
         SpriteRenderer candleGlowRenderer = null;
@@ -169,7 +173,6 @@ public static class CryptPrototypeBuilder
             CreatePaintedRoom(room.transform, out candleGlowRenderer, out candleHeatRenderer, out shadowGradeRenderer, out sigilPulseRenderer);
             bool useBg2Room = UsesBg2Room();
             coffinPosition = useBg2Room ? new Vector3(2.43f, -0.72f, 0f) : new Vector3(2.58f, 0.74f, 0f);
-            exitPosition = useBg2Room ? new Vector3(-0.88f, 1.36f, 0f) : new Vector3(-3.58f, 1.36f, 0f);
             if (!useBg2Room)
             {
                 Sprite coffinPropSprite = File.Exists(PaintedCoffinPropPath)
@@ -225,7 +228,6 @@ public static class CryptPrototypeBuilder
             exitStepObject.transform.localScale = Vector3.one * 0.62f;
             CreateSpriteObject("Rug Runner", rug, new Vector3(0.75f, -0.68f, 0f), 72, room.transform);
             coffinPosition = IsoPosition(3, 2);
-            exitPosition = new Vector3(4.24f, 2.78f, 0f);
             CreateSpriteObject("Coffin Red Spill", coffinGlow, coffinPosition + new Vector3(0f, -0.04f, 0f), 95, room.transform);
             CreateSpriteObject("Coffin", coffin, coffinPosition + new Vector3(0f, -0.03f, 0f), 130, room.transform);
             CreateCoffinDressing(room.transform, candles, coffinPosition);
@@ -238,15 +240,8 @@ public static class CryptPrototypeBuilder
 
         CreateWalkBoundaryColliders(room.transform);
 
-        GameObject exit = new GameObject("Main Arch Exit Trigger");
-        exit.transform.SetParent(room.transform);
-        exit.transform.position = exitPosition;
-        BoxCollider2D exitCollider = exit.AddComponent<BoxCollider2D>();
-        exitCollider.isTrigger = true;
-        exitCollider.size = new Vector2(0.78f, 0.78f);
-
         Vector3 playerPosition = UsesBg2Room() ? new Vector3(0.42f, -1.74f, 0f) : new Vector3(0.25f, -1.35f, 0f);
-        GameObject player = CreateSpriteObject("Dracula", downFrames[0], playerPosition, 318, root.transform);
+        GameObject player = CreateSpriteObject("Dracula", idleDownFrames[0], playerPosition, 318, root.transform);
         player.transform.localScale = new Vector3(DraculaReferenceScale, DraculaReferenceScale, 1f);
         Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
         playerBody.bodyType = RigidbodyType2D.Dynamic;
@@ -262,25 +257,29 @@ public static class CryptPrototypeBuilder
         DraculaWalker walker = player.AddComponent<DraculaWalker>();
         walker.spriteRenderer = player.GetComponent<SpriteRenderer>();
         walker.body = playerBody;
-        walker.walkDown = downFrames;
-        walker.walkUp = upFrames;
-        walker.walkSide = sideFrames;
+        walker.walkDown = emptyCharacterFrames;
+        walker.walkUp = emptyCharacterFrames;
+        walker.walkSide = emptyCharacterFrames;
         walker.idleDown = idleDownFrames;
-        walker.idleUp = idleUpFrames;
-        walker.idleSide = idleSideFrames;
-        walker.toIdleDown = toIdleDownFrames;
+        walker.idleUp = emptyCharacterFrames;
+        walker.idleSide = emptyCharacterFrames;
         walker.frameTime = DraculaWalkFrameTime;
         walker.sideFrameTime = DraculaSideWalkFrameTime;
         walker.upFrameTime = DraculaUpWalkFrameTime;
         walker.idleFrameTime = DraculaIdleFrameTime;
-        walker.toIdleFrameTime = DraculaToIdleFrameTime;
         walker.baseSortingOrder = 280;
         walker.ySortMultiplier = 28f;
         walker.minSortingOrder = 180;
         walker.maxSortingOrder = 340;
-        walker.minBounds = UsesBg2Room() ? new Vector2(-8.5f, -3.4f) : new Vector2(-4.78f, -1.66f);
-        walker.maxBounds = UsesBg2Room() ? new Vector2(9.5f, 1.4f) : new Vector2(6.48f, 2.74f);
+        walker.minBounds = UsesBg2Room() ? CastleRoomLayout.CryptMinBounds : new Vector2(-4.78f, -1.66f);
+        walker.maxBounds = UsesBg2Room() ? CastleRoomLayout.CryptMaxBounds : new Vector2(6.48f, 2.74f);
         walker.walkBoundary = null;
+
+        AdventureActor draculaActor = player.AddComponent<AdventureActor>();
+        draculaActor.character = AdventureCharacter.Dracula;
+        draculaActor.roomName = "Crypt";
+        draculaActor.walker = walker;
+        draculaActor.spriteRenderer = walker.spriteRenderer;
 
         CryptPrototypeInteraction interaction = player.AddComponent<CryptPrototypeInteraction>();
         interaction.coffinPosition = coffinPosition;
@@ -292,6 +291,25 @@ public static class CryptPrototypeBuilder
 
         GameObject playerShadow = CreateSpriteObject("Shadow", shadow, Vector3.zero, 198, player.transform);
         playerShadow.transform.localPosition = new Vector3(0f, 0.08f, 0f);
+
+        AdventureActor renfieldActor;
+        AdventureActionStation[] renfieldStations = CreateRenfieldWorkroom(root.transform, servantWing, renfieldSprite, taskMarker, shadow, out renfieldActor);
+        CreateCastleMap(root.transform, castleMap);
+
+        AdventureLoopController loopController = root.AddComponent<AdventureLoopController>();
+        loopController.dracula = draculaActor;
+        loopController.renfield = renfieldActor;
+        loopController.renfieldStations = renfieldStations;
+        loopController.sceneCamera = sceneCamera;
+        loopController.panelTexture = File.Exists(PromptPanelPath) ? LoadTexture(PromptPanelPath) : null;
+        loopController.startDayWithRenfield = false;
+        loopController.draculaSleepsDuringDay = false;
+
+        CreateCastleTravel(
+            root.transform,
+            room.transform,
+            centralDemonDoorVoid,
+            loopController);
 
         CryptAmbientAnimator ambientAnimator = root.AddComponent<CryptAmbientAnimator>();
         ambientAnimator.flickerRenderers = new SpriteRenderer[0];
@@ -328,6 +346,11 @@ public static class CryptPrototypeBuilder
         if (!Directory.Exists(ArtFolder))
         {
             Directory.CreateDirectory(ArtFolder);
+        }
+
+        if (!Directory.Exists(DraculaCharacterArtFolder))
+        {
+            Directory.CreateDirectory(DraculaCharacterArtFolder);
         }
     }
 
@@ -479,6 +502,157 @@ public static class CryptPrototypeBuilder
         return obj;
     }
 
+    private static void CreateCastleMap(Transform root, Sprite castleMap)
+    {
+        GameObject mapRoot = new GameObject("Castle Map");
+        mapRoot.transform.SetParent(root);
+        mapRoot.transform.position = Vector3.zero;
+
+        GameObject playfield = CreateSpriteObject("Castle Map Playfield", castleMap, ToVector3(CastleRoomLayout.CastleMapCenter), -170, mapRoot.transform);
+        playfield.transform.localScale = Vector3.one;
+
+        CreateMapLabel(mapRoot.transform, "Crypt Map Label", "CRYPT", CastleRoomLayout.CastleMapCryptRoomCenter + new Vector2(-0.15f, -0.62f));
+        CreateMapLabel(mapRoot.transform, "Processional Map Label", "LOWER PROCESSIONAL", CastleRoomLayout.CastleMapLowerProcessionalRoomCenter + new Vector2(-0.05f, 0.58f));
+        CreateMapLabel(mapRoot.transform, "Reliquary Map Label", "RELIQUARY", CastleRoomLayout.CastleMapReliquaryRoomCenter + new Vector2(0f, 0.6f));
+        CreateMapLabel(mapRoot.transform, "Broken Stair Map Label", "BROKEN STAIR", CastleRoomLayout.CastleMapBrokenStairRoomCenter + new Vector2(0f, -0.6f));
+        CreateMapLabel(mapRoot.transform, "Service Corridor Map Label", "SERVICE CORRIDOR", CastleRoomLayout.CastleMapServiceCorridorRoomCenter + new Vector2(0f, -0.54f));
+        CreateMapLabel(mapRoot.transform, "Servant Wing Map Label", "SERVANT WING", CastleRoomLayout.CastleMapServantWingRoomCenter + new Vector2(0f, 0.68f));
+    }
+
+    private static void CreateMapLabel(Transform parent, string name, string text, Vector2 position)
+    {
+        GameObject labelObject = new GameObject(name);
+        labelObject.transform.SetParent(parent);
+        labelObject.transform.position = new Vector3(position.x, position.y, -0.05f);
+        TextMesh label = labelObject.AddComponent<TextMesh>();
+        label.text = text;
+        label.anchor = TextAnchor.MiddleCenter;
+        label.alignment = TextAlignment.Center;
+        label.fontSize = 48;
+        label.characterSize = 0.055f;
+        label.color = new Color(0.83f, 0.78f, 0.61f, 1f);
+
+        MeshRenderer renderer = labelObject.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            renderer.sortingOrder = 220;
+        }
+    }
+
+    private static void CreateCastleTravel(
+        Transform root,
+        Transform cryptRoom,
+        Sprite doorVoid,
+        AdventureLoopController loopController)
+    {
+        Vector3 cryptSpawnPosition = ToVector3(CastleRoomLayout.CryptEntryFromCastleMap);
+        Vector3 servantSpawnPosition = ToVector3(CastleRoomLayout.ServantWingEntryFromCastleMap);
+        Vector3 mapFromCryptSpawnPosition = ToVector3(CastleRoomLayout.CastleMapEntryFromCrypt);
+        Vector3 mapFromServantSpawnPosition = ToVector3(CastleRoomLayout.CastleMapEntryFromServantWing);
+
+        Transform cryptSpawn = CreateMarker(root, "Crypt Entry From Castle Map", cryptSpawnPosition);
+        Transform servantSpawn = CreateMarker(root, "Servant Wing Entry From Castle Map", servantSpawnPosition);
+        Transform mapFromCryptSpawn = CreateMarker(root, "Castle Map Entry From Crypt", mapFromCryptSpawnPosition);
+        Transform mapFromServantSpawn = CreateMarker(root, "Castle Map Entry From Servant Wing", mapFromServantSpawnPosition);
+
+        GameObject doorRoot = new GameObject("Central Demon Door");
+        doorRoot.transform.SetParent(cryptRoom);
+        doorRoot.transform.position = ToVector3(CastleRoomLayout.CentralDemonDoorThreshold);
+
+        Vector3 doorArtCenter = ToVector3(CastleRoomLayout.CentralDemonDoorArtCenter);
+        CreateSpriteObject("Open Black Doorway", doorVoid, doorArtCenter, -118, doorRoot.transform);
+
+        CreatePortal(
+            "Central Demon Door To Castle Map Trigger",
+            doorRoot.transform,
+            ToVector3(CastleRoomLayout.CryptToCastleMapPortal),
+            new Vector2(0.84f, 0.62f),
+            mapFromCryptSpawn,
+            "Castle Map",
+            CastleRoomLayout.CastleMapMinBounds,
+            CastleRoomLayout.CastleMapMaxBounds,
+            loopController);
+
+        CreatePortal(
+            "Servant Wing Left Door To Castle Map Trigger",
+            root,
+            ToVector3(CastleRoomLayout.ServantWingToCastleMapPortal),
+            new Vector2(0.78f, 0.74f),
+            mapFromServantSpawn,
+            "Castle Map",
+            CastleRoomLayout.CastleMapMinBounds,
+            CastleRoomLayout.CastleMapMaxBounds,
+            loopController);
+
+        CreatePortal(
+            "Castle Map Crypt Gate Trigger",
+            root,
+            ToVector3(CastleRoomLayout.CastleMapCryptGate),
+            new Vector2(0.86f, 0.72f),
+            cryptSpawn,
+            "Crypt",
+            CastleRoomLayout.CryptMinBounds,
+            CastleRoomLayout.CryptMaxBounds,
+            loopController);
+
+        CreatePortal(
+            "Castle Map Servant Wing Gate Trigger",
+            root,
+            ToVector3(CastleRoomLayout.CastleMapServantWingGate),
+            new Vector2(0.86f, 0.72f),
+            servantSpawn,
+            "Servant Wing",
+            CastleRoomLayout.ServantWingMinBounds,
+            CastleRoomLayout.ServantWingMaxBounds,
+            loopController);
+    }
+
+    private static CastleRoomPortal CreatePortal(
+        string name,
+        Transform parent,
+        Vector3 position,
+        Vector2 size,
+        Transform destination,
+        string destinationRoomName,
+        Vector2 destinationMinBounds,
+        Vector2 destinationMaxBounds,
+        AdventureLoopController loopController)
+    {
+        GameObject portalObject = new GameObject(name);
+        portalObject.transform.SetParent(parent);
+        portalObject.transform.position = position;
+        BoxCollider2D collider = portalObject.AddComponent<BoxCollider2D>();
+        collider.isTrigger = true;
+        collider.size = size;
+
+        CastleRoomPortal portal = portalObject.AddComponent<CastleRoomPortal>();
+        portal.loopController = loopController;
+        portal.destination = destination;
+        portal.destinationRoomName = destinationRoomName;
+        portal.destinationMinBounds = destinationMinBounds;
+        portal.destinationMaxBounds = destinationMaxBounds;
+        return portal;
+    }
+
+    private static Transform CreateMarker(Transform parent, string name, Vector3 position)
+    {
+        GameObject marker = new GameObject(name);
+        marker.transform.SetParent(parent);
+        marker.transform.position = position;
+        return marker.transform;
+    }
+
+    private static Vector3 ToVector3(Vector2 value)
+    {
+        return new Vector3(value.x, value.y, 0f);
+    }
+
+    private static Vector3 Bg2PixelCenterToWorld(float xMin, float yMin, float xMax, float yMax)
+    {
+        Vector2 position = CastleRoomLayout.Bg2PixelCenterToWorld(xMin, yMin, xMax, yMax);
+        return new Vector3(position.x, position.y, 0f);
+    }
+
     private static void CreateWalkBoundaryColliders(Transform room)
     {
         GameObject boundary = new GameObject("Walk Boundary Colliders");
@@ -622,6 +796,90 @@ public static class CryptPrototypeBuilder
         PolygonCollider2D collider = colliderObject.AddComponent<PolygonCollider2D>();
         collider.points = points;
         return collider;
+    }
+
+    private static AdventureActionStation[] CreateRenfieldWorkroom(
+        Transform root,
+        Sprite roomSprite,
+        Sprite renfieldSprite,
+        Sprite taskMarker,
+        Sprite shadow,
+        out AdventureActor renfieldActor)
+    {
+        GameObject workroom = new GameObject("Renfield Servant Wing");
+        workroom.transform.SetParent(root);
+
+        Vector3 roomCenter = UsesBg2Room() ? ToVector3(CastleRoomLayout.ServantWingCenter) : new Vector3(8.7f, -0.7f, 0f);
+        GameObject roomFloor = CreateSpriteObject("Servant Wing Floor And Walls", roomSprite, roomCenter, -130, workroom.transform);
+        roomFloor.transform.localScale = Vector3.one;
+
+        GameObject renfieldObject = CreateSpriteObject("Renfield", renfieldSprite, roomCenter + new Vector3(-0.75f, -1.2f, 0f), 318, root);
+        renfieldObject.transform.localScale = Vector3.one * 1.18f;
+
+        Rigidbody2D body = renfieldObject.AddComponent<Rigidbody2D>();
+        body.bodyType = RigidbodyType2D.Dynamic;
+        body.gravityScale = 0f;
+        body.freezeRotation = true;
+        body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        body.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+        BoxCollider2D collider = renfieldObject.AddComponent<BoxCollider2D>();
+        collider.size = new Vector2(0.42f, 0.18f);
+        collider.offset = new Vector2(0f, 0.08f);
+
+        DraculaWalker walker = renfieldObject.AddComponent<DraculaWalker>();
+        walker.spriteRenderer = renfieldObject.GetComponent<SpriteRenderer>();
+        walker.body = body;
+        walker.inputEnabled = false;
+        walker.moveSpeed = 2.15f;
+        walker.minBounds = UsesBg2Room() ? CastleRoomLayout.ServantWingMinBounds : new Vector2(roomCenter.x - 3.55f, roomCenter.y - 2.15f);
+        walker.maxBounds = UsesBg2Room() ? CastleRoomLayout.ServantWingMaxBounds : new Vector2(roomCenter.x + 3.45f, roomCenter.y + 1.55f);
+        walker.baseSortingOrder = 280;
+        walker.ySortMultiplier = 28f;
+        walker.minSortingOrder = 180;
+        walker.maxSortingOrder = 340;
+
+        GameObject renfieldShadow = CreateSpriteObject("Shadow", shadow, Vector3.zero, 198, renfieldObject.transform);
+        renfieldShadow.transform.localPosition = new Vector3(0f, 0.06f, 0f);
+        renfieldShadow.transform.localScale = new Vector3(0.55f, 0.48f, 1f);
+
+        renfieldActor = renfieldObject.AddComponent<AdventureActor>();
+        renfieldActor.character = AdventureCharacter.Renfield;
+        renfieldActor.roomName = "Servant Wing";
+        renfieldActor.walker = walker;
+        renfieldActor.spriteRenderer = walker.spriteRenderer;
+
+        return new AdventureActionStation[]
+        {
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.ResetChandelier, "Reset Chandelier", "Check ropes, counterweights, and the drop release.", roomCenter + new Vector3(-2.45f, 0.35f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.RepairGrandHall, "Repair Grand Hall", "Patch doors, sweep broken glass, and slow intruders.", roomCenter + new Vector3(-1.35f, 1.0f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.ScoutVillage, "Scout Village", "Learn who is coming after sunset.", roomCenter + new Vector3(0.2f, 1.12f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.PrepareBlackCandles, "Prepare Black Candles", "Keep one route darker tonight.", roomCenter + new Vector3(1.55f, 0.65f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.MoveCoffin, "Move Coffin", "Shift decoys and protect the true crypt.", roomCenter + new Vector3(2.35f, -0.45f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.EraseSigns, "Erase Signs", "Remove marks, garlic, tracks, and chalked routes.", roomCenter + new Vector3(1.25f, -1.52f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.PrepareArtifact, "Prepare Artifact", "Set a relic aside for Dracula's next waking hours.", roomCenter + new Vector3(-0.25f, -1.78f, 0f)),
+            CreateRenfieldStation(workroom.transform, taskMarker, RenfieldAction.ReleaseVermin, "Release Vermin", "Send rats and bats into the walls.", roomCenter + new Vector3(-2.1f, -1.25f, 0f))
+        };
+    }
+
+    private static AdventureActionStation CreateRenfieldStation(
+        Transform parent,
+        Sprite markerSprite,
+        RenfieldAction action,
+        string displayName,
+        string description,
+        Vector3 position)
+    {
+        GameObject stationObject = CreateSpriteObject(displayName + " Station", markerSprite, position, SortForY(position.y, 24), parent);
+        stationObject.transform.localScale = Vector3.one * 0.9f;
+
+        AdventureActionStation station = stationObject.AddComponent<AdventureActionStation>();
+        station.action = action;
+        station.displayName = displayName;
+        station.description = description;
+        station.interactRadius = 0.82f;
+        station.spriteRenderer = stationObject.GetComponent<SpriteRenderer>();
+        return station;
     }
 
     private static void CreateCandleLightingRig(Transform parent, SpriteRenderer[] glowRenderers, SpriteRenderer shadowGradeRenderer)
@@ -805,6 +1063,54 @@ public static class CryptPrototypeBuilder
         return frames;
     }
 
+    private static Sprite[] LoadGridSpriteSheet(
+        string path,
+        string spriteNamePrefix,
+        int frameCount,
+        int columns,
+        int rows,
+        int cellWidth,
+        int cellHeight,
+        Vector2 pivot,
+        float pixelsPerUnit)
+    {
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException("Missing required Dracula spritesheet.", path);
+        }
+
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        ConfigureGridSpriteSheetImporter(path, spriteNamePrefix, frameCount, columns, rows, cellWidth, cellHeight, pivot, pixelsPerUnit);
+
+        Object[] assets = AssetDatabase.LoadAllAssetRepresentationsAtPath(path);
+        Sprite[] frames = new Sprite[frameCount];
+        for (int i = 0; i < frameCount; i++)
+        {
+            string spriteName = spriteNamePrefix + i.ToString("00");
+            frames[i] = FindSpriteByName(assets, spriteName);
+            if (frames[i] == null)
+            {
+                throw new FileNotFoundException("Unity failed to import required Dracula spritesheet frame.", path + "/" + spriteName);
+            }
+        }
+
+        return frames;
+    }
+
+    private static Sprite FindSpriteByName(Object[] assets, string spriteName)
+    {
+        for (int i = 0; i < assets.Length; i++)
+        {
+            Sprite sprite = assets[i] as Sprite;
+            if (sprite != null && sprite.name == spriteName)
+            {
+                return sprite;
+            }
+        }
+
+        return null;
+    }
+
     private static Texture2D LoadTexture(string path)
     {
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
@@ -838,8 +1144,398 @@ public static class CryptPrototypeBuilder
             importer.wrapMode = TextureWrapMode.Clamp;
             importer.maxTextureSize = 4096;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
+            ApplySpriteImporterSerialization(importer);
             importer.SaveAndReimport();
         }
+    }
+
+    private static void ConfigureGridSpriteSheetImporter(
+        string path,
+        string spriteNamePrefix,
+        int frameCount,
+        int columns,
+        int rows,
+        int cellWidth,
+        int cellHeight,
+        Vector2 pivot,
+        float pixelsPerUnit)
+    {
+        TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (importer == null)
+        {
+            return;
+        }
+
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Multiple;
+        importer.spritePixelsPerUnit = pixelsPerUnit;
+        importer.mipmapEnabled = false;
+        importer.alphaIsTransparency = true;
+        importer.filterMode = FilterMode.Point;
+        importer.wrapMode = TextureWrapMode.Clamp;
+        importer.maxTextureSize = 4096;
+        importer.textureCompression = TextureImporterCompression.Uncompressed;
+
+        SpriteMetaData[] slices = new SpriteMetaData[frameCount];
+        for (int i = 0; i < frameCount; i++)
+        {
+            int column = i % columns;
+            int row = i / columns;
+            slices[i] = new SpriteMetaData
+            {
+                name = spriteNamePrefix + i.ToString("00"),
+                rect = new Rect(
+                    column * cellWidth,
+                    (rows - 1 - row) * cellHeight,
+                    cellWidth,
+                    cellHeight),
+                alignment = SpriteAlignmentCustom,
+                pivot = pivot
+            };
+        }
+
+        importer.spritesheet = slices;
+        importer.SaveAndReimport();
+    }
+
+    private static void ApplySpriteImporterSerialization(TextureImporter importer)
+    {
+        SerializedObject serializedImporter = new SerializedObject(importer);
+        SetSerializedInt(serializedImporter, "m_Alignment", SpriteAlignmentCustom);
+        SetSerializedInt(serializedImporter, "m_SpriteMeshType", SpriteMeshTypeFullRect);
+        serializedImporter.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetSerializedInt(SerializedObject serializedObject, string propertyPath, int value)
+    {
+        SerializedProperty property = serializedObject.FindProperty(propertyPath);
+        if (property != null)
+        {
+            property.intValue = value;
+        }
+    }
+
+    private static void DrawCastleMapPlayfield(Texture2D texture)
+    {
+        Color32 ground = new Color32(23, 25, 33, 255);
+        Color32 grid = new Color32(39, 43, 55, 135);
+        Color32 route = new Color32(111, 82, 51, 255);
+        Color32 routeLight = new Color32(187, 139, 74, 255);
+        Color32 room = new Color32(48, 53, 67, 255);
+        Color32 activeRoom = new Color32(72, 62, 50, 255);
+        Color32 outline = new Color32(150, 139, 103, 255);
+        Color32 gate = new Color32(196, 151, 72, 255);
+
+        FillRect(texture, 0, 0, 1600, 900, ground);
+
+        for (int x = 80; x < 1600; x += 80)
+        {
+            DrawLine(texture, x, 40, x, 860, grid);
+        }
+
+        for (int y = 60; y < 900; y += 80)
+        {
+            DrawLine(texture, 45, y, 1555, y, grid);
+        }
+
+        DrawCastleMapNorthMarker(texture);
+
+        DrawCastleMapRoute(texture, CastleRoomLayout.CastleMapCryptGate, CastleRoomLayout.CastleMapLowerProcessionalGate, route, routeLight);
+        DrawCastleMapRoute(texture, CastleRoomLayout.CastleMapLowerProcessionalGate, CastleRoomLayout.CastleMapReliquaryGate, route, routeLight);
+        DrawCastleMapRoute(texture, CastleRoomLayout.CastleMapReliquaryGate, CastleRoomLayout.CastleMapBrokenStairGate, route, routeLight);
+        DrawCastleMapRoute(texture, CastleRoomLayout.CastleMapBrokenStairGate, CastleRoomLayout.CastleMapServiceCorridorGate, route, routeLight);
+        DrawCastleMapRoute(texture, CastleRoomLayout.CastleMapServiceCorridorGate, CastleRoomLayout.CastleMapServantWingGate, route, routeLight);
+        DrawCastleMapRoute(texture, CastleRoomLayout.CastleMapServantWingSecondDoorGate, CastleRoomLayout.CastleMapServantWingSecondDoorGate + new Vector2(0.92f, -0.22f), new Color32(58, 54, 55, 255), new Color32(94, 91, 92, 255));
+
+        DrawCastleMapRoom(texture, CastleRoomLayout.CastleMapCryptRoomCenter, 245, 155, activeRoom, outline);
+        DrawCastleMapRoom(texture, CastleRoomLayout.CastleMapLowerProcessionalRoomCenter, 255, 145, room, outline);
+        DrawCastleMapRoom(texture, CastleRoomLayout.CastleMapReliquaryRoomCenter, 235, 145, room, outline);
+        DrawCastleMapRoom(texture, CastleRoomLayout.CastleMapBrokenStairRoomCenter, 220, 140, room, outline);
+        DrawCastleMapRoom(texture, CastleRoomLayout.CastleMapServiceCorridorRoomCenter, 250, 130, room, outline);
+        DrawCastleMapRoom(texture, CastleRoomLayout.CastleMapServantWingRoomCenter, 270, 165, activeRoom, outline);
+
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapCryptGate, gate);
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapLowerProcessionalGate, new Color32(94, 91, 92, 255));
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapReliquaryGate, new Color32(94, 91, 92, 255));
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapBrokenStairGate, new Color32(94, 91, 92, 255));
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapServiceCorridorGate, new Color32(94, 91, 92, 255));
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapServantWingGate, gate);
+        DrawCastleMapGate(texture, CastleRoomLayout.CastleMapServantWingSecondDoorGate, new Color32(94, 91, 92, 255));
+
+        FillRect(texture, 60, 44, 620, 44, new Color32(9, 10, 14, 180));
+        DrawRect(texture, 60, 44, 620, 44, outline);
+        DrawLine(texture, 84, 68, 196, 68, gate);
+        DrawLine(texture, 238, 68, 350, 68, new Color32(94, 91, 92, 255));
+        DrawLine(texture, 392, 68, 504, 68, routeLight);
+    }
+
+    private static void DrawCastleMapRoom(Texture2D texture, Vector2 worldCenter, int width, int height, Color32 fill, Color32 outline)
+    {
+        Vector2 pixelCenter = CastleMapPixel(worldCenter);
+        int x = Mathf.RoundToInt(pixelCenter.x - width * 0.5f);
+        int y = Mathf.RoundToInt(pixelCenter.y - height * 0.5f);
+        FillRect(texture, x, y, width, height, fill);
+        DrawRect(texture, x, y, width, height, outline);
+        DrawRect(texture, x + 6, y + 6, width - 12, height - 12, new Color32(23, 25, 34, 180));
+    }
+
+    private static void DrawCastleMapGate(Texture2D texture, Vector2 worldCenter, Color32 fill)
+    {
+        Vector2 pixelCenter = CastleMapPixel(worldCenter);
+        int x = Mathf.RoundToInt(pixelCenter.x);
+        int y = Mathf.RoundToInt(pixelCenter.y);
+        FillEllipse(texture, x, y, 24, 24, new Color32(8, 9, 13, 235));
+        FillEllipse(texture, x, y, 15, 15, fill);
+        DrawLine(texture, x - 26, y, x + 26, y, new Color32(8, 9, 13, 220));
+        DrawLine(texture, x, y - 26, x, y + 26, new Color32(8, 9, 13, 220));
+    }
+
+    private static void DrawCastleMapRoute(Texture2D texture, Vector2 from, Vector2 to, Color32 baseColor, Color32 highlight)
+    {
+        Vector2 a = CastleMapPixel(from);
+        Vector2 b = CastleMapPixel(to);
+        int ax = Mathf.RoundToInt(a.x);
+        int ay = Mathf.RoundToInt(a.y);
+        int bx = Mathf.RoundToInt(b.x);
+        int by = Mathf.RoundToInt(b.y);
+
+        for (int offset = -5; offset <= 5; offset++)
+        {
+            DrawLine(texture, ax, ay + offset, bx, by + offset, baseColor);
+        }
+
+        DrawLine(texture, ax, ay, bx, by, highlight);
+    }
+
+    private static void DrawCastleMapNorthMarker(Texture2D texture)
+    {
+        Color32 mark = new Color32(218, 191, 111, 255);
+        Color32 shadow = new Color32(5, 6, 9, 255);
+        int x = 1490;
+        int y = 770;
+
+        DrawLine(texture, x, y, x, y + 72, shadow);
+        DrawLine(texture, x - 1, y, x - 1, y + 72, shadow);
+        DrawLine(texture, x + 1, y, x + 1, y + 72, shadow);
+        DrawLine(texture, x, y, x, y + 72, mark);
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(x, y + 94),
+            new Vector2(x - 22, y + 56),
+            new Vector2(x + 22, y + 56)
+        }, mark);
+        DrawPolygon(texture, new Vector2[]
+        {
+            new Vector2(x, y + 94),
+            new Vector2(x - 22, y + 56),
+            new Vector2(x + 22, y + 56)
+        }, shadow);
+
+        DrawLine(texture, x - 44, y - 18, x - 44, y + 30, mark);
+        DrawLine(texture, x - 44, y + 30, x - 10, y - 18, mark);
+        DrawLine(texture, x - 10, y - 18, x - 10, y + 30, mark);
+    }
+
+    private static Vector2 CastleMapPixel(Vector2 world)
+    {
+        return new Vector2(
+            800f + (world.x - CastleRoomLayout.CastleMapCenter.x) * CastleRoomLayout.CastleMapPpu,
+            450f + (world.y - CastleRoomLayout.CastleMapCenter.y) * CastleRoomLayout.CastleMapPpu);
+    }
+
+    private static void DrawServantWingRoom(Texture2D texture)
+    {
+        Color32 wallBase = new Color32(37, 38, 48, 255);
+        Color32 wallShade = new Color32(23, 24, 32, 255);
+        Color32 wallTrim = new Color32(78, 79, 91, 255);
+        Color32 floorBase = new Color32(52, 55, 66, 255);
+        Color32 floorShade = new Color32(31, 34, 43, 255);
+        Color32 floorLine = new Color32(90, 94, 107, 150);
+        Color32 amber = new Color32(178, 111, 45, 255);
+
+        FillRect(texture, 0, 0, 960, 520, new Color32(0, 0, 0, 0));
+        FillRect(texture, 0, 188, 960, 332, wallBase);
+        FillRect(texture, 0, 188, 960, 24, wallShade);
+        FillRect(texture, 0, 485, 960, 35, wallShade);
+
+        Vector2[] floor = new Vector2[]
+        {
+            new Vector2(0, 0),
+            new Vector2(960, 0),
+            new Vector2(960, 188),
+            new Vector2(650, 236),
+            new Vector2(310, 236),
+            new Vector2(0, 188)
+        };
+        FillPolygon(texture, floor, floorBase);
+        DrawPolygon(texture, floor, Ink);
+        DrawLine(texture, 0, 188, 310, 236, wallTrim);
+        DrawLine(texture, 960, 188, 650, 236, new Color32(18, 19, 27, 220));
+        DrawLine(texture, 310, 236, 650, 236, wallTrim);
+
+        for (int row = 0; row < 6; row++)
+        {
+            int y = 28 + row * 34;
+            DrawLineClipped(texture, 18, y, 942, y + row * 3, floorLine, floor);
+        }
+
+        for (int i = 0; i < 12; i++)
+        {
+            int x = 52 + i * 78;
+            DrawLineClipped(texture, x, 0, x + 86, 214, new Color32(24, 27, 36, 155), floor);
+        }
+
+        for (int x = 0; x < 960; x += 78)
+        {
+            DrawLine(texture, x, 212, x + 18, 485, new Color32(18, 19, 26, 125));
+        }
+
+        for (int y = 244; y < 482; y += 62)
+        {
+            DrawLine(texture, 24, y, 936, y, new Color32(73, 74, 86, 120));
+        }
+
+        FillRect(texture, 42, 205, 112, 230, wallShade);
+        DrawRect(texture, 42, 205, 112, 230, wallTrim);
+        FillRect(texture, 66, 226, 64, 158, DoorBlack);
+        DrawLine(texture, 66, 384, 130, 384, new Color32(35, 42, 60, 180));
+        DrawLine(texture, 66, 226, 130, 226, new Color32(80, 70, 72, 160));
+
+        FillRect(texture, 300, 300, 112, 112, new Color32(31, 31, 39, 255));
+        DrawRect(texture, 300, 300, 112, 112, wallTrim);
+        DrawLine(texture, 312, 382, 400, 382, Ink);
+        DrawLine(texture, 312, 348, 400, 348, Ink);
+        DrawLine(texture, 356, 306, 356, 406, Ink);
+
+        FillRect(texture, 556, 304, 136, 104, new Color32(30, 30, 38, 255));
+        DrawRect(texture, 556, 304, 136, 104, wallTrim);
+        DrawLine(texture, 568, 378, 680, 378, Ink);
+        DrawLine(texture, 568, 342, 680, 342, Ink);
+
+        FillRect(texture, 198, 188, 42, 302, wallShade);
+        FillRect(texture, 724, 188, 44, 302, wallShade);
+        DrawRect(texture, 198, 188, 42, 302, wallTrim);
+        DrawRect(texture, 724, 188, 44, 302, wallTrim);
+
+        DrawServantTable(texture, 184, 198, 172, 44);
+        DrawServantTable(texture, 592, 196, 214, 46);
+        DrawServantTable(texture, 378, 162, 184, 42);
+
+        FillEllipse(texture, 484, 102, 116, 26, new Color32(12, 12, 15, 115));
+        FillRect(texture, 450, 122, 70, 96, new Color32(56, 38, 32, 255));
+        DrawRect(texture, 450, 122, 70, 96, Ink);
+        DrawLine(texture, 464, 210, 506, 210, new Color32(124, 80, 51, 210));
+        DrawLine(texture, 463, 122, 446, 86, Ink);
+        DrawLine(texture, 506, 122, 524, 86, Ink);
+
+        DrawSmallCandle(texture, 230, 250, amber);
+        DrawSmallCandle(texture, 650, 250, amber);
+        DrawSmallCandle(texture, 492, 230, amber);
+
+        FillRect(texture, 830, 220, 86, 170, new Color32(28, 29, 37, 255));
+        DrawRect(texture, 830, 220, 86, 170, wallTrim);
+        for (int y = 250; y < 376; y += 34)
+        {
+            DrawLine(texture, 842, y, 904, y, new Color32(11, 12, 17, 255));
+        }
+
+        for (int i = 0; i < 58; i++)
+        {
+            int x = (i * 137 + 41) % 920 + 20;
+            int y = (i * 61 + 23) % 178 + 20;
+            DrawLine(texture, x, y, x + 12, y + 2, new Color32(16, 18, 25, 120));
+        }
+    }
+
+    private static void DrawServantTable(Texture2D texture, int x, int y, int width, int height)
+    {
+        FillRect(texture, x, y + height - 16, width, 16, new Color32(58, 31, 27, 255));
+        DrawRect(texture, x, y + height - 16, width, 16, Ink);
+        DrawLine(texture, x + 8, y + height, x + width - 8, y + height, new Color32(137, 86, 56, 220));
+        DrawLine(texture, x + 16, y + height - 16, x + 16, y, Ink);
+        DrawLine(texture, x + width - 16, y + height - 16, x + width - 16, y, Ink);
+    }
+
+    private static void DrawSmallCandle(Texture2D texture, int x, int y, Color32 flame)
+    {
+        FillRect(texture, x - 5, y - 28, 10, 28, new Color32(173, 126, 51, 255));
+        DrawRect(texture, x - 5, y - 28, 10, 28, Ink);
+        FillEllipse(texture, x, y + 2, 6, 11, flame);
+        FillEllipse(texture, x, y + 2, 3, 7, new Color32(255, 201, 81, 255));
+    }
+
+    private static void DrawRenfield(Texture2D texture)
+    {
+        Color32 coat = new Color32(78, 55, 39, 255);
+        Color32 coatDark = new Color32(41, 31, 27, 255);
+        Color32 shirt = new Color32(172, 163, 139, 255);
+        Color32 skin = new Color32(190, 151, 117, 255);
+        Color32 hair = new Color32(42, 31, 25, 255);
+
+        FillEllipse(texture, 22, 8, 13, 5, new Color32(0, 0, 0, 128));
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(13, 14),
+            new Vector2(31, 14),
+            new Vector2(34, 46),
+            new Vector2(10, 46)
+        }, coatDark);
+        DrawPolygon(texture, new Vector2[]
+        {
+            new Vector2(13, 14),
+            new Vector2(31, 14),
+            new Vector2(34, 46),
+            new Vector2(10, 46)
+        }, Ink);
+
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(15, 18),
+            new Vector2(22, 14),
+            new Vector2(29, 18),
+            new Vector2(27, 45),
+            new Vector2(17, 45)
+        }, coat);
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(19, 18),
+            new Vector2(22, 15),
+            new Vector2(25, 18),
+            new Vector2(24, 43),
+            new Vector2(20, 43)
+        }, shirt);
+
+        DrawLine(texture, 12, 38, 6, 27, Ink);
+        DrawLine(texture, 32, 38, 39, 28, Ink);
+        DrawLine(texture, 10, 37, 7, 28, coat);
+        DrawLine(texture, 34, 37, 38, 28, coatDark);
+        DrawLine(texture, 17, 15, 15, 3, Ink);
+        DrawLine(texture, 27, 15, 29, 3, Ink);
+        DrawLine(texture, 18, 14, 17, 4, new Color32(52, 40, 35, 255));
+        DrawLine(texture, 26, 14, 28, 4, new Color32(35, 28, 25, 255));
+
+        FillEllipse(texture, 22, 53, 10, 11, skin);
+        DrawLine(texture, 13, 53, 31, 53, Ink);
+        DrawLine(texture, 14, 59, 30, 59, hair);
+        DrawLine(texture, 16, 62, 28, 62, hair);
+        DrawLine(texture, 17, 51, 18, 51, Ink);
+        DrawLine(texture, 26, 51, 27, 51, Ink);
+        DrawLine(texture, 20, 47, 24, 47, new Color32(103, 58, 55, 255));
+        DrawLine(texture, 18, 42, 26, 42, Ink);
+    }
+
+    private static void DrawRenfieldTaskMarker(Texture2D texture)
+    {
+        FillEllipse(texture, 21, 8, 15, 6, new Color32(0, 0, 0, 118));
+        FillDiamond(texture, 21, 18, 17, 10, new Color32(58, 45, 30, 255));
+        DrawDiamond(texture, 21, 18, 17, 10, Ink);
+        FillRect(texture, 15, 20, 12, 16, new Color32(186, 137, 58, 255));
+        DrawRect(texture, 15, 20, 12, 16, Ink);
+        DrawLine(texture, 21, 36, 21, 44, new Color32(226, 190, 94, 255));
+        DrawLine(texture, 20, 41, 16, 37, new Color32(226, 190, 94, 180));
+        DrawLine(texture, 22, 41, 27, 37, new Color32(226, 190, 94, 150));
+        FillEllipse(texture, 21, 36, 5, 4, new Color32(225, 99, 42, 220));
+        FillEllipse(texture, 21, 38, 3, 5, new Color32(255, 219, 101, 230));
     }
 
     private static void DrawFloorTile(Texture2D texture)
