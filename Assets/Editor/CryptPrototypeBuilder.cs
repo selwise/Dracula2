@@ -17,6 +17,8 @@ public static class CryptPrototypeBuilder
     private const string DraculaIdleDownRedVestBootsSheetPath =
         DraculaCharacterArtFolder + "/IdleDownRedVestBoots/dracula_idle_down_red_vest_boots_sheet.png";
     private const string DraculaIdleDownRedVestBootsSpritePrefix = "dracula_idle_down_red_vest_boots_";
+    private const string DraculaSpectrumWalkRightPrefix =
+        DraculaCharacterArtFolder + "/SpectrumPlaceholder/WalkRight/walking_right_";
     private const string PaintedBackgroundPath = ArtFolder + "/crypt_room_painted_background.png";
     private const string PaintedForegroundOccludersPath = ArtFolder + "/crypt_room_foreground_occluders.png";
     private const string PaintedCoffinOccludersPath = ArtFolder + "/crypt_room_coffin_occluders.png";
@@ -37,10 +39,12 @@ public static class CryptPrototypeBuilder
     private const float Bg2BackgroundPpu = 124.2f;
     private const float CharacterPpu = 64f;
     private const int DraculaDownIdleFrameCount = 16;
+    private const int DraculaSpectrumWalkFrameCount = 12;
     private const int DraculaDownIdleSheetColumns = 4;
     private const int DraculaDownIdleSheetRows = 4;
     private const int DraculaDownIdleCellSize = 256;
     private const float DraculaIdleDownRedVestBootsPpu = 157f;
+    private const float DraculaSpectrumWalkPpu = 650f;
     private const float DraculaReferenceScale = 1.55f;
     private const float DraculaWalkFrameTime = 0.16f;
     private const float DraculaSideWalkFrameTime = 0.08f;
@@ -136,18 +140,18 @@ public static class CryptPrototypeBuilder
         Sprite servantWing = CreateSprite("renfield_servant_wing_placeholder", 960, 520, new Vector2(0.5f, 0.5f), DrawServantWingRoom, Bg2BackgroundPpu);
         Sprite renfieldSprite = CreateSprite("renfield_placeholder", 44, 72, new Vector2(0.5f, 0f), DrawRenfield, CharacterPpu);
         Sprite taskMarker = CreateSprite("renfield_task_marker", 42, 48, new Vector2(0.5f, 0.12f), DrawRenfieldTaskMarker, CharacterPpu);
-        Sprite centralDemonDoorVoid = LoadSprite(CentralDemonDoorVoidPath, new Vector2(0.5f, 0.5f), Bg2BackgroundPpu);
-        Sprite[] idleDownFrames = LoadGridSpriteSheet(
-            DraculaIdleDownRedVestBootsSheetPath,
-            DraculaIdleDownRedVestBootsSpritePrefix,
-            DraculaDownIdleFrameCount,
-            DraculaDownIdleSheetColumns,
-            DraculaDownIdleSheetRows,
-            DraculaDownIdleCellSize,
-            DraculaDownIdleCellSize,
+        Sprite oldKey = CreateSprite("crypt_old_key", 64, 32, new Vector2(0.5f, 0.45f), DrawOldKey, CharacterPpu);
+        Sprite angryPeasant = CreateSprite("angry_peasant_placeholder", 48, 78, new Vector2(0.5f, 0f), DrawAngryPeasant, CharacterPpu);
+        Sprite priest = CreateSprite("priest_placeholder", 50, 80, new Vector2(0.5f, 0f), DrawPriest, CharacterPpu);
+        Sprite centralDemonDoorVoid = File.Exists(CentralDemonDoorVoidPath)
+            ? LoadSprite(CentralDemonDoorVoidPath, new Vector2(0.5f, 0.5f), Bg2BackgroundPpu)
+            : null;
+        Sprite[] temporaryDraculaWalkFrames = LoadSpriteSequence(
+            DraculaSpectrumWalkRightPrefix,
+            DraculaSpectrumWalkFrameCount,
             new Vector2(0.5f, 0f),
-            DraculaIdleDownRedVestBootsPpu);
-        Sprite[] emptyCharacterFrames = new Sprite[0];
+            DraculaSpectrumWalkPpu);
+        Sprite[] temporaryDraculaIdleFrames = new[] { temporaryDraculaWalkFrames[0] };
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = "CryptPrototype";
@@ -241,7 +245,7 @@ public static class CryptPrototypeBuilder
         CreateWalkBoundaryColliders(room.transform);
 
         Vector3 playerPosition = UsesBg2Room() ? new Vector3(0.42f, -1.74f, 0f) : new Vector3(0.25f, -1.35f, 0f);
-        GameObject player = CreateSpriteObject("Dracula", idleDownFrames[0], playerPosition, 318, root.transform);
+        GameObject player = CreateSpriteObject("Dracula", temporaryDraculaWalkFrames[0], playerPosition, 318, root.transform);
         player.transform.localScale = new Vector3(DraculaReferenceScale, DraculaReferenceScale, 1f);
         Rigidbody2D playerBody = player.AddComponent<Rigidbody2D>();
         playerBody.bodyType = RigidbodyType2D.Dynamic;
@@ -257,12 +261,12 @@ public static class CryptPrototypeBuilder
         DraculaWalker walker = player.AddComponent<DraculaWalker>();
         walker.spriteRenderer = player.GetComponent<SpriteRenderer>();
         walker.body = playerBody;
-        walker.walkDown = emptyCharacterFrames;
-        walker.walkUp = emptyCharacterFrames;
-        walker.walkSide = emptyCharacterFrames;
-        walker.idleDown = idleDownFrames;
-        walker.idleUp = emptyCharacterFrames;
-        walker.idleSide = emptyCharacterFrames;
+        walker.walkDown = temporaryDraculaWalkFrames;
+        walker.walkUp = temporaryDraculaWalkFrames;
+        walker.walkSide = temporaryDraculaWalkFrames;
+        walker.idleDown = temporaryDraculaIdleFrames;
+        walker.idleUp = temporaryDraculaIdleFrames;
+        walker.idleSide = temporaryDraculaIdleFrames;
         walker.frameTime = DraculaWalkFrameTime;
         walker.sideFrameTime = DraculaSideWalkFrameTime;
         walker.upFrameTime = DraculaUpWalkFrameTime;
@@ -292,6 +296,16 @@ public static class CryptPrototypeBuilder
         GameObject playerShadow = CreateSpriteObject("Shadow", shadow, Vector3.zero, 198, player.transform);
         playerShadow.transform.localPosition = new Vector3(0f, 0.08f, 0f);
 
+        AdventureInteractionTarget oldKeyTarget = CreatePickupTarget(
+            room.transform,
+            oldKey,
+            "Old Key",
+            "TAKE",
+            "old_key",
+            "Old Key",
+            "A cold iron key, probably for something deeper in the castle.",
+            coffinPosition + new Vector3(-0.74f, -0.28f, 0f));
+
         AdventureActor renfieldActor;
         AdventureActionStation[] renfieldStations = CreateRenfieldWorkroom(root.transform, servantWing, renfieldSprite, taskMarker, shadow, out renfieldActor);
         CreateCastleMap(root.transform, castleMap);
@@ -302,8 +316,25 @@ public static class CryptPrototypeBuilder
         loopController.renfieldStations = renfieldStations;
         loopController.sceneCamera = sceneCamera;
         loopController.panelTexture = File.Exists(PromptPanelPath) ? LoadTexture(PromptPanelPath) : null;
-        loopController.startDayWithRenfield = false;
-        loopController.draculaSleepsDuringDay = false;
+        loopController.startDayWithRenfield = true;
+        loopController.draculaSleepsDuringDay = true;
+
+        AdventureInventory inventory = root.AddComponent<AdventureInventory>();
+        AdventureInteractionTarget angryPeasantTarget = CreateIntruderEncounter(root.transform, angryPeasant, loopController, IntruderKind.AngryPeasant);
+        AdventureInteractionTarget priestTarget = CreateIntruderEncounter(root.transform, priest, loopController, IntruderKind.Priest);
+        AdventureInteractionController interactionController = root.AddComponent<AdventureInteractionController>();
+        interactionController.loopController = loopController;
+        interactionController.inventory = inventory;
+        interactionController.targets = new[] { oldKeyTarget, angryPeasantTarget, priestTarget };
+
+        AdventureDayReport dayReport = root.AddComponent<AdventureDayReport>();
+        dayReport.loopController = loopController;
+        dayReport.intruders = new[]
+        {
+            angryPeasantTarget.receiver as IntruderEncounter,
+            priestTarget.receiver as IntruderEncounter
+        };
+        dayReport.panelTexture = File.Exists(PromptPanelPath) ? LoadTexture(PromptPanelPath) : null;
 
         CreateCastleTravel(
             root.transform,
@@ -502,7 +533,7 @@ public static class CryptPrototypeBuilder
         return obj;
     }
 
-    private static void CreateCastleMap(Transform root, Sprite castleMap)
+    private static Transform CreateCastleMap(Transform root, Sprite castleMap)
     {
         GameObject mapRoot = new GameObject("Castle Map");
         mapRoot.transform.SetParent(root);
@@ -517,6 +548,7 @@ public static class CryptPrototypeBuilder
         CreateMapLabel(mapRoot.transform, "Broken Stair Map Label", "BROKEN STAIR", CastleRoomLayout.CastleMapBrokenStairRoomCenter + new Vector2(0f, -0.6f));
         CreateMapLabel(mapRoot.transform, "Service Corridor Map Label", "SERVICE CORRIDOR", CastleRoomLayout.CastleMapServiceCorridorRoomCenter + new Vector2(0f, -0.54f));
         CreateMapLabel(mapRoot.transform, "Servant Wing Map Label", "SERVANT WING", CastleRoomLayout.CastleMapServantWingRoomCenter + new Vector2(0f, 0.68f));
+        return mapRoot.transform;
     }
 
     private static void CreateMapLabel(Transform parent, string name, string text, Vector2 position)
@@ -560,7 +592,10 @@ public static class CryptPrototypeBuilder
         doorRoot.transform.position = ToVector3(CastleRoomLayout.CentralDemonDoorThreshold);
 
         Vector3 doorArtCenter = ToVector3(CastleRoomLayout.CentralDemonDoorArtCenter);
-        CreateSpriteObject("Open Black Doorway", doorVoid, doorArtCenter, -118, doorRoot.transform);
+        if (doorVoid != null)
+        {
+            CreateSpriteObject("Open Black Doorway", doorVoid, doorArtCenter, -118, doorRoot.transform);
+        }
 
         CreatePortal(
             "Central Demon Door To Castle Map Trigger",
@@ -882,6 +917,96 @@ public static class CryptPrototypeBuilder
         return station;
     }
 
+    private static AdventureInteractionTarget CreatePickupTarget(
+        Transform parent,
+        Sprite sprite,
+        string displayName,
+        string verb,
+        string itemId,
+        string itemName,
+        string description,
+        Vector3 position)
+    {
+        GameObject pickupObject = CreateSpriteObject(displayName + " Pickup", sprite, position, SortForY(position.y, 40), parent);
+        pickupObject.transform.localScale = Vector3.one * 0.82f;
+
+        AdventureInteractionTarget target = pickupObject.AddComponent<AdventureInteractionTarget>();
+        target.action = AdventureInteractionAction.Pickup;
+        target.anyCharacter = false;
+        target.requiredCharacter = AdventureCharacter.Dracula;
+        target.displayName = displayName;
+        target.verb = verb;
+        target.description = description;
+        target.interactRadius = 0.72f;
+        target.itemId = itemId;
+        target.itemName = itemName;
+        target.itemIcon = sprite;
+        target.hideWhenPickedUp = true;
+        return target;
+    }
+
+    private static AdventureInteractionTarget CreateIntruderEncounter(
+        Transform parent,
+        Sprite sprite,
+        AdventureLoopController loopController,
+        IntruderKind kind)
+    {
+        bool isPriest = kind == IntruderKind.Priest;
+        string intruderName = isPriest ? "Priest" : "Angry Peasant";
+        Vector3[] routePositions = isPriest
+            ? new[]
+            {
+                ToVector3(CastleRoomLayout.CastleMapReliquaryRoomCenter + new Vector2(0.06f, -0.18f)),
+                ToVector3(CastleRoomLayout.CastleMapCryptGate + new Vector2(0.34f, -0.18f)),
+                ToVector3(CastleRoomLayout.CentralDemonDoorThreshold + new Vector2(0.72f, -0.78f))
+            }
+            : new[]
+            {
+                ToVector3(CastleRoomLayout.CastleMapLowerProcessionalRoomCenter + new Vector2(-0.28f, -0.12f)),
+                ToVector3(CastleRoomLayout.CastleMapServiceCorridorRoomCenter + new Vector2(-0.04f, -0.08f)),
+                ToVector3(CastleRoomLayout.ServantWingCenter + new Vector2(1.92f, -1.12f))
+            };
+
+        string[] routeRooms = isPriest
+            ? new[] { "Castle Map", "Castle Map", "Crypt" }
+            : new[] { "Castle Map", "Castle Map", "Servant Wing" };
+        string[] routeLocations = isPriest
+            ? new[] { "Reliquary", "Crypt Gate", "Crypt Door" }
+            : new[] { "Lower Processional", "Service Corridor", "Servant Wing" };
+
+        GameObject intruderObject = CreateSpriteObject(intruderName, sprite, routePositions[0], 330, parent);
+        intruderObject.transform.localScale = Vector3.one * (isPriest ? 1.02f : 1f);
+
+        AdventureInteractionTarget target = intruderObject.AddComponent<AdventureInteractionTarget>();
+        target.action = AdventureInteractionAction.Inspect;
+        target.anyCharacter = true;
+        target.displayName = intruderName;
+        target.verb = isPriest ? "CONFRONT" : "TERRORIZE";
+        target.description = "A village intruder moving room by room.";
+        target.interactRadius = isPriest ? 0.92f : 0.86f;
+
+        IntruderEncounter encounter = intruderObject.AddComponent<IntruderEncounter>();
+        encounter.loopController = loopController;
+        encounter.interactionTarget = target;
+        encounter.spriteRenderer = intruderObject.GetComponent<SpriteRenderer>();
+        encounter.kind = kind;
+        encounter.intruderName = intruderName;
+        encounter.routePositions = routePositions;
+        encounter.routeRoomNames = routeRooms;
+        encounter.routeLocationNames = routeLocations;
+        encounter.stepSeconds = isPriest ? 15f : 12f;
+        encounter.blackCandleDelaySeconds = isPriest ? 8f : 5f;
+        encounter.preparedRoomDelaySeconds = isPriest ? 7f : 5f;
+        encounter.renfieldStallSeconds = isPriest ? 7f : 5f;
+        encounter.idlePaceDistance = isPriest ? 0.045f : 0.075f;
+        encounter.idlePaceSpeed = isPriest ? 1.7f : 2.8f;
+        encounter.announcesWave = !isPriest;
+        target.receiver = encounter;
+        encounter.spriteRenderer.enabled = false;
+        target.enabled = false;
+        return target;
+    }
+
     private static void CreateCandleLightingRig(Transform parent, SpriteRenderer[] glowRenderers, SpriteRenderer shadowGradeRenderer)
     {
         GameObject rig = new GameObject("Realtime Candle Light Rig");
@@ -1057,7 +1182,12 @@ public static class CryptPrototypeBuilder
         Sprite[] frames = new Sprite[frameCount];
         for (int i = 0; i < frameCount; i++)
         {
-            frames[i] = LoadSprite(pathPrefix + i.ToString("00") + ".png", pivot, pixelsPerUnit);
+            string path = pathPrefix + i.ToString("00") + ".png";
+            frames[i] = LoadSprite(path, pivot, pixelsPerUnit);
+            if (frames[i] == null)
+            {
+                throw new FileNotFoundException("Unity failed to import required Dracula frame.", path);
+            }
         }
 
         return frames;
@@ -1536,6 +1666,142 @@ public static class CryptPrototypeBuilder
         DrawLine(texture, 22, 41, 27, 37, new Color32(226, 190, 94, 150));
         FillEllipse(texture, 21, 36, 5, 4, new Color32(225, 99, 42, 220));
         FillEllipse(texture, 21, 38, 3, 5, new Color32(255, 219, 101, 230));
+    }
+
+    private static void DrawOldKey(Texture2D texture)
+    {
+        FillEllipse(texture, 24, 12, 19, 7, new Color32(0, 0, 0, 112));
+        DrawLine(texture, 15, 16, 52, 16, Ink);
+        DrawLine(texture, 15, 17, 52, 17, Ink);
+        FillEllipse(texture, 15, 16, 8, 8, new Color32(184, 127, 44, 255));
+        FillEllipse(texture, 15, 16, 4, 4, new Color32(8, 9, 14, 255));
+        DrawLine(texture, 20, 16, 48, 16, new Color32(224, 181, 78, 255));
+        DrawLine(texture, 20, 17, 48, 17, new Color32(135, 87, 35, 255));
+        FillRect(texture, 44, 17, 4, 7, new Color32(184, 127, 44, 255));
+        FillRect(texture, 50, 17, 4, 5, new Color32(184, 127, 44, 255));
+        DrawRect(texture, 44, 17, 4, 7, Ink);
+        DrawRect(texture, 50, 17, 4, 5, Ink);
+        DrawLine(texture, 11, 11, 18, 11, new Color32(247, 221, 126, 255));
+        DrawLine(texture, 23, 14, 44, 14, new Color32(247, 221, 126, 230));
+    }
+
+    private static void DrawAngryPeasant(Texture2D texture)
+    {
+        Color32 tunic = new Color32(105, 61, 39, 255);
+        Color32 tunicDark = new Color32(54, 36, 31, 255);
+        Color32 trousers = new Color32(52, 55, 57, 255);
+        Color32 skin = new Color32(206, 150, 93, 255);
+        Color32 hair = new Color32(55, 33, 21, 255);
+        Color32 red = new Color32(183, 32, 28, 255);
+        Color32 wood = new Color32(128, 82, 40, 255);
+
+        FillEllipse(texture, 24, 7, 15, 5, new Color32(0, 0, 0, 130));
+
+        DrawLine(texture, 9, 17, 7, 54, Ink);
+        DrawLine(texture, 10, 17, 8, 54, wood);
+        DrawLine(texture, 7, 54, 2, 64, Ink);
+        DrawLine(texture, 7, 54, 7, 67, Ink);
+        DrawLine(texture, 7, 54, 12, 64, Ink);
+        DrawLine(texture, 3, 64, 3, 69, wood);
+        DrawLine(texture, 8, 66, 8, 71, wood);
+        DrawLine(texture, 12, 64, 12, 69, wood);
+
+        FillRect(texture, 16, 9, 7, 26, trousers);
+        FillRect(texture, 25, 9, 7, 26, new Color32(39, 42, 45, 255));
+        DrawRect(texture, 16, 9, 7, 26, Ink);
+        DrawRect(texture, 25, 9, 7, 26, Ink);
+        FillRect(texture, 14, 8, 10, 4, Ink);
+        FillRect(texture, 25, 8, 10, 4, Ink);
+
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(14, 33),
+            new Vector2(34, 33),
+            new Vector2(37, 56),
+            new Vector2(11, 56)
+        }, Ink);
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(16, 34),
+            new Vector2(32, 34),
+            new Vector2(34, 54),
+            new Vector2(14, 54)
+        }, tunic);
+        FillRect(texture, 18, 50, 12, 6, red);
+        DrawLine(texture, 17, 52, 31, 52, Ink);
+
+        DrawLine(texture, 14, 50, 7, 40, Ink);
+        DrawLine(texture, 34, 50, 43, 42, Ink);
+        DrawLine(texture, 15, 49, 8, 40, tunicDark);
+        DrawLine(texture, 33, 49, 42, 42, tunic);
+        FillEllipse(texture, 7, 40, 3, 3, skin);
+        FillEllipse(texture, 43, 42, 3, 3, skin);
+
+        FillEllipse(texture, 24, 63, 10, 10, skin);
+        DrawLine(texture, 15, 63, 33, 63, Ink);
+        FillRect(texture, 15, 69, 18, 4, hair);
+        DrawRect(texture, 15, 69, 18, 4, Ink);
+        DrawLine(texture, 19, 62, 20, 62, Ink);
+        DrawLine(texture, 28, 62, 29, 62, Ink);
+        DrawLine(texture, 19, 58, 29, 58, new Color32(105, 45, 36, 255));
+        DrawLine(texture, 17, 67, 31, 67, hair);
+    }
+
+    private static void DrawPriest(Texture2D texture)
+    {
+        Color32 robe = new Color32(38, 38, 48, 255);
+        Color32 robeDark = new Color32(15, 16, 23, 255);
+        Color32 trim = new Color32(202, 194, 166, 255);
+        Color32 skin = new Color32(198, 169, 136, 255);
+        Color32 silver = new Color32(150, 153, 151, 255);
+        Color32 purple = new Color32(76, 55, 96, 255);
+
+        FillEllipse(texture, 25, 7, 16, 5, new Color32(0, 0, 0, 132));
+
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(15, 11),
+            new Vector2(35, 11),
+            new Vector2(38, 54),
+            new Vector2(12, 54)
+        }, Ink);
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(17, 13),
+            new Vector2(33, 13),
+            new Vector2(35, 52),
+            new Vector2(15, 52)
+        }, robe);
+        FillPolygon(texture, new Vector2[]
+        {
+            new Vector2(25, 13),
+            new Vector2(34, 51),
+            new Vector2(26, 54),
+            new Vector2(23, 13)
+        }, robeDark);
+        FillRect(texture, 22, 48, 6, 6, trim);
+        DrawRect(texture, 22, 48, 6, 6, Ink);
+        DrawLine(texture, 25, 43, 25, 31, silver);
+        DrawLine(texture, 21, 36, 29, 36, silver);
+
+        DrawLine(texture, 15, 48, 7, 39, Ink);
+        DrawLine(texture, 35, 48, 44, 39, Ink);
+        DrawLine(texture, 16, 47, 8, 39, robe);
+        DrawLine(texture, 34, 47, 43, 39, robeDark);
+        FillRect(texture, 5, 36, 8, 6, purple);
+        DrawRect(texture, 5, 36, 8, 6, Ink);
+        DrawLine(texture, 43, 41, 43, 60, Ink);
+        DrawLine(texture, 44, 41, 44, 60, silver);
+        DrawLine(texture, 39, 55, 48, 55, silver);
+
+        FillEllipse(texture, 25, 64, 10, 11, skin);
+        DrawLine(texture, 16, 64, 34, 64, Ink);
+        FillRect(texture, 16, 70, 18, 4, robeDark);
+        DrawRect(texture, 16, 70, 18, 4, Ink);
+        DrawLine(texture, 20, 63, 21, 63, Ink);
+        DrawLine(texture, 29, 63, 30, 63, Ink);
+        DrawLine(texture, 20, 59, 30, 59, new Color32(91, 63, 64, 255));
+        DrawLine(texture, 18, 67, 32, 67, trim);
     }
 
     private static void DrawFloorTile(Texture2D texture)

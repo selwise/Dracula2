@@ -8,6 +8,10 @@ public sealed class AdventureLoopController : MonoBehaviour
     public AdventureActor renfield;
     public bool startDayWithRenfield;
     public bool draculaSleepsDuringDay;
+    public bool allowEmergencyDayWake = true;
+    public float emergencyWakeSeconds = 9f;
+    public int emergencyWakeUsesPerDay = 1;
+    public float emergencyDraculaMoveSpeedMultiplier = 0.55f;
 
     [Header("Day Support")]
     public AdventureActionStation[] renfieldStations;
@@ -29,6 +33,24 @@ public sealed class AdventureLoopController : MonoBehaviour
     private string contextualPrompt;
     private int contextualPromptFrame = -1;
     private int interactionConsumedFrame = -1;
+    private float emergencyWakeTimer;
+    private int emergencyWakeUsesRemaining;
+    private float draculaBaseMoveSpeed;
+    private bool hasDraculaBaseMoveSpeed;
+    private Vector3 draculaStartPosition;
+    private Vector3 renfieldStartPosition;
+    private string draculaStartRoomName;
+    private string renfieldStartRoomName;
+    private Vector2 draculaStartMinBounds;
+    private Vector2 draculaStartMaxBounds;
+    private Vector2 renfieldStartMinBounds;
+    private Vector2 renfieldStartMaxBounds;
+    private bool hasInitialActorState;
+    private string phaseCardTitle;
+    private string phaseCardSubtitle;
+    private float phaseCardTimer;
+    private int playtestIntruderJumpIndex = -1;
+    private const float PhaseCardDuration = 1.85f;
 
     public AdventureLoopState State
     {
@@ -47,14 +69,19 @@ public sealed class AdventureLoopController : MonoBehaviour
             sceneCamera = Camera.main;
         }
 
+        CacheInitialActorState();
+
         if (startDayWithRenfield)
         {
             state.SetActiveCharacter(AdventureCharacter.Renfield);
         }
 
+        emergencyWakeUsesRemaining = Mathf.Max(0, emergencyWakeUsesPerDay);
+        CacheDraculaBaseMoveSpeed();
         ApplyControlState();
         RefreshStationState();
         ShowFeedback(GetInitialFeedback());
+        ShowPhaseCard("DAY 1", GetObjectiveText());
     }
 
     private void Update()
@@ -64,9 +91,12 @@ public sealed class AdventureLoopController : MonoBehaviour
         {
             if (keyboard.tabKey.wasPressedThisFrame)
             {
-                state.SwitchActiveCharacter();
-                ApplyControlState();
-                ShowFeedback("Control switched to " + GetCharacterName(state.ActiveCharacter) + ".");
+                TrySwitchActiveCharacter();
+            }
+
+            if (keyboard.qKey.wasPressedThisFrame)
+            {
+                TryEmergencyWakeDracula();
             }
 
             if (keyboard.nKey.wasPressedThisFrame)
@@ -74,17 +104,66 @@ public sealed class AdventureLoopController : MonoBehaviour
                 AdvancePhase();
             }
 
+            if (keyboard.rKey.wasPressedThisFrame)
+            {
+                ResetPlaytestDay();
+            }
+
+            if (keyboard.mKey.wasPressedThisFrame)
+            {
+                JumpActiveActorToCastleMap();
+            }
+
+            if (keyboard.jKey.wasPressedThisFrame)
+            {
+                JumpActiveActorToNextIntruder();
+            }
+
+            TryUsePlaytestPrepShortcut(keyboard);
+
             if (keyboard.eKey.wasPressedThisFrame)
             {
-                if (interactionConsumedFrame != Time.frameCount)
+                if (interactionConsumedFrame != Time.frameCount
+                    && (state.ActiveCharacter == AdventureCharacter.Renfield || nearestStation != null))
                 {
                     TryUseNearestStation();
                 }
             }
         }
 
+        Gamepad gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            if (gamepad.selectButton.wasPressedThisFrame)
+            {
+                TrySwitchActiveCharacter();
+            }
+
+            if (gamepad.buttonNorth.wasPressedThisFrame)
+            {
+                TryEmergencyWakeDracula();
+            }
+
+            if (gamepad.startButton.wasPressedThisFrame)
+            {
+                AdvancePhase();
+            }
+
+            if (gamepad.leftShoulder.wasPressedThisFrame)
+            {
+                JumpActiveActorToCastleMap();
+            }
+
+            if (gamepad.rightShoulder.wasPressedThisFrame)
+            {
+                JumpActiveActorToNextIntruder();
+            }
+        }
+
         nearestStation = FindNearestStation();
+        TickEmergencyWake();
         RefreshStationState();
+        TickPhaseCard();
         TickFeedback();
         ApplyControlState();
     }
@@ -117,15 +196,177 @@ public sealed class AdventureLoopController : MonoBehaviour
         if (state.Phase == AdventurePhase.Day)
         {
             state.SetActiveCharacter(AdventureCharacter.Renfield);
+            emergencyWakeTimer = 0f;
+            emergencyWakeUsesRemaining = Mathf.Max(0, emergencyWakeUsesPerDay);
         }
         else if (state.Phase == AdventurePhase.Night)
         {
             state.SetActiveCharacter(AdventureCharacter.Dracula);
+            emergencyWakeTimer = 0f;
         }
 
         ApplyControlState();
         RefreshStationState();
         ShowFeedback(GetPhaseFeedback());
+        ShowPhaseCard(GetPhaseCardTitle(), GetObjectiveText());
+    }
+
+    private void ResetPlaytestDay()
+    {
+        state.ResetDayOne(startDayWithRenfield ? AdventureCharacter.Renfield : AdventureCharacter.Dracula);
+        emergencyWakeTimer = 0f;
+        emergencyWakeUsesRemaining = Mathf.Max(0, emergencyWakeUsesPerDay);
+        playtestIntruderJumpIndex = -1;
+
+        RestoreInitialActorState();
+        ResetIntruders();
+
+        ApplyControlState();
+        RefreshStationState();
+        SnapCameraToActiveActor();
+        RefreshDayReport();
+        ShowFeedback("Playtest reset: Day 1 begins again.");
+        ShowPhaseCard("DAY 1 RESET", "Choose 2 Renfield preparations.");
+    }
+
+    private void JumpActiveActorToCastleMap()
+    {
+        AdventureActor actor = GetActiveActor();
+        if (actor == null)
+        {
+            return;
+        }
+
+        Vector2 entry = actor.character == AdventureCharacter.Renfield
+            ? CastleRoomLayout.CastleMapEntryFromServantWing
+            : CastleRoomLayout.CastleMapEntryFromCrypt;
+        MoveActorTo(
+            actor,
+            new Vector3(entry.x, entry.y, actor.transform.position.z),
+            "Castle Map",
+            CastleRoomLayout.CastleMapMinBounds,
+            CastleRoomLayout.CastleMapMaxBounds);
+        actor.LockPortals(0.35f);
+        SnapCameraToActiveActor();
+        ShowFeedback(GetCharacterName(actor.character) + " jumped to castle map.");
+    }
+
+    private void JumpActiveActorToNextIntruder()
+    {
+        AdventureActor actor = GetActiveActor();
+        if (actor == null)
+        {
+            return;
+        }
+
+        IntruderEncounter[] intruders = FindObjectsByType<IntruderEncounter>(FindObjectsInactive.Include);
+        if (intruders == null || intruders.Length == 0)
+        {
+            ShowFeedback("No intruders registered yet.");
+            return;
+        }
+
+        if (playtestIntruderJumpIndex >= intruders.Length)
+        {
+            playtestIntruderJumpIndex = -1;
+        }
+
+        for (int i = 0; i < intruders.Length; i++)
+        {
+            playtestIntruderJumpIndex = (playtestIntruderJumpIndex + 1) % intruders.Length;
+            IntruderEncounter intruder = intruders[playtestIntruderJumpIndex];
+            if (intruder == null || intruder.IsResolved || !intruder.IsActive)
+            {
+                continue;
+            }
+
+            JumpActiveActorToIntruder(actor, intruder);
+            return;
+        }
+
+        ShowFeedback("No active intruder yet. Press N toward dusk or night.");
+    }
+
+    private void JumpActiveActorToIntruder(AdventureActor actor, IntruderEncounter intruder)
+    {
+        string roomName = intruder.CurrentRoomLabel;
+        Vector2 minBounds;
+        Vector2 maxBounds;
+        GetRoomBounds(roomName, out minBounds, out maxBounds);
+
+        Vector3 position = intruder.CurrentWorldPosition;
+        float sideOffset = actor.character == AdventureCharacter.Dracula ? -0.65f : 0.65f;
+        position += new Vector3(sideOffset, -0.22f, 0f);
+        position.x = Mathf.Clamp(position.x, minBounds.x, maxBounds.x);
+        position.y = Mathf.Clamp(position.y, minBounds.y, maxBounds.y);
+        position.z = actor.transform.position.z;
+
+        MoveActorTo(actor, position, roomName, minBounds, maxBounds);
+        actor.LockPortals(0.35f);
+        SnapCameraToActiveActor();
+        ShowFeedback(GetCharacterName(actor.character) + " jumped to " + intruder.ReportName + ".");
+    }
+
+    private static void GetRoomBounds(string roomName, out Vector2 minBounds, out Vector2 maxBounds)
+    {
+        if (roomName == "Crypt")
+        {
+            minBounds = CastleRoomLayout.CryptMinBounds;
+            maxBounds = CastleRoomLayout.CryptMaxBounds;
+            return;
+        }
+
+        if (roomName == "Servant Wing")
+        {
+            minBounds = CastleRoomLayout.ServantWingMinBounds;
+            maxBounds = CastleRoomLayout.ServantWingMaxBounds;
+            return;
+        }
+
+        minBounds = CastleRoomLayout.CastleMapMinBounds;
+        maxBounds = CastleRoomLayout.CastleMapMaxBounds;
+    }
+
+    private void TrySwitchActiveCharacter()
+    {
+        if (state.Phase == AdventurePhase.Day
+            && draculaSleepsDuringDay
+            && state.ActiveCharacter == AdventureCharacter.Renfield)
+        {
+            ShowFeedback(GetEmergencyWakeHint());
+            return;
+        }
+
+        state.SwitchActiveCharacter();
+        ApplyControlState();
+        ShowFeedback("Control switched to " + GetCharacterName(state.ActiveCharacter) + ".");
+    }
+
+    private void TryEmergencyWakeDracula()
+    {
+        if (!allowEmergencyDayWake || !draculaSleepsDuringDay || state.Phase != AdventurePhase.Day)
+        {
+            return;
+        }
+
+        if (emergencyWakeTimer > 0f)
+        {
+            ShowFeedback("Dracula is already awake, but daylight weakens him.");
+            return;
+        }
+
+        if (emergencyWakeUsesRemaining <= 0)
+        {
+            ShowFeedback("Dracula cannot be forced from the coffin again today.");
+            return;
+        }
+
+        emergencyWakeUsesRemaining--;
+        emergencyWakeTimer = Mathf.Max(1f, emergencyWakeSeconds);
+        state.SetActiveCharacter(AdventureCharacter.Dracula);
+        ApplyControlState();
+        SnapCameraToActiveActor();
+        ShowFeedback("Emergency wake: Dracula rises weakly in daylight.");
     }
 
     private void TryUseNearestStation()
@@ -166,6 +407,76 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
 
         RefreshStationState();
+        RefreshDayReport();
+    }
+
+    private void TryUsePlaytestPrepShortcut(Keyboard keyboard)
+    {
+        if (keyboard == null || state.Phase != AdventurePhase.Day)
+        {
+            return;
+        }
+
+        if (WasKeyPressed(keyboard, Key.Digit1, Key.Numpad1))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.ScoutVillage);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit2, Key.Numpad2))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.PrepareBlackCandles);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit3, Key.Numpad3))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.ResetChandelier);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit4, Key.Numpad4))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.RepairGrandHall);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit5, Key.Numpad5))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.EraseSigns);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit6, Key.Numpad6))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.PrepareArtifact);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit7, Key.Numpad7))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.ReleaseVermin);
+        }
+        else if (WasKeyPressed(keyboard, Key.Digit8, Key.Numpad8))
+        {
+            TryPerformPlaytestPrep(RenfieldAction.MoveCoffin);
+        }
+    }
+
+    private void TryPerformPlaytestPrep(RenfieldAction action)
+    {
+        if (state.HasPerformedRenfieldAction(action))
+        {
+            ShowFeedback(GetRenfieldActionName(action) + " is already prepared.");
+            return;
+        }
+
+        if (state.RenfieldActionsRemaining <= 0)
+        {
+            ShowFeedback("No Renfield prep left. Press R to replay.");
+            return;
+        }
+
+        if (state.TryPerformRenfieldAction(action))
+        {
+            RefreshStationState();
+            RefreshDayReport();
+            ShowFeedback("Quick prep: " + GetRenfieldActionName(action) + ".");
+            ShowPhaseCard("PREP SET", GetRenfieldActionName(action));
+        }
+    }
+
+    private static bool WasKeyPressed(Keyboard keyboard, Key digitKey, Key numpadKey)
+    {
+        return keyboard[digitKey].wasPressedThisFrame || keyboard[numpadKey].wasPressedThisFrame;
     }
 
     private AdventureActionStation FindNearestStation()
@@ -212,13 +523,24 @@ public sealed class AdventureLoopController : MonoBehaviour
         bool active = actor.character == state.ActiveCharacter;
         bool canMove = active && CanMove(actor);
         actor.ApplyControl(active, canMove);
+
+        if (actor.character == AdventureCharacter.Dracula && actor.walker != null)
+        {
+            CacheDraculaBaseMoveSpeed();
+            if (hasDraculaBaseMoveSpeed)
+            {
+                actor.walker.moveSpeed = IsEmergencyDayWakeActive
+                    ? draculaBaseMoveSpeed * Mathf.Clamp(emergencyDraculaMoveSpeedMultiplier, 0.1f, 1f)
+                    : draculaBaseMoveSpeed;
+            }
+        }
     }
 
     private bool CanMove(AdventureActor actor)
     {
         if (actor.character == AdventureCharacter.Dracula && draculaSleepsDuringDay && state.Phase == AdventurePhase.Day)
         {
-            return false;
+            return emergencyWakeTimer > 0f;
         }
 
         return true;
@@ -263,9 +585,134 @@ public sealed class AdventureLoopController : MonoBehaviour
         ShowFeedback(text);
     }
 
+    public bool IsEmergencyDayWakeActive
+    {
+        get { return state.Phase == AdventurePhase.Day && emergencyWakeTimer > 0f; }
+    }
+
     private AdventureActor GetActiveActor()
     {
         return state.ActiveCharacter == AdventureCharacter.Dracula ? dracula : renfield;
+    }
+
+    private void TickEmergencyWake()
+    {
+        if (emergencyWakeTimer <= 0f)
+        {
+            return;
+        }
+
+        emergencyWakeTimer -= Time.deltaTime;
+        if (emergencyWakeTimer > 0f)
+        {
+            return;
+        }
+
+        emergencyWakeTimer = 0f;
+        if (state.Phase == AdventurePhase.Day)
+        {
+            state.SetActiveCharacter(AdventureCharacter.Renfield);
+            ApplyControlState();
+            SnapCameraToActiveActor();
+            ShowFeedback("Daylight overcomes Dracula. Renfield must finish the preparations.");
+        }
+    }
+
+    private void CacheDraculaBaseMoveSpeed()
+    {
+        if (hasDraculaBaseMoveSpeed || dracula == null || dracula.walker == null)
+        {
+            return;
+        }
+
+        draculaBaseMoveSpeed = dracula.walker.moveSpeed;
+        hasDraculaBaseMoveSpeed = true;
+    }
+
+    private void CacheInitialActorState()
+    {
+        if (hasInitialActorState)
+        {
+            return;
+        }
+
+        if (dracula != null)
+        {
+            draculaStartPosition = dracula.transform.position;
+            draculaStartRoomName = dracula.roomName;
+            if (dracula.walker != null)
+            {
+                draculaStartMinBounds = dracula.walker.minBounds;
+                draculaStartMaxBounds = dracula.walker.maxBounds;
+            }
+        }
+
+        if (renfield != null)
+        {
+            renfieldStartPosition = renfield.transform.position;
+            renfieldStartRoomName = renfield.roomName;
+            if (renfield.walker != null)
+            {
+                renfieldStartMinBounds = renfield.walker.minBounds;
+                renfieldStartMaxBounds = renfield.walker.maxBounds;
+            }
+        }
+
+        hasInitialActorState = true;
+    }
+
+    private void RestoreInitialActorState()
+    {
+        if (!hasInitialActorState)
+        {
+            CacheInitialActorState();
+        }
+
+        if (dracula != null)
+        {
+            MoveActorTo(dracula, draculaStartPosition, draculaStartRoomName, draculaStartMinBounds, draculaStartMaxBounds);
+        }
+
+        if (renfield != null)
+        {
+            MoveActorTo(renfield, renfieldStartPosition, renfieldStartRoomName, renfieldStartMinBounds, renfieldStartMaxBounds);
+        }
+    }
+
+    private static void MoveActorTo(AdventureActor actor, Vector3 position, string roomName, Vector2 minBounds, Vector2 maxBounds)
+    {
+        Rigidbody2D body = actor.GetComponent<Rigidbody2D>();
+        if (body != null)
+        {
+            body.linearVelocity = Vector2.zero;
+            body.position = new Vector2(position.x, position.y);
+        }
+
+        actor.transform.position = position;
+        actor.roomName = roomName;
+        if (actor.walker != null)
+        {
+            actor.walker.minBounds = minBounds;
+            actor.walker.maxBounds = maxBounds;
+        }
+    }
+
+    private static void ResetIntruders()
+    {
+        IntruderEncounter[] intruders = FindObjectsByType<IntruderEncounter>(FindObjectsInactive.Include);
+        for (int i = 0; i < intruders.Length; i++)
+        {
+            intruders[i].ResetForPlaytest();
+        }
+    }
+
+    private static void RefreshDayReport()
+    {
+        AdventureDayReport report = FindAnyObjectByType<AdventureDayReport>();
+        if (report != null)
+        {
+            report.ForceRefresh();
+        }
     }
 
     private void RefreshStationState()
@@ -299,6 +746,21 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
     }
 
+    private void ShowPhaseCard(string title, string subtitle)
+    {
+        phaseCardTitle = title;
+        phaseCardSubtitle = subtitle;
+        phaseCardTimer = PhaseCardDuration;
+    }
+
+    private void TickPhaseCard()
+    {
+        if (phaseCardTimer > 0f)
+        {
+            phaseCardTimer -= Time.deltaTime;
+        }
+    }
+
     private string GetPhaseFeedback()
     {
         switch (state.Phase)
@@ -306,11 +768,11 @@ public sealed class AdventureLoopController : MonoBehaviour
             case AdventurePhase.Day:
                 return "Day " + state.DayNumber + ": Renfield prepares the castle.";
             case AdventurePhase.Dusk:
-                return "Dusk: review preparations before night.";
+                return "Dusk: read the intruder report, then press N for night.";
             case AdventurePhase.Night:
-                return "Night: Dracula wakes.";
+                return "Night: Dracula wakes. Find and handle intruders.";
             default:
-                return "Dawn: return to safety before the next day.";
+                return "Dawn: read the report. R resets Day 1.";
         }
     }
 
@@ -364,7 +826,7 @@ public sealed class AdventureLoopController : MonoBehaviour
         GUI.Label(new Rect(x, y, width, 24f * uiScale), "Renfield actions: " + state.RenfieldActionsRemaining + " / " + AdventureLoopState.RenfieldActionsPerDay, BodyStyle(uiScale));
 
         y += 29f * uiScale;
-        GUI.Label(new Rect(x, y, width, 24f * uiScale), "Tab switch   E use task   N next phase", HintStyle(uiScale));
+        GUI.Label(new Rect(x, y, width, 24f * uiScale), "E/A use   N phase   J threat   R reset   M map", HintStyle(uiScale));
 
         y += 26f * uiScale;
         string prompt = GetPromptText();
@@ -372,6 +834,8 @@ public sealed class AdventureLoopController : MonoBehaviour
 
         GUI.color = previousColor;
         GUI.depth = previousDepth;
+
+        DrawPhaseCard(uiScale);
     }
 
     private string GetPromptText()
@@ -383,7 +847,7 @@ public sealed class AdventureLoopController : MonoBehaviour
 
         if (state.ActiveCharacter == AdventureCharacter.Dracula && state.Phase == AdventurePhase.Day && draculaSleepsDuringDay)
         {
-            return "Dracula sleeps by day. Switch to Renfield for preparations.";
+            return IsEmergencyDayWakeActive ? "Daylight weakens Dracula. Time is short." : GetEmergencyWakeHint();
         }
 
         if (nearestStation != null)
@@ -397,6 +861,106 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
 
         return GetPhaseFeedback();
+    }
+
+    private string GetPhaseCardTitle()
+    {
+        switch (state.Phase)
+        {
+            case AdventurePhase.Day:
+                return "DAY " + state.DayNumber;
+            case AdventurePhase.Dusk:
+                return "DUSK";
+            case AdventurePhase.Night:
+                return "NIGHT";
+            default:
+                return "DAWN REPORT";
+        }
+    }
+
+    private string GetObjectiveText()
+    {
+        switch (state.Phase)
+        {
+            case AdventurePhase.Day:
+                if (state.RenfieldActionsRemaining > 0)
+                {
+                    return "Choose " + state.RenfieldActionsRemaining + " Renfield preparations.";
+                }
+
+                return "Preparations spent. Press N for dusk.";
+            case AdventurePhase.Dusk:
+                return "Review intruders. Press N when ready for night.";
+            case AdventurePhase.Night:
+                return "Use J for threats, or M for map.";
+            default:
+                return "Read outcomes. Press R to replay Day 1.";
+        }
+    }
+
+    private static string GetRenfieldActionName(RenfieldAction action)
+    {
+        switch (action)
+        {
+            case RenfieldAction.ResetChandelier:
+                return "Chandelier Trap";
+            case RenfieldAction.RepairGrandHall:
+                return "Repair Hall";
+            case RenfieldAction.ScoutVillage:
+                return "Scout Village";
+            case RenfieldAction.PrepareBlackCandles:
+                return "Black Candles";
+            case RenfieldAction.MoveCoffin:
+                return "Move Coffin";
+            case RenfieldAction.EraseSigns:
+                return "Erase Signs";
+            case RenfieldAction.PrepareArtifact:
+                return "Prepare Artifact";
+            default:
+                return "Release Vermin";
+        }
+    }
+
+    private void DrawPhaseCard(float uiScale)
+    {
+        if (phaseCardTimer <= 0f || string.IsNullOrEmpty(phaseCardTitle))
+        {
+            return;
+        }
+
+        float alpha = Mathf.Clamp01(phaseCardTimer / 0.28f);
+        Rect rect = new Rect(
+            (Screen.width - 520f * uiScale) * 0.5f,
+            (Screen.height - 150f * uiScale) * 0.5f,
+            520f * uiScale,
+            150f * uiScale);
+
+        int previousDepth = GUI.depth;
+        Color previousColor = GUI.color;
+        GUI.depth = -120;
+        GUI.color = new Color(0.012f, 0.018f, 0.023f, 0.86f * alpha);
+        GUI.DrawTexture(rect, Texture2D.whiteTexture);
+        GUI.color = new Color(0.08f, 0.75f, 0.84f, alpha);
+        GUI.DrawTexture(new Rect(rect.x, rect.y, rect.width, 3f * uiScale), Texture2D.whiteTexture);
+        GUI.DrawTexture(new Rect(rect.x, rect.yMax - 3f * uiScale, rect.width, 3f * uiScale), Texture2D.whiteTexture);
+
+        GUI.color = new Color(0.96f, 0.84f, 0.28f, alpha);
+        GUI.Label(new Rect(rect.x + 18f * uiScale, rect.y + 24f * uiScale, rect.width - 36f * uiScale, 54f * uiScale), phaseCardTitle.ToUpperInvariant(), PhaseTitleStyle(uiScale));
+        GUI.color = new Color(0.82f, 0.91f, 0.95f, alpha);
+        GUI.Label(new Rect(rect.x + 24f * uiScale, rect.y + 88f * uiScale, rect.width - 48f * uiScale, 40f * uiScale), phaseCardSubtitle.ToUpperInvariant(), PhaseSubtitleStyle(uiScale));
+
+        GUI.color = previousColor;
+        GUI.depth = previousDepth;
+    }
+
+    private string GetEmergencyWakeHint()
+    {
+        if (!allowEmergencyDayWake || emergencyWakeUsesRemaining <= 0)
+        {
+            return "Dracula sleeps by day. Renfield must defend the castle.";
+        }
+
+        return "Dracula sleeps by day. Q/Y can wake him briefly, weakened.";
     }
 
     private static GUIStyle HeaderStyle(float uiScale)
@@ -422,6 +986,26 @@ public sealed class AdventureLoopController : MonoBehaviour
         GUIStyle style = BodyStyle(uiScale);
         style.fontSize = Mathf.RoundToInt(14f * uiScale);
         style.normal.textColor = new Color(0.74f, 0.76f, 0.82f, 1f);
+        return style;
+    }
+
+    private static GUIStyle PhaseTitleStyle(float uiScale)
+    {
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
+        style.fontSize = Mathf.RoundToInt(34f * uiScale);
+        style.fontStyle = FontStyle.Bold;
+        style.normal.textColor = new Color(0.96f, 0.84f, 0.28f, 1f);
+        return style;
+    }
+
+    private static GUIStyle PhaseSubtitleStyle(float uiScale)
+    {
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
+        style.fontSize = Mathf.RoundToInt(15f * uiScale);
+        style.wordWrap = true;
+        style.normal.textColor = new Color(0.82f, 0.91f, 0.95f, 1f);
         return style;
     }
 }

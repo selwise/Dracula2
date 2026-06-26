@@ -49,6 +49,15 @@ public sealed class AdventureLoopState
         ActiveCharacter = character;
     }
 
+    public void ResetDayOne(AdventureCharacter activeCharacter)
+    {
+        ActiveCharacter = activeCharacter;
+        Phase = AdventurePhase.Day;
+        DayNumber = 1;
+        RenfieldActionsRemaining = RenfieldActionsPerDay;
+        performedRenfieldActions.Clear();
+    }
+
     public void AdvancePhase()
     {
         switch (Phase)
