@@ -1,53 +1,48 @@
 // ============================================================
 // File: Assets/Scripts/RoomDustParticles.cs
-// Author: AI Assistant
-// Description: Atmospheric dust particles for pixel art rooms
+// Description: Atmospheric dust particles using pre-sliced spritesheet
 // ============================================================
 
 using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Creates and manages atmospheric dust particles in a room.
-/// Single-pixel particles with subtle shimmer for pixel art aesthetics.
-/// Matches the visual style of CryptAmbientAnimator (Perlin noise-based).
+/// Creates and manages atmospheric dust particles using a pre-sliced spritesheet.
+/// Supports animated frames with controllable framerate.
 /// </summary>
 public sealed class RoomDustParticles : MonoBehaviour
 {
     [Header("Particle Count")]
     [Range(50, 500)]
-    public int particleCount = 150;
+    public int particleCount = 200;
     
     [Header("Particle Appearance")]
-    [Range(0.5f, 3f)]
-    public float particleSize = 1f;
-    [Range(0.05f, 0.3f)]
-    public float baseAlpha = 0.12f;
-    [Range(0.5f, 2f)]
-    public float alphaVariation = 0.8f;
+    [Range(0.1f, 2f)]
+    public float particleSize = 0.8f;
+    [Range(0.2f, 0.6f)]
+    public float baseBrightness = 0.4f;
+    [Range(0.1f, 0.4f)]
+    public float brightnessVariation = 0.2f;
     
-    [Header("Shimmer Effect")]
-    [Range(0.2f, 2f)]
-    public float shimmerSpeed = 0.6f;
-    [Range(0.3f, 1.0f)]
-    public float shimmerMinAlpha = 0.6f;  // ← NEW: Minimum brightness (0.6 = 60%)
-    [Range(0.5f, 3f)]
-    public float shimmerScale = 1.5f;
+    [Header("Animation")]
+    [Range(1, 24)]
+    public float animationFramerate = 8f;
+    public bool randomizeFrameOffset = true;
     
     [Header("Movement")]
-    [Range(0f, 0.5f)]
-    public float driftSpeed = 0.08f;
-    [Range(0f, 0.3f)]
-    public float driftAmplitude = 0.15f;
-    [Range(0.01f, 0.1f)]
-    public float verticalRiseSpeed = 0.02f;
+    [Range(0f, 2f)]           // ← Was [0f, 0.3f] - 6x more range!
+    public float driftSpeed = 0.15f;
+    [Range(0f, 1f)]           // ← Was [0f, 0.2f] - 5x more range!
+    public float driftAmplitude = 0.2f;
+    [Range(0f, 0.5f)]         // ← Was [0.01f, 0.1f] - 5x more range!
+    public float verticalRiseSpeed = 0.05f;
     
     [Header("Room Bounds")]
     public Vector2 boundsMin = new Vector2(-10f, -5f);
     public Vector2 boundsMax = new Vector2(10f, 5f);
     
     [Header("References")]
-    public Sprite dustSprite;
+    public Sprite[] dustFrames;  // ← Assign all 10 sliced frames here
     
     private List<DustParticle> particles = new List<DustParticle>();
     private Transform particlesContainer;
@@ -55,10 +50,10 @@ public sealed class RoomDustParticles : MonoBehaviour
     private struct DustParticle
     {
         public Vector3 position;
-        public float baseAlpha;
-        public float shimmerOffset;
+        public float baseBrightness;
         public float driftOffset;
         public float verticalOffset;
+        public float frameOffset;
         public SpriteRenderer renderer;
     }
     
@@ -73,9 +68,11 @@ public sealed class RoomDustParticles : MonoBehaviour
         particlesContainer.SetParent(transform);
         particlesContainer.localPosition = Vector3.zero;
         
-        if (dustSprite == null)
+        // Fallback if no frames assigned
+        if (dustFrames == null || dustFrames.Length == 0)
         {
-            dustSprite = CreateDefaultDustSprite();
+            Debug.LogWarning("DustFrames not assigned! Using fallback sprite.");
+            dustFrames = new Sprite[] { CreateDefaultDustSprite() };
         }
         
         particles = new List<DustParticle>(particleCount);
@@ -91,35 +88,32 @@ public sealed class RoomDustParticles : MonoBehaviour
     {
         GameObject particleObj = new GameObject($"Dust_{index}");
         particleObj.transform.SetParent(particlesContainer);
-    
+        
         Vector3 position = new Vector3(
             Random.Range(boundsMin.x, boundsMax.x),
             Random.Range(boundsMin.y, boundsMax.y),
             Random.Range(-0.5f, 0.5f)
         );
         particleObj.transform.position = position;
-    
+        
         SpriteRenderer renderer = particleObj.AddComponent<SpriteRenderer>();
-        renderer.sprite = dustSprite;
+        renderer.sprite = dustFrames[0];
         renderer.sortingLayerName = "Effects";
         renderer.sortingOrder = 10;
-    
-        // FIX: Clamp alpha variation to prevent near-zero alpha
-        float alphaRangeMin = Mathf.Max(0.5f, 1f - alphaVariation);
-        float alphaRangeMax = 1f + alphaVariation;
-        float alpha = baseAlpha * Random.Range(alphaRangeMin, alphaRangeMax);
-    
-        Color color = new Color(1f, 1f, 1f, alpha);
+        
+        // Brightness controls visibility (not alpha) - works on any background
+        float brightness = baseBrightness * Random.Range(1f - brightnessVariation, 1f + brightnessVariation);
+        Color color = new Color(brightness, brightness, brightness, 1f);
         renderer.color = color;
         renderer.transform.localScale = Vector3.one * particleSize * Random.Range(0.8f, 1.2f);
-    
+        
         return new DustParticle
         {
             position = position,
-            baseAlpha = alpha,
-            shimmerOffset = Random.Range(0f, 100f),
+            baseBrightness = brightness,
             driftOffset = Random.Range(0f, 100f),
             verticalOffset = Random.Range(0f, 100f),
+            frameOffset = randomizeFrameOffset ? Random.Range(0f, dustFrames.Length) : 0f,
             renderer = renderer
         };
     }
@@ -127,33 +121,29 @@ public sealed class RoomDustParticles : MonoBehaviour
     private void Update()
     {
         float time = Time.time;
-    
+        int frameCount = dustFrames.Length;
+        
         for (int i = 0; i < particles.Count; i++)
         {
             DustParticle p = particles[i];
-        
-            // Shimmer using Perlin noise (matches CryptAmbientAnimator style)
-            float shimmerNoise = Mathf.PerlinNoise(
-                p.shimmerOffset, 
-                time * shimmerSpeed * shimmerScale
-            );
-        
-            // KEY FIX: Lerp between 60%-100% of base alpha (never disappears)
-            float alphaMultiplier = Mathf.Lerp(shimmerMinAlpha, 1.0f, shimmerNoise);
-            float currentAlpha = p.baseAlpha * alphaMultiplier;
-        
-            Color color = p.renderer.color;
-            color.a = Mathf.Clamp01(currentAlpha);
-            p.renderer.color = color;
-        
+            
+            // Animate spritesheet frames
+            if (frameCount > 1)
+            {
+                float animTime = time * animationFramerate + p.frameOffset;
+                int currentFrame = Mathf.FloorToInt(animTime) % frameCount;
+                currentFrame = Mathf.Abs(currentFrame); // Ensure positive
+                p.renderer.sprite = dustFrames[currentFrame];
+            }
+            
             // Subtle drift movement
             float driftX = Mathf.Sin(time * driftSpeed + p.driftOffset) * driftAmplitude;
             float driftY = Mathf.Cos(time * driftSpeed * 0.7f + p.driftOffset) * driftAmplitude;
             float verticalRise = Mathf.Sin(time * verticalRiseSpeed + p.verticalOffset) * 0.01f;
-        
+            
             Vector3 newPos = p.position + new Vector3(driftX, driftY + verticalRise, 0f);
             p.renderer.transform.position = newPos;
-        
+            
             // Wrap around bounds (seamless looping)
             newPos = WrapPosition(newPos);
             p.position = newPos;
@@ -175,10 +165,7 @@ public sealed class RoomDustParticles : MonoBehaviour
     
     private Sprite CreateDefaultDustSprite()
     {
-        // FIX: 2x2 pixels at 128 PPU = much smaller in world space
         Texture2D texture = new Texture2D(2, 2, TextureFormat.ARGB32, false);
-    
-        // Fill with white
         for (int x = 0; x < 2; x++)
         {
             for (int y = 0; y < 2; y++)
@@ -189,17 +176,18 @@ public sealed class RoomDustParticles : MonoBehaviour
         texture.Apply();
         texture.filterMode = FilterMode.Point;
         texture.wrapMode = TextureWrapMode.Clamp;
-    
+        
         Sprite sprite = Sprite.Create(
             texture,
             new Rect(0, 0, 2, 2),
             new Vector2(0.5f, 0.5f),
-            128f  // ← CHANGED: 128 PPU instead of 64 (makes sprite 2x smaller)
+            128f
         );
-        sprite.name = "DustPixel2x2";
-    
+        sprite.name = "DustDefault";
+        
         return sprite;
     }
+    
     private void OnDestroy()
     {
         if (particlesContainer != null)
@@ -227,11 +215,5 @@ public sealed class RoomDustParticles : MonoBehaviour
         }
         particles.Clear();
         InitializeParticles();
-    }
-    
-    public void SetParticleCount(int count)
-    {
-        particleCount = Mathf.Clamp(count, 50, 500);
-        ClearAndReinitialize();
     }
 }
