@@ -1,7 +1,7 @@
 {
   "created_utc": "2026-06-16T08:54:33Z",
   "folder": "Assets/Art/Crypt/SourceSheets/Dracula_Current_Patch_Sheets",
-  "purpose": "Clearly marked editable Dracula spritesheets for manual alpha/paint patching. Sheets are generated from current runtime frame folders loaded by CryptPrototypeBuilder.",
+  "purpose": "Archived editable Dracula spritesheets from the deprecated crypt prototype. Kept for manual alpha/paint reference only.",
   "important_rules": [
     "Edit *_sheet.png files, not *_preview.png files.",
     "Do not run automated alpha repair or black/dark keying unless Selene explicitly asks.",

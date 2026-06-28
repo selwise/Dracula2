@@ -1,6 +1,6 @@
 {
   "created_utc": "2026-06-16T08:52:03Z",
-  "purpose": "Current runtime Dracula patch sheets generated from the exact frame folders loaded by CryptPrototypeBuilder. Transparent sheets preserve alpha for editing; preview sheets add checkerboard and labels only for review.",
+  "purpose": "Archived Dracula patch sheets from the deprecated crypt prototype. Transparent sheets preserve alpha for editing; preview sheets add checkerboard and labels only for review.",
   "left_direction_note": "There is no separate left sheet. Left walk and left idle mirror the right-facing runtime frames with SpriteRenderer.flipX.",
   "sets": [
     {

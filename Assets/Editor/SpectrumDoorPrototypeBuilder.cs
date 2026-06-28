@@ -1,4 +1,5 @@
 using System.IO;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -8,13 +9,22 @@ public static class SpectrumDoorPrototypeBuilder
 {
     private const string ScenePath = "Assets/Scenes/SpectrumDoorPrototype.unity";
     private const string ArtFolder = "Assets/Art/SpectrumPrototype";
-    private const string CharacterFolder = "Assets/Art/Characters/Dracula/SpectrumPlaceholder/WalkRight";
+    private const string CharacterSheetFolder = "Assets/Art/Characters/Dracula/Sheets";
     private const string RoomBasePath = ArtFolder + "/spectrum_mockup_room_black_recess.png";
     private const string DoorFullRawPath = ArtFolder + "/spectrum_statue_door_full_raw.png";
-    private const string WalkRightPrefix = CharacterFolder + "/walking_right_";
-    private const int WalkRightFrameCount = 12;
+    private const string ClassicWalkRightSheetPath = CharacterSheetFolder + "/dracula_classic_walk_right_sheet.png";
+    private const string ClassicWalkLeftSheetPath = CharacterSheetFolder + "/dracula_classic_walk_left_sheet.png";
+    private const string ClassicWalkDownSheetPath = CharacterSheetFolder + "/dracula_classic_walk_down_sheet.png";
+    private const string SpectrumWalkRightSheetPath = CharacterSheetFolder + "/dracula_spectrum_walk_right_sheet.png";
+    private const string SpectrumWalkLeftSheetPath = CharacterSheetFolder + "/dracula_spectrum_walk_left_sheet.png";
+    private const string SpectrumWalkDownSheetPath = CharacterSheetFolder + "/dracula_spectrum_walk_down_sheet.png";
+    private const int WalkSideFrameCount = 16;
+    private const int WalkDownFrameCount = 14;
+    private const int SheetColumns = 4;
+    private const int SheetRows = 4;
     private const float RoomPpu = 180f;
-    private const float CharacterPpu = 650f;
+    private const float CharacterPpu = 160f;
+    private const float SpectrumSidePpu = 80f;
     private const int DoorCenterX = 1130;
     private const int DoorHalfWidth = 230;
     private const int DoorX = DoorCenterX - DoorHalfWidth;
@@ -31,7 +41,22 @@ public static class SpectrumDoorPrototypeBuilder
 
         Sprite roomBase = LoadSprite(RoomBasePath, new Vector2(0.5f, 0.5f), RoomPpu);
         ConfigureSpriteImporter(DoorFullRawPath, new Vector2(0.5f, 0.5f), RoomPpu);
-        Sprite[] walkRight = LoadSpriteSequence(WalkRightPrefix, WalkRightFrameCount, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] walkRight = LoadSpriteSheetSequence(ClassicWalkRightSheetPath, "classic_walk_right", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] walkLeft = LoadSpriteSheetSequence(ClassicWalkLeftSheetPath, "classic_walk_left", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] walkDown = LoadSpriteSheetSequence(ClassicWalkDownSheetPath, "classic_walk_down", WalkDownFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] walkUp = FirstFrame(walkDown);
+        Sprite[] idleDown = FirstFrame(walkDown);
+        Sprite[] idleUp = FirstFrame(walkDown);
+        Sprite[] idleRight = FirstFrame(walkRight);
+        Sprite[] idleLeft = FirstFrame(walkLeft);
+        Sprite[] spectrumWalkRight = LoadSpriteSheetSequence(SpectrumWalkRightSheetPath, "spectrum_walk_right", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), SpectrumSidePpu);
+        Sprite[] spectrumWalkLeft = LoadSpriteSheetSequence(SpectrumWalkLeftSheetPath, "spectrum_walk_left", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), SpectrumSidePpu);
+        Sprite[] spectrumWalkDown = LoadSpriteSheetSequence(SpectrumWalkDownSheetPath, "spectrum_walk_down", WalkDownFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] spectrumWalkUp = FirstFrame(spectrumWalkDown);
+        Sprite[] spectrumIdleDown = FirstFrame(spectrumWalkDown);
+        Sprite[] spectrumIdleUp = FirstFrame(spectrumWalkDown);
+        Sprite[] spectrumIdleRight = FirstFrame(spectrumWalkRight);
+        Sprite[] spectrumIdleLeft = FirstFrame(spectrumWalkLeft);
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = "SpectrumDoorPrototype";
@@ -47,7 +72,25 @@ public static class SpectrumDoorPrototypeBuilder
 
         Vector3 doorCenter = PixelCenterToWorld(DoorX + DoorWidth * 0.5f, DoorY + DoorHeight * 0.5f, roomBase);
 
-        GameObject player = CreateDracula(walkRight, doorCenter + new Vector3(-1.45f, -1.55f, 0f), root.transform);
+        GameObject player = CreateDracula(
+            walkRight,
+            walkDown,
+            walkUp,
+            walkLeft,
+            idleDown,
+            idleUp,
+            idleRight,
+            idleLeft,
+            spectrumWalkRight,
+            spectrumWalkDown,
+            spectrumWalkUp,
+            spectrumWalkLeft,
+            spectrumIdleDown,
+            spectrumIdleUp,
+            spectrumIdleRight,
+            spectrumIdleLeft,
+            doorCenter + new Vector3(-1.45f, -1.55f, 0f),
+            root.transform);
         AdventureActor actor = player.GetComponent<AdventureActor>();
 
         Selection.activeGameObject = root;
@@ -61,7 +104,12 @@ public static class SpectrumDoorPrototypeBuilder
         {
             RoomBasePath,
             DoorFullRawPath,
-            WalkRightPrefix + "00.png"
+            ClassicWalkRightSheetPath,
+            ClassicWalkLeftSheetPath,
+            ClassicWalkDownSheetPath,
+            SpectrumWalkRightSheetPath,
+            SpectrumWalkLeftSheetPath,
+            SpectrumWalkDownSheetPath
         };
 
         for (int i = 0; i < requiredPaths.Length; i++)
@@ -95,7 +143,25 @@ public static class SpectrumDoorPrototypeBuilder
         lightObject.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
     }
 
-    private static GameObject CreateDracula(Sprite[] walkRight, Vector3 position, Transform parent)
+    private static GameObject CreateDracula(
+        Sprite[] walkRight,
+        Sprite[] walkDown,
+        Sprite[] walkUp,
+        Sprite[] walkLeft,
+        Sprite[] idleDown,
+        Sprite[] idleUp,
+        Sprite[] idleRight,
+        Sprite[] idleLeft,
+        Sprite[] spectrumWalkRight,
+        Sprite[] spectrumWalkDown,
+        Sprite[] spectrumWalkUp,
+        Sprite[] spectrumWalkLeft,
+        Sprite[] spectrumIdleDown,
+        Sprite[] spectrumIdleUp,
+        Sprite[] spectrumIdleRight,
+        Sprite[] spectrumIdleLeft,
+        Vector3 position,
+        Transform parent)
     {
         GameObject player = CreateSpriteObject("Spectrum Dracula Placeholder", walkRight[0], position, 40, parent);
         Rigidbody2D body = player.AddComponent<Rigidbody2D>();
@@ -114,12 +180,14 @@ public static class SpectrumDoorPrototypeBuilder
         DraculaWalker walker = player.AddComponent<DraculaWalker>();
         walker.spriteRenderer = player.GetComponent<SpriteRenderer>();
         walker.body = body;
-        walker.walkDown = walkRight;
-        walker.walkUp = walkRight;
+        walker.walkDown = walkDown;
+        walker.walkUp = walkUp;
         walker.walkSide = walkRight;
-        walker.idleDown = new[] { walkRight[0] };
-        walker.idleUp = new[] { walkRight[0] };
-        walker.idleSide = new[] { walkRight[0] };
+        walker.walkLeft = walkLeft;
+        walker.idleDown = idleDown;
+        walker.idleUp = idleUp;
+        walker.idleSide = idleRight;
+        walker.idleLeft = idleLeft;
         walker.moveSpeed = 2.25f;
         walker.sideFrameTime = 0.15f;
         walker.idleFrameTime = 0.24f;
@@ -130,6 +198,14 @@ public static class SpectrumDoorPrototypeBuilder
         walker.minBounds = new Vector2(-6.2f, -2.8f);
         walker.maxBounds = new Vector2(6.2f, 0.35f);
 
+        DraculaSpriteStyleSwitcher styleSwitcher = player.AddComponent<DraculaSpriteStyleSwitcher>();
+        styleSwitcher.walker = walker;
+        styleSwitcher.spriteRenderer = walker.spriteRenderer;
+        AssignSpriteSet(styleSwitcher.classic, walkDown, walkUp, walkRight, walkLeft, idleDown, idleUp, idleRight, idleLeft);
+        AssignSpriteSet(styleSwitcher.spectrumInspired, spectrumWalkDown, spectrumWalkUp, spectrumWalkRight, spectrumWalkLeft, spectrumIdleDown, spectrumIdleUp, spectrumIdleRight, spectrumIdleLeft);
+        styleSwitcher.useSpectrumInspired = false;
+        styleSwitcher.ApplySelectedStyle();
+
         AdventureActor actor = player.AddComponent<AdventureActor>();
         actor.character = AdventureCharacter.Dracula;
         actor.roomName = "Spectrum Mockup Room";
@@ -137,6 +213,27 @@ public static class SpectrumDoorPrototypeBuilder
         actor.spriteRenderer = walker.spriteRenderer;
 
         return player;
+    }
+
+    private static void AssignSpriteSet(
+        DraculaSpriteStyleSwitcher.DraculaSpriteSet set,
+        Sprite[] walkDown,
+        Sprite[] walkUp,
+        Sprite[] walkSide,
+        Sprite[] walkLeft,
+        Sprite[] idleDown,
+        Sprite[] idleUp,
+        Sprite[] idleSide,
+        Sprite[] idleLeft)
+    {
+        set.walkDown = walkDown;
+        set.walkUp = walkUp;
+        set.walkSide = walkSide;
+        set.walkLeft = walkLeft;
+        set.idleDown = idleDown;
+        set.idleUp = idleUp;
+        set.idleSide = idleSide;
+        set.idleLeft = idleLeft;
     }
 
     private static GameObject CreateSpriteObject(string name, Sprite sprite, Vector3 position, int sortingOrder, Transform parent)
@@ -159,29 +256,58 @@ public static class SpectrumDoorPrototypeBuilder
         return new Vector3(x, y, 0f);
     }
 
-    private static Sprite LoadSprite(string path, Vector2 pivot, float pixelsPerUnit)
+    private static Sprite LoadSprite(string path, Vector2 pivot, float pixelsPerUnit, FilterMode filterMode = FilterMode.Point)
     {
-        ConfigureSpriteImporter(path, pivot, pixelsPerUnit);
+        ConfigureSpriteImporter(path, pivot, pixelsPerUnit, filterMode);
         return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
-    private static Sprite[] LoadSpriteSequence(string pathPrefix, int frameCount, Vector2 pivot, float pixelsPerUnit)
+    private static Sprite[] LoadSpriteSheetSequence(
+        string path,
+        string spriteNamePrefix,
+        int frameCount,
+        int columns,
+        int rows,
+        Vector2 pivot,
+        float pixelsPerUnit)
     {
+        ConfigureSpriteSheetImporter(path, spriteNamePrefix, frameCount, columns, rows, pivot, pixelsPerUnit);
+
+        Dictionary<string, Sprite> spritesByName = new Dictionary<string, Sprite>();
+        Object[] assets = AssetDatabase.LoadAllAssetRepresentationsAtPath(path);
+        for (int i = 0; i < assets.Length; i++)
+        {
+            Sprite sprite = assets[i] as Sprite;
+            if (sprite != null)
+            {
+                spritesByName[sprite.name] = sprite;
+            }
+        }
+
         Sprite[] sprites = new Sprite[frameCount];
         for (int i = 0; i < frameCount; i++)
         {
-            string path = pathPrefix + i.ToString("00") + ".png";
-            sprites[i] = LoadSprite(path, pivot, pixelsPerUnit);
-            if (sprites[i] == null)
+            string spriteName = spriteNamePrefix + "_" + i.ToString("00");
+            if (!spritesByName.TryGetValue(spriteName, out sprites[i]) || sprites[i] == null)
             {
-                throw new FileNotFoundException("Unity failed to import required Spectrum Dracula frame.", path);
+                throw new FileNotFoundException("Unity failed to import required Spectrum Dracula sheet sprite " + spriteName + ".", path);
             }
         }
 
         return sprites;
     }
 
-    private static void ConfigureSpriteImporter(string path, Vector2 pivot, float pixelsPerUnit)
+    private static Sprite[] FirstFrame(Sprite[] sprites)
+    {
+        if (sprites == null || sprites.Length == 0 || sprites[0] == null)
+        {
+            return new Sprite[0];
+        }
+
+        return new[] { sprites[0] };
+    }
+
+    private static void ConfigureSpriteImporter(string path, Vector2 pivot, float pixelsPerUnit, FilterMode filterMode = FilterMode.Point)
     {
         AssetDatabase.ImportAsset(path);
         TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
@@ -193,7 +319,7 @@ public static class SpectrumDoorPrototypeBuilder
         bool changed = importer.textureType != TextureImporterType.Sprite
             || importer.spriteImportMode != SpriteImportMode.Single
             || importer.mipmapEnabled
-            || importer.filterMode != FilterMode.Point
+            || importer.filterMode != filterMode
             || importer.textureCompression != TextureImporterCompression.Uncompressed
             || importer.spritePixelsPerUnit != pixelsPerUnit
             || importer.spritePivot != pivot;
@@ -203,7 +329,7 @@ public static class SpectrumDoorPrototypeBuilder
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
             importer.mipmapEnabled = false;
-            importer.filterMode = FilterMode.Point;
+            importer.filterMode = filterMode;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.spritePixelsPerUnit = pixelsPerUnit;
             importer.spritePivot = pivot;
@@ -213,6 +339,70 @@ public static class SpectrumDoorPrototypeBuilder
         ApplySpriteImporterSerialization(importer);
         EditorUtility.SetDirty(importer);
         importer.SaveAndReimport();
+    }
+
+    private static void ConfigureSpriteSheetImporter(
+        string path,
+        string spriteNamePrefix,
+        int frameCount,
+        int columns,
+        int rows,
+        Vector2 pivot,
+        float pixelsPerUnit,
+        FilterMode filterMode = FilterMode.Point)
+    {
+        AssetDatabase.ImportAsset(path);
+        TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (importer == null)
+        {
+            throw new FileNotFoundException("Missing required sprite sheet asset.", path);
+        }
+
+        int width;
+        int height;
+        importer.GetSourceTextureWidthAndHeight(out width, out height);
+        int cellWidth = width / columns;
+        int cellHeight = height / rows;
+        SpriteMetaData[] metadata = new SpriteMetaData[frameCount];
+
+        for (int i = 0; i < frameCount; i++)
+        {
+            int column = i % columns;
+            int row = i / columns;
+            SpriteMetaData spriteMetaData = new SpriteMetaData();
+            spriteMetaData.name = spriteNamePrefix + "_" + i.ToString("00");
+            spriteMetaData.alignment = SpriteAlignmentCustom;
+            spriteMetaData.pivot = pivot;
+            spriteMetaData.rect = new Rect(column * cellWidth, height - ((row + 1) * cellHeight), cellWidth, cellHeight);
+            metadata[i] = spriteMetaData;
+        }
+
+        bool changed = importer.textureType != TextureImporterType.Sprite
+            || importer.spriteImportMode != SpriteImportMode.Multiple
+            || importer.mipmapEnabled
+            || importer.filterMode != filterMode
+            || importer.textureCompression != TextureImporterCompression.Uncompressed
+            || importer.spritePixelsPerUnit != pixelsPerUnit;
+
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Multiple;
+        importer.mipmapEnabled = false;
+        importer.filterMode = filterMode;
+        importer.textureCompression = TextureImporterCompression.Uncompressed;
+        importer.spritePixelsPerUnit = pixelsPerUnit;
+        importer.alphaIsTransparency = true;
+        importer.spritesheet = metadata;
+
+        ApplySpriteImporterSerialization(importer);
+        EditorUtility.SetDirty(importer);
+        if (changed)
+        {
+            importer.SaveAndReimport();
+        }
+        else
+        {
+            importer.SaveAndReimport();
+        }
     }
 
     private static void ApplySpriteImporterSerialization(TextureImporter importer)

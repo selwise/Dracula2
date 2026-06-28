@@ -1,13 +1,13 @@
 # Dracula2
 
-Isometric Dracula crypt prototype / vertical slice.
+Dracula Spectrum door prototype / vertical slice.
 
 ## Project
 
-- Unity: 6000.4.10f1
-- Main scene: `Assets/Scenes/CryptPrototype.unity`
+- Unity: 6000.5.0f1
+- Main scene: `Assets/Scenes/SpectrumDoorPrototype.unity`
 - Input: WASD movement through `Assets/Scripts/DraculaWalker.cs`
-- Art: generated low-resolution crypt sprites under `Assets/Art/Crypt`
+- Art: Spectrum room/door assets under `Assets/Art/SpectrumPrototype` and placeholder Dracula frames under `Assets/Art/Characters/Dracula/SpectrumPlaceholder`
 
 ## AI Workflow Guardrail
 

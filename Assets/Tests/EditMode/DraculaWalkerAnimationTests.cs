@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
@@ -28,7 +29,7 @@ public sealed class DraculaWalkerAnimationTests
         }
         finally
         {
-            Object.DestroyImmediate(obj);
+            UnityEngine.Object.DestroyImmediate(obj);
         }
     }
 
@@ -63,7 +64,67 @@ public sealed class DraculaWalkerAnimationTests
         }
         finally
         {
-            Object.DestroyImmediate(obj);
+            UnityEngine.Object.DestroyImmediate(obj);
+        }
+    }
+
+    [Test]
+    public void LeftMovementUsesExplicitLeftFramesWhenAssigned()
+    {
+        GameObject obj = new GameObject("Dracula Explicit Left Test");
+
+        try
+        {
+            SpriteRenderer renderer = obj.AddComponent<SpriteRenderer>();
+            DraculaWalker walker = obj.AddComponent<DraculaWalker>();
+            Sprite rightSprite = CreateSprite("right");
+            Sprite leftSprite = CreateSprite("left");
+
+            walker.spriteRenderer = renderer;
+            walker.walkSide = new[] { rightSprite };
+            walker.walkLeft = new[] { leftSprite };
+
+            SetPrivateField(walker, "moveInput", Vector2.left);
+            SetPrivateField(walker, "sideSign", -1);
+            SetPrivateEnumField(walker, "facing", "Side");
+
+            InvokeAnimate(walker, 0.01f);
+
+            Assert.AreSame(leftSprite, renderer.sprite);
+            Assert.IsFalse(renderer.flipX);
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(obj);
+        }
+    }
+
+    [Test]
+    public void LeftMovementFallsBackToFlippedSideFrames()
+    {
+        GameObject obj = new GameObject("Dracula Flipped Left Test");
+
+        try
+        {
+            SpriteRenderer renderer = obj.AddComponent<SpriteRenderer>();
+            DraculaWalker walker = obj.AddComponent<DraculaWalker>();
+            Sprite rightSprite = CreateSprite("right");
+
+            walker.spriteRenderer = renderer;
+            walker.walkSide = new[] { rightSprite };
+
+            SetPrivateField(walker, "moveInput", Vector2.left);
+            SetPrivateField(walker, "sideSign", -1);
+            SetPrivateEnumField(walker, "facing", "Side");
+
+            InvokeAnimate(walker, 0.01f);
+
+            Assert.AreSame(rightSprite, renderer.sprite);
+            Assert.IsTrue(renderer.flipX);
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(obj);
         }
     }
 
@@ -86,6 +147,12 @@ public sealed class DraculaWalkerAnimationTests
     {
         FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
         field.SetValue(target, value);
+    }
+
+    private static void SetPrivateEnumField(object target, string fieldName, string value)
+    {
+        FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+        field.SetValue(target, Enum.Parse(field.FieldType, value));
     }
 
     private static void InvokeAnimate(DraculaWalker walker, float deltaTime)

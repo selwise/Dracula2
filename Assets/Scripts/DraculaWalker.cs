@@ -19,9 +19,11 @@ public sealed class DraculaWalker : MonoBehaviour
     public Sprite[] walkDown;
     public Sprite[] walkUp;
     public Sprite[] walkSide;
+    public Sprite[] walkLeft;
     public Sprite[] idleDown;
     public Sprite[] idleUp;
     public Sprite[] idleSide;
+    public Sprite[] idleLeft;
     public float frameTime = 0.16f;
     public float sideFrameTime = 0.08f;
     public float upFrameTime = 0.108f;
@@ -288,7 +290,7 @@ public sealed class DraculaWalker : MonoBehaviour
                 currentFrame = (currentFrame + 1) % frames.Length;
             }
 
-            ApplyFrame(frames, Mathf.Clamp(currentFrame, 0, frames.Length - 1), facing == Facing.Side && sideSign < 0);
+            ApplyFrame(frames, Mathf.Clamp(currentFrame, 0, frames.Length - 1), GetMovementFlipX(frames));
         }
         else
         {
@@ -318,7 +320,7 @@ public sealed class DraculaWalker : MonoBehaviour
                 currentFrame %= frames.Length;
             }
 
-            ApplyFrame(frames, Mathf.Clamp(currentFrame, 0, frames.Length - 1), GetIdleFlipX());
+            ApplyFrame(frames, Mathf.Clamp(currentFrame, 0, frames.Length - 1), GetIdleFlipX(frames));
         }
 
         if (visualRoot != null && visualRoot != transform)
@@ -336,6 +338,11 @@ public sealed class DraculaWalker : MonoBehaviour
             case Facing.Up:
                 return walkUp;
             case Facing.Side:
+                if (sideSign < 0 && HasFrames(walkLeft))
+                {
+                    return walkLeft;
+                }
+
                 return walkSide;
             default:
                 return walkDown;
@@ -367,9 +374,19 @@ public sealed class DraculaWalker : MonoBehaviour
 
                 return walkUp;
             case Facing.Side:
+                if (sideSign < 0 && HasFrames(idleLeft))
+                {
+                    return idleLeft;
+                }
+
                 if (idleSide != null && idleSide.Length > 0)
                 {
                     return idleSide;
+                }
+
+                if (sideSign < 0 && HasFrames(walkLeft))
+                {
+                    return walkLeft;
                 }
 
                 return walkSide;
@@ -378,9 +395,19 @@ public sealed class DraculaWalker : MonoBehaviour
         }
     }
 
-    private bool GetIdleFlipX()
+    private bool GetMovementFlipX(Sprite[] frames)
     {
-        return facing == Facing.Side && sideSign < 0;
+        return facing == Facing.Side && sideSign < 0 && frames != walkLeft;
+    }
+
+    private bool GetIdleFlipX(Sprite[] frames)
+    {
+        return facing == Facing.Side && sideSign < 0 && frames != idleLeft && frames != walkLeft;
+    }
+
+    private static bool HasFrames(Sprite[] frames)
+    {
+        return frames != null && frames.Length > 0 && frames[0] != null;
     }
 
     private void ApplyFrame(Sprite[] frames, int frameIndex, bool flipX)
