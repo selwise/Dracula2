@@ -757,58 +757,6 @@ Transform:
   - {fileID: 1569903304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1453341819 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
-  m_PrefabInstance: {fileID: 3957954075142445508}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1453341822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453341819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 570ae8bfab8aed049bbe7ac57c508e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Dracula2.Runtime::CandleFlame
-  flameFrames:
-  - {fileID: -923658932, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 1350339945, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -1530220853, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -947808322, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -355466123, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -966925968, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -740575417, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 706032225, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 523632771, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 37383863, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -568794037, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: -119045449, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 1075009620, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 839050059, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 243972181, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  - {fileID: 1799241216, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  animationFramerate: 8.55
-  framerateVariation: 0.1
-  flameSize: 1
-  positionJitter: 0
-  jitterSpeedVariation: 0.2
-  lightColor: {r: 1, g: 0.85, b: 0.6, a: 1}
-  lightIntensity: 3
-  intensityVariation: 0.1
-  lightRange: 5
-  lightFlickerIntensity: 0.3
-  lightFlickerSpeed: 2
-  flickerSpeedVariation: 0.15
-  flameOffset: {x: 0, y: 0}
-  randomizeFrameStart: 1
-  randomizeFlickerPhase: 1
-  randomizeAllOnStart: 1
-  hideBaseSpriteAtRuntime: 1
-  showDebugLogs: 0
 --- !u!1 &1569903303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.317
+      value: 2.243
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1101,10 +1049,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1453341822}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2de550abda6f90488154e9eb9843470, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
