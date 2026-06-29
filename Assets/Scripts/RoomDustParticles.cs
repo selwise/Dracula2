@@ -19,10 +19,15 @@ public sealed class RoomDustParticles : MonoBehaviour
     [Header("Particle Appearance")]
     [Range(0.1f, 2f)]
     public float particleSize = 0.8f;
-    [Range(0.2f, 0.6f)]
+    [Range(0.05f, 0.75f)]
     public float baseBrightness = 0.4f;
     [Range(0.1f, 0.4f)]
     public float brightnessVariation = 0.2f;
+    public Color particleTint = new Color(0.94f, 0.97f, 1f, 1f);
+
+    [Header("Rendering")]
+    public string sortingLayerName = "Default";
+    public int sortingOrder = 15;
     
     [Header("Animation")]
     [Range(1, 24)]
@@ -98,12 +103,15 @@ public sealed class RoomDustParticles : MonoBehaviour
         
         SpriteRenderer renderer = particleObj.AddComponent<SpriteRenderer>();
         renderer.sprite = dustFrames[0];
-        renderer.sortingLayerName = "Effects";
-        renderer.sortingOrder = 10;
+        renderer.sortingLayerName = sortingLayerName;
+        renderer.sortingOrder = sortingOrder;
         
-        // Brightness controls visibility (not alpha) - works on any background
-        float brightness = baseBrightness * Random.Range(1f - brightnessVariation, 1f + brightnessVariation);
-        Color color = new Color(brightness, brightness, brightness, 1f);
+        float brightness = Random.Range(1f - brightnessVariation, 1f + brightnessVariation);
+        Color color = new Color(
+            Mathf.Clamp01(particleTint.r * brightness),
+            Mathf.Clamp01(particleTint.g * brightness),
+            Mathf.Clamp01(particleTint.b * brightness),
+            Mathf.Clamp01(baseBrightness * brightness));
         renderer.color = color;
         renderer.transform.localScale = Vector3.one * particleSize * Random.Range(0.8f, 1.2f);
         

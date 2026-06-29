@@ -25,7 +25,7 @@ public sealed class DraculaSpriteStyleSwitcher : MonoBehaviour
     {
         public Sprite[] walkDown;
         public Sprite[] walkUp;
-        public Sprite[] walkSide;
+        public Sprite[] walkRight;
         public Sprite[] walkLeft;
         public Sprite[] idleDown;
         public Sprite[] idleUp;
@@ -34,7 +34,7 @@ public sealed class DraculaSpriteStyleSwitcher : MonoBehaviour
 
         public bool HasPlayableFrames()
         {
-            return HasFrames(walkDown) && HasFrames(walkSide);
+            return HasFrames(walkDown) && HasFrames(walkRight);
         }
 
         public Sprite GetStartupSprite()
@@ -49,7 +49,7 @@ public sealed class DraculaSpriteStyleSwitcher : MonoBehaviour
                 return walkDown[0];
             }
 
-            return HasFrames(walkSide) ? walkSide[0] : null;
+            return HasFrames(walkRight) ? walkRight[0] : null;
         }
 
         private static bool HasFrames(Sprite[] frames)
@@ -100,7 +100,7 @@ public sealed class DraculaSpriteStyleSwitcher : MonoBehaviour
 
         walker.walkDown = selectedSet.walkDown;
         walker.walkUp = selectedSet.walkUp;
-        walker.walkSide = selectedSet.walkSide;
+        walker.walkRight = selectedSet.walkRight;
         walker.walkLeft = selectedSet.walkLeft;
         walker.idleDown = selectedSet.idleDown;
         walker.idleUp = selectedSet.idleUp;

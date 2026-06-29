@@ -81,7 +81,7 @@ public sealed class DraculaWalkerAnimationTests
             Sprite leftSprite = CreateSprite("left");
 
             walker.spriteRenderer = renderer;
-            walker.walkSide = new[] { rightSprite };
+            walker.walkRight = new[] { rightSprite };
             walker.walkLeft = new[] { leftSprite };
 
             SetPrivateField(walker, "moveInput", Vector2.left);
@@ -111,7 +111,7 @@ public sealed class DraculaWalkerAnimationTests
             Sprite rightSprite = CreateSprite("right");
 
             walker.spriteRenderer = renderer;
-            walker.walkSide = new[] { rightSprite };
+            walker.walkRight = new[] { rightSprite };
 
             SetPrivateField(walker, "moveInput", Vector2.left);
             SetPrivateField(walker, "sideSign", -1);

@@ -18,7 +18,7 @@ public sealed class DraculaWalker : MonoBehaviour
     public Transform visualRoot;
     public Sprite[] walkDown;
     public Sprite[] walkUp;
-    public Sprite[] walkSide;
+    public Sprite[] walkRight;
     public Sprite[] walkLeft;
     public Sprite[] idleDown;
     public Sprite[] idleUp;
@@ -343,7 +343,7 @@ public sealed class DraculaWalker : MonoBehaviour
                     return walkLeft;
                 }
 
-                return walkSide;
+                return walkRight;
             default:
                 return walkDown;
         }
@@ -389,7 +389,7 @@ public sealed class DraculaWalker : MonoBehaviour
                     return walkLeft;
                 }
 
-                return walkSide;
+                return walkRight;
             default:
                 return idleDown != null && idleDown.Length > 0 ? idleDown : walkDown;
         }

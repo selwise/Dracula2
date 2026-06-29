@@ -5,9 +5,9 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SpectrumDoorPrototypeBuilder
+public static class CryptPrototypeBuilder
 {
-    private const string ScenePath = "Assets/Scenes/SpectrumDoorPrototype.unity";
+    private const string ScenePath = "Assets/Scenes/CryptPrototype.unity";
     private const string ArtFolder = "Assets/Art/SpectrumPrototype";
     private const string CharacterSheetFolder = "Assets/Art/Characters/Dracula/Sheets";
     private const string RoomBasePath = ArtFolder + "/spectrum_mockup_room_black_recess.png";
@@ -18,7 +18,7 @@ public static class SpectrumDoorPrototypeBuilder
     private const string SpectrumWalkRightSheetPath = CharacterSheetFolder + "/dracula_spectrum_walk_right_sheet.png";
     private const string SpectrumWalkLeftSheetPath = CharacterSheetFolder + "/dracula_spectrum_walk_left_sheet.png";
     private const string SpectrumWalkDownSheetPath = CharacterSheetFolder + "/dracula_spectrum_walk_down_sheet.png";
-    private const int WalkSideFrameCount = 16;
+    private const int WalkRightFrameCount = 16;
     private const int WalkDownFrameCount = 14;
     private const int SheetColumns = 4;
     private const int SheetRows = 4;
@@ -34,23 +34,23 @@ public static class SpectrumDoorPrototypeBuilder
     private const int SpriteAlignmentCustom = 9;
     private const int SpriteMeshTypeFullRect = 0;
 
-    [MenuItem("Dracula/Build Spectrum Door Prototype")]
-    public static void BuildSpectrumDoorPrototype()
+    [MenuItem("Dracula/Build Crypt Prototype")]
+    public static void BuildCryptPrototype()
     {
         EnsureRequiredAssets();
 
         Sprite roomBase = LoadSprite(RoomBasePath, new Vector2(0.5f, 0.5f), RoomPpu);
         ConfigureSpriteImporter(DoorFullRawPath, new Vector2(0.5f, 0.5f), RoomPpu);
-        Sprite[] walkRight = LoadSpriteSheetSequence(ClassicWalkRightSheetPath, "classic_walk_right", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
-        Sprite[] walkLeft = LoadSpriteSheetSequence(ClassicWalkLeftSheetPath, "classic_walk_left", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] walkRight = LoadSpriteSheetSequence(ClassicWalkRightSheetPath, "classic_walk_right", WalkRightFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
+        Sprite[] walkLeft = LoadSpriteSheetSequence(ClassicWalkLeftSheetPath, "classic_walk_left", WalkRightFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
         Sprite[] walkDown = LoadSpriteSheetSequence(ClassicWalkDownSheetPath, "classic_walk_down", WalkDownFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
         Sprite[] walkUp = FirstFrame(walkDown);
         Sprite[] idleDown = FirstFrame(walkDown);
         Sprite[] idleUp = FirstFrame(walkDown);
         Sprite[] idleRight = FirstFrame(walkRight);
         Sprite[] idleLeft = FirstFrame(walkLeft);
-        Sprite[] spectrumWalkRight = LoadSpriteSheetSequence(SpectrumWalkRightSheetPath, "spectrum_walk_right", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), SpectrumSidePpu);
-        Sprite[] spectrumWalkLeft = LoadSpriteSheetSequence(SpectrumWalkLeftSheetPath, "spectrum_walk_left", WalkSideFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), SpectrumSidePpu);
+        Sprite[] spectrumWalkRight = LoadSpriteSheetSequence(SpectrumWalkRightSheetPath, "spectrum_walk_right", WalkRightFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), SpectrumSidePpu);
+        Sprite[] spectrumWalkLeft = LoadSpriteSheetSequence(SpectrumWalkLeftSheetPath, "spectrum_walk_left", WalkRightFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), SpectrumSidePpu);
         Sprite[] spectrumWalkDown = LoadSpriteSheetSequence(SpectrumWalkDownSheetPath, "spectrum_walk_down", WalkDownFrameCount, SheetColumns, SheetRows, new Vector2(0.5f, 0f), CharacterPpu);
         Sprite[] spectrumWalkUp = FirstFrame(spectrumWalkDown);
         Sprite[] spectrumIdleDown = FirstFrame(spectrumWalkDown);
@@ -59,10 +59,10 @@ public static class SpectrumDoorPrototypeBuilder
         Sprite[] spectrumIdleLeft = FirstFrame(spectrumWalkLeft);
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-        scene.name = "SpectrumDoorPrototype";
+        scene.name = "CryptPrototype";
 
-        GameObject root = new GameObject("Spectrum Door Prototype");
-        GameObject room = new GameObject("Mockup Room Plate");
+        GameObject root = new GameObject("Crypt Prototype");
+        GameObject room = new GameObject("Isometric Crypt Room");
         room.transform.SetParent(root.transform);
 
         CreateCamera(roomBase);
@@ -95,7 +95,7 @@ public static class SpectrumDoorPrototypeBuilder
 
         Selection.activeGameObject = root;
         EditorSceneManager.SaveScene(scene, ScenePath);
-        Debug.Log("Built doorless Spectrum prototype scene at " + ScenePath + " using actor " + actor.name + ".");
+        Debug.Log("Built Crypt prototype scene at " + ScenePath + " using actor " + actor.name + ".");
     }
 
     private static void EnsureRequiredAssets()
@@ -182,7 +182,7 @@ public static class SpectrumDoorPrototypeBuilder
         walker.body = body;
         walker.walkDown = walkDown;
         walker.walkUp = walkUp;
-        walker.walkSide = walkRight;
+        walker.walkRight = walkRight;
         walker.walkLeft = walkLeft;
         walker.idleDown = idleDown;
         walker.idleUp = idleUp;
@@ -208,7 +208,7 @@ public static class SpectrumDoorPrototypeBuilder
 
         AdventureActor actor = player.AddComponent<AdventureActor>();
         actor.character = AdventureCharacter.Dracula;
-        actor.roomName = "Spectrum Mockup Room";
+        actor.roomName = "Crypt Room";
         actor.walker = walker;
         actor.spriteRenderer = walker.spriteRenderer;
 
@@ -219,7 +219,7 @@ public static class SpectrumDoorPrototypeBuilder
         DraculaSpriteStyleSwitcher.DraculaSpriteSet set,
         Sprite[] walkDown,
         Sprite[] walkUp,
-        Sprite[] walkSide,
+        Sprite[] walkRight,
         Sprite[] walkLeft,
         Sprite[] idleDown,
         Sprite[] idleUp,
@@ -228,7 +228,7 @@ public static class SpectrumDoorPrototypeBuilder
     {
         set.walkDown = walkDown;
         set.walkUp = walkUp;
-        set.walkSide = walkSide;
+        set.walkRight = walkRight;
         set.walkLeft = walkLeft;
         set.idleDown = idleDown;
         set.idleUp = idleUp;
