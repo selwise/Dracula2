@@ -1,5 +1,7 @@
 # Codex Handoff - Dracula2 Crypt Prototype - 2026-06-16
 
+> Newer handoff exists: `Docs/codex-handoff-2026-06-30.md`.
+
 This is the current working handoff for the Dracula2 crypt prototype after the room, Dracula sprite, animation, and collider iteration pass.
 
 ## Read This First

@@ -122,15 +122,15 @@ MonoBehaviour:
   - {fileID: 839050059, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
   - {fileID: 243972181, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
   - {fileID: 1799241216, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
-  animationFramerate: 8.55
-  framerateVariation: 0.1
+  animationFramerate: 4.6
+  framerateVariation: 0
   flameSize: 1
   positionJitter: 0
-  jitterSpeedVariation: 0.2
+  jitterSpeedVariation: 0.224
   lightColor: {r: 1, g: 0.85, b: 0.6, a: 1}
-  lightIntensity: 3
+  lightIntensity: 1.25
   intensityVariation: 0.1
-  lightRange: 5
+  lightRange: 1.35
   lightFlickerIntensity: 0.3
   lightFlickerSpeed: 2
   flickerSpeedVariation: 0.15

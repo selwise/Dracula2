@@ -29,11 +29,11 @@ public class CandleFlame : MonoBehaviour
     [Header("Lighting")]
     public Color lightColor = new Color(1f, 0.85f, 0.6f);
     [Range(1f, 10f)]
-    public float lightIntensity = 3f;
+    public float lightIntensity = 1.25f;
     [Range(0f, 0.5f)]
     public float intensityVariation = 0.1f;
     [Range(1f, 20f)]
-    public float lightRange = 5f;
+    public float lightRange = 1.35f;
     [Range(0f, 1f)]
     public float lightFlickerIntensity = 0.3f;
     [Range(0.5f, 5f)]
@@ -61,7 +61,8 @@ public class CandleFlame : MonoBehaviour
     private System.Type light2DType;
     private PropertyInfo intensityProperty;
     private PropertyInfo colorProperty;
-    private PropertyInfo rangeProperty;
+    private PropertyInfo innerRadiusProperty;
+    private PropertyInfo outerRadiusProperty;
     
     private int frameCount;
     private float frameTimer;
@@ -139,8 +140,13 @@ public class CandleFlame : MonoBehaviour
         lightObj.transform.localPosition = flameOffset;
         
         // Find Light2D type via reflection (Unity 6 compatible)
-        light2DType = System.Type.GetType("UnityEngine.Rendering.Universal.Light2D, Unity.RenderPipelines.Universal.Runtime");
+        light2DType = System.Type.GetType("UnityEngine.Rendering.Universal.Light2D, Unity.RenderPipelines.Universal.2D.Runtime");
         
+        if (light2DType == null)
+        {
+            light2DType = System.Type.GetType("UnityEngine.Rendering.Universal.Light2D, Unity.RenderPipelines.Universal.Runtime");
+        }
+
         if (light2DType == null)
         {
             light2DType = System.Type.GetType("UnityEngine.Rendering.Light2D, Unity.RenderPipelines.Universal.Runtime");
@@ -153,15 +159,22 @@ public class CandleFlame : MonoBehaviour
             // Cache property references
             intensityProperty = light2DType.GetProperty("intensity");
             colorProperty = light2DType.GetProperty("color");
-            rangeProperty = light2DType.GetProperty("range");
+            innerRadiusProperty = light2DType.GetProperty("pointLightInnerRadius");
+            outerRadiusProperty = light2DType.GetProperty("pointLightOuterRadius");
             
             // Set initial values
+            SetLightEnumProperty("lightType", "Point");
             if (intensityProperty != null)
                 intensityProperty.SetValue(candleLight, runtimeIntensity > 0 ? runtimeIntensity : lightIntensity);
             if (colorProperty != null)
                 colorProperty.SetValue(candleLight, lightColor);
-            if (rangeProperty != null)
-                rangeProperty.SetValue(candleLight, lightRange);
+            if (innerRadiusProperty != null)
+                innerRadiusProperty.SetValue(candleLight, Mathf.Max(0.05f, lightRange * 0.18f));
+            if (outerRadiusProperty != null)
+                outerRadiusProperty.SetValue(candleLight, lightRange);
+            SetLightFloatProperty("falloffIntensity", 0.9f);
+            SetLightFloatProperty("shadowIntensity", 0f);
+            SetLightBoolProperty("shadowsEnabled", false);
         }
         else
         {
@@ -211,6 +224,49 @@ public class CandleFlame : MonoBehaviour
     
     public void Extinguish() => SetFlameActive(false);
     public void Ignite() => SetFlameActive(true);
+
+    private void SetLightFloatProperty(string propertyName, float value)
+    {
+        if (candleLight == null || light2DType == null)
+        {
+            return;
+        }
+
+        PropertyInfo property = light2DType.GetProperty(propertyName);
+        if (property != null)
+        {
+            property.SetValue(candleLight, value);
+        }
+    }
+
+    private void SetLightBoolProperty(string propertyName, bool value)
+    {
+        if (candleLight == null || light2DType == null)
+        {
+            return;
+        }
+
+        PropertyInfo property = light2DType.GetProperty(propertyName);
+        if (property != null)
+        {
+            property.SetValue(candleLight, value);
+        }
+    }
+
+    private void SetLightEnumProperty(string propertyName, string valueName)
+    {
+        if (candleLight == null || light2DType == null)
+        {
+            return;
+        }
+
+        PropertyInfo property = light2DType.GetProperty(propertyName);
+        if (property != null && property.PropertyType.IsEnum)
+        {
+            object value = System.Enum.Parse(property.PropertyType, valueName);
+            property.SetValue(candleLight, value);
+        }
+    }
     
     [ContextMenu("Refresh Variation")]
     public void EditorRefreshVariation()

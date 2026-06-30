@@ -131,6 +131,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 12 Right Wall Upper Tall
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.863
@@ -181,6 +193,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
   m_PrefabInstance: {fileID: 12542715}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &208081025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 208081026}
+  - component: {fileID: 208081027}
+  m_Layer: 0
+  m_Name: Readability Overlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &208081026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208081025}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1163556104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &208081027
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208081025}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 41
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 1814005592, guid: b1bb02281f1a4dc41a2940f425b71535, type: 3}
+  m_Color: {r: 0.84, g: 0.88, b: 0.96, a: 0.17}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.1625, y: 3.3324304}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &235487935
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +343,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -284,6 +388,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 11 Right Wall Upper Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -347,6 +463,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 06 Left Candelabrum Right
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.684
@@ -397,6 +525,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
   m_PrefabInstance: {fileID: 382221071}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &437302505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 437302507}
+  - component: {fileID: 437302506}
+  m_Layer: 0
+  m_Name: Candle Lighting Rig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &437302506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437302505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 707523b167eadaf4da3cf5001464efd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dracula2.Runtime::CryptCandleLightFlicker
+  candleLights: []
+  glowRenderers:
+  - {fileID: 835302208}
+  - {fileID: 2106654639}
+  - {fileID: 1822696121}
+  - {fileID: 1889687263}
+  - {fileID: 1608675065}
+  - {fileID: 1078607341}
+  - {fileID: 1276772367}
+  shadowGradeRenderer: {fileID: 1938529435}
+  flickerSpeed: 2.15
+  lightIntensityPulse: 0.28
+  lightRangePulse: 0.16
+  glowAlphaPulse: 0.12
+  glowScalePulse: 0.008
+  shadowBreath: 0.018
+--- !u!4 &437302507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437302505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1938529436}
+  - {fileID: 1396641637}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &530891444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -408,6 +598,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 13 Right Wall Upper Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -528,6 +730,98 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &835302206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 835302207}
+  - component: {fileID: 835302208}
+  m_Layer: 0
+  m_Name: Glow Pool - Left Wall Candles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &835302207
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835302206}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.17, y: 1.94, z: 0}
+  m_LocalScale: {x: 0.594084, y: 0.75134176, z: 0.9927879}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &835302208
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835302206}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.16466312}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1001 &965600866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -539,6 +833,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 03 Left Wall Lower Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -602,6 +908,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 07 Center Candelabrum Left
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01
@@ -652,6 +970,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
   m_PrefabInstance: {fileID: 1002272523}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1078607339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1078607340}
+  - component: {fileID: 1078607341}
+  m_Layer: 0
+  m_Name: Glow Pool - Right Wall Upper Candles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1078607340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078607339}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.86, y: 2, z: 0}
+  m_LocalScale: {x: 0.6736598, y: 0.69093335, z: 0.98143923}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1078607341
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078607339}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.13991266}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1001 &1080982855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -663,6 +1073,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 08 Center Candelabrum Tall
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -725,6 +1147,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 14 Right Wall Lower Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -790,6 +1224,7 @@ GameObject:
   - component: {fileID: 1163556106}
   - component: {fileID: 1163556105}
   - component: {fileID: 1163556109}
+  - component: {fileID: 1163556110}
   m_Layer: 0
   m_Name: Spectrum Dracula Placeholder
   m_TagString: Untagged
@@ -811,6 +1246,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1900015035}
+  - {fileID: 208081026}
   m_Father: {fileID: 1300486497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1163556105
@@ -941,7 +1377,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1078,6 +1514,26 @@ MonoBehaviour:
     - {fileID: 2458969622460751349, guid: 444cc0c6f61cea94e8b413d7abb3e34c, type: 3}
     idleLeft:
     - {fileID: 1068069767948759037, guid: eaa7195086be27a4a95f08d12e298756, type: 3}
+--- !u!114 &1163556110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163556103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a34d6289b5bdf459cf64810957df66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dracula2.Runtime::CharacterReadabilityOverlay
+  sourceRenderer: {fileID: 1163556108}
+  overlayRenderer: {fileID: 208081027}
+  overlayMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  overlayEnabled: 1
+  alpha: 0.17
+  tint: {r: 0.84, g: 0.88, b: 0.96, a: 1}
+  sortingOrderOffset: 1
+  localOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1193379636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1629,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 10b Left Niche
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.159
@@ -1218,6 +1686,98 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+--- !u!1 &1276772366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276772368}
+  - component: {fileID: 1276772367}
+  m_Layer: 0
+  m_Name: Glow Pool - Right Wall Lower Candles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &1276772367
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276772366}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.16205588}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
+--- !u!4 &1276772368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276772366}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.63, y: 0.14, z: 0}
+  m_LocalScale: {x: 0.67342716, y: 0.77975774, z: 1.0069184}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1289650927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1229,6 +1789,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 01 Left Wall Lower Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1313,6 +1885,145 @@ Transform:
   - {fileID: 1569903304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1396641636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1396641637}
+  m_Layer: 0
+  m_Name: Warm Local Glow Pools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1396641637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396641636}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 835302207}
+  - {fileID: 2106654638}
+  - {fileID: 1822696120}
+  - {fileID: 1889687262}
+  - {fileID: 1608675064}
+  - {fileID: 1078607340}
+  - {fileID: 1276772368}
+  m_Father: {fileID: 437302507}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1514843386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1514843388}
+  - component: {fileID: 1514843387}
+  m_Layer: 0
+  m_Name: Global Low Ambient 2D Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1514843387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514843386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
+  m_ComponentVersion: 4
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_Light2DProvider:
+    rid: -2
+  m_SelectionSources:
+    rid: 1068565448930099267
+  m_FalloffIntensity: 0.7
+  m_Color: {r: 0.56, g: 0.62, b: 0.68, a: 1}
+  m_Intensity: 0.22
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1068565448930099267
+      type: {class: Light2DProviderSources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data:
+        m_SelectedHashCode: 4
+        m_SelectedSource:
+          rid: -2
+        m_Provider2DCache:
+          rid: -2
+--- !u!4 &1514843388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514843386}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1525619490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1324,6 +2035,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 05 Left Candelabrum Tall
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1407,6 +2130,98 @@ Transform:
   - {fileID: 235487936}
   m_Father: {fileID: 1300486497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1608675063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1608675064}
+  - component: {fileID: 1608675065}
+  m_Layer: 0
+  m_Name: Glow Pool - Right Door Niche
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1608675064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608675063}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.09, y: 2.24, z: 0}
+  m_LocalScale: {x: 0.4176799, y: 0.5046964, z: 0.9888253}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1608675065
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608675063}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.11145629}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &1671622960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,6 +2282,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 04 Left Candelabrum Left
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.144
@@ -1522,6 +2349,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
   m_PrefabInstance: {fileID: 3957954075142445508}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1822696119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822696120}
+  - component: {fileID: 1822696121}
+  m_Layer: 0
+  m_Name: Glow Pool - Center Candelabrum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1822696120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822696119}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.22, y: 2.08, z: 0}
+  m_LocalScale: {x: 0.6555768, y: 0.6555768, z: 0.9802286}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1822696121
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822696119}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.13596836}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &1831546717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +2458,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1831546718
 Light:
   m_ObjectHideFlags: 0
@@ -1551,7 +2470,7 @@ Light:
   serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.8
+  m_Intensity: 0.08
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1661,6 +2580,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 02 Left Wall Tall
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.169
@@ -1711,6 +2642,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
   m_PrefabInstance: {fileID: 1858773535}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1889687261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889687262}
+  - component: {fileID: 1889687263}
+  m_Layer: 0
+  m_Name: Glow Pool - Left Door Niche
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1889687262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889687261}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.16, y: 2.21, z: 0}
+  m_LocalScale: {x: 0.38924983, y: 0.47574985, z: 0.9829543}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1889687263
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889687261}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.09575985}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &1900015034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,6 +2812,98 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.42, y: 0.16}
   m_EdgeRadius: 0
+--- !u!1 &1938529434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1938529436}
+  - component: {fileID: 1938529435}
+  m_Layer: 0
+  m_Name: Low Ambient Veil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &1938529435
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938529434}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 25
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: eaf39a7d58e7d0148ab86b64e9596dfe, type: 3}
+  m_Color: {r: 0.005, g: 0.007, b: 0.011, a: 0.41459167}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
+--- !u!4 &1938529436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938529434}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 17.2, y: 9.7, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 437302507}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2036769213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1800,6 +2915,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 09 Center Candelabrum Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1863,6 +2990,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 16 Right Wall Lower Right
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.827
@@ -1925,6 +3064,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle Flame 15 Right Wall Lower Tall
       objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.64
@@ -1975,6 +3126,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
   m_PrefabInstance: {fileID: 2106399744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2106654637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2106654638}
+  - component: {fileID: 2106654639}
+  m_Layer: 0
+  m_Name: Glow Pool - Left Candelabrum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2106654638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106654637}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.91, y: 2.18, z: 0}
+  m_LocalScale: {x: 0.67002165, y: 0.67002165, z: 1.0018265}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396641637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2106654639
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106654637}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: aca036bdad38c4c4b8d5de01412f0ffd, type: 3}
+  m_Color: {r: 1, g: 0.46, b: 0.13, a: 0.18701279}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!4 &2139623205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
@@ -1991,6 +3234,18 @@ PrefabInstance:
     - target: {fileID: 2946081391607031835, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_Name
       value: Candle Flame 10a Right Niche
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerSpeed
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: intensityVariation
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054630735395339714, guid: c2de550abda6f90488154e9eb9843470, type: 3}
+      propertyPath: lightFlickerIntensity
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 8629574699788565938, guid: c2de550abda6f90488154e9eb9843470, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2046,3 +3301,5 @@ SceneRoots:
   - {fileID: 1831546719}
   - {fileID: 716423231}
   - {fileID: 1671622961}
+  - {fileID: 437302507}
+  - {fileID: 1514843388}

@@ -19,6 +19,8 @@ When iterating on the prototype, work in this order unless Selene explicitly cha
 
 Do not rush ahead into coffin props, candle edits, filters, alpha cleanup, palette conversion, or other side fixes unless specifically requested. If Selene says an asset already has proper alpha or is hand-cleaned, use it directly and do not process it first.
 
+Keep Codex handoffs, durable planning notes, and project workflow documentation under `Docs/`. Prefer dated handoff files like `Docs/codex-handoff-YYYY-MM-DD.md` rather than root-level scratch notes.
+
 ## Git Notes
 
 This repo uses Git LFS for binary art/media files. After cloning on a new machine, run:
