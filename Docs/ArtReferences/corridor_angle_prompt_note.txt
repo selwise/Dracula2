@@ -1,0 +1,24 @@
+Use corridor_tileable_base_irregular_floor_blockout.png as the base corridor layout reference.
+Use Assets/Art/SpectrumPrototype/Cryptroom6.png as the only palette and style authority.
+
+The blockout colors are not art direction. Match Cryptroom6: cool gray-green stone, black outlines, soft desaturated blue-gray highlights, deep black voids, restrained gothic ornament language.
+
+For the first pass, generate only a horizontally tileable base corridor section:
+- one continuous wall plane
+- one continuous floor plane
+- preserve the source as a seamless horizontal tile; the left and right edges must match exactly when repeated two-wide
+- do not add unique seams, cracks, objects, lighting features, or dark marks near either horizontal tile edge
+- floor tile seams following the blockout: uneven ancient stone slabs, staggered widths, chipped/broken seams, mostly horizontal row courses plus one consistent shallow diagonal seam family
+- no floor seams converging toward a centerpoint or vanishing point
+- no factory-perfect grid or bathroom-tile regularity
+- no long uninterrupted showroom lines; break the slabs into ancient, uneven stones like Cryptroom6
+- no characters
+- no UI or text
+- no props
+- no endcaps
+- no arches
+- no doors
+- no standalone pillars
+- no candles or sconces
+
+Use corridor_open_arch_module_plain_blockout.png and corridor_endcap_module_plain_blockout.png only as separate module references after the base tile is working.

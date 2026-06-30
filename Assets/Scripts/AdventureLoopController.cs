@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public sealed class AdventureLoopController : MonoBehaviour
 {
+    [Header("Game Options")]
+    public GameOptions gameOptions;
+
     [Header("Actors")]
     public AdventureActor dracula;
     public AdventureActor renfield;
@@ -71,7 +74,7 @@ public sealed class AdventureLoopController : MonoBehaviour
 
         CacheInitialActorState();
 
-        if (startDayWithRenfield)
+        if (ShouldStartDayWithRenfield)
         {
             state.SetActiveCharacter(AdventureCharacter.Renfield);
         }
@@ -213,7 +216,7 @@ public sealed class AdventureLoopController : MonoBehaviour
 
     private void ResetPlaytestDay()
     {
-        state.ResetDayOne(startDayWithRenfield ? AdventureCharacter.Renfield : AdventureCharacter.Dracula);
+        state.ResetDayOne(ShouldStartDayWithRenfield ? AdventureCharacter.Renfield : AdventureCharacter.Dracula);
         emergencyWakeTimer = 0f;
         emergencyWakeUsesRemaining = Mathf.Max(0, emergencyWakeUsesPerDay);
         playtestIntruderJumpIndex = -1;
@@ -593,6 +596,11 @@ public sealed class AdventureLoopController : MonoBehaviour
     private AdventureActor GetActiveActor()
     {
         return state.ActiveCharacter == AdventureCharacter.Dracula ? dracula : renfield;
+    }
+
+    private bool ShouldStartDayWithRenfield
+    {
+        get { return gameOptions != null ? gameOptions.startAsRenfield : startDayWithRenfield; }
     }
 
     private void TickEmergencyWake()

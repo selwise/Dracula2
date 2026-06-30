@@ -45,6 +45,31 @@ public sealed class AdventureLoopControllerTests
         }
     }
 
+    [Test]
+    public void GameOptionsCanChooseStartingCharacter()
+    {
+        GameObject obj = new GameObject("Adventure Loop Controller Test");
+        GameObject optionsObject = new GameObject("GameOptions Test");
+
+        try
+        {
+            GameOptions options = optionsObject.AddComponent<GameOptions>();
+            options.startAsRenfield = true;
+
+            AdventureLoopController controller = obj.AddComponent<AdventureLoopController>();
+            controller.gameOptions = options;
+
+            InvokeAwake(controller);
+
+            Assert.AreEqual(AdventureCharacter.Renfield, controller.State.ActiveCharacter);
+        }
+        finally
+        {
+            Object.DestroyImmediate(optionsObject);
+            Object.DestroyImmediate(obj);
+        }
+    }
+
     private static void InvokeAwake(AdventureLoopController controller)
     {
         MethodInfo awake = typeof(AdventureLoopController).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic);
