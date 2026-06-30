@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 160
+  spritePixelsToUnits: 65
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -114,9 +114,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1066
-        width: 346
-        height: 533
+        y: 324
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,10 +135,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_5
       rect:
         serializedVersion: 2
-        x: 346
-        y: 1066
-        width: 346
-        height: 533
+        x: 208
+        y: 324
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,10 +157,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_6
       rect:
         serializedVersion: 2
-        x: 692
-        y: 1066
-        width: 346
-        height: 533
+        x: 416
+        y: 324
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,10 +179,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_7
       rect:
         serializedVersion: 2
-        x: 1038
-        y: 1066
-        width: 346
-        height: 533
+        x: 624
+        y: 324
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,9 +202,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 533
-        width: 346
-        height: 533
+        y: 0
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,10 +223,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_9
       rect:
         serializedVersion: 2
-        x: 346
-        y: 533
-        width: 346
-        height: 533
+        x: 208
+        y: 0
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,10 +245,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_10
       rect:
         serializedVersion: 2
-        x: 692
-        y: 533
-        width: 346
-        height: 533
+        x: 416
+        y: 0
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -267,10 +267,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_11
       rect:
         serializedVersion: 2
-        x: 1038
-        y: 533
-        width: 346
-        height: 533
+        x: 624
+        y: 0
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -286,57 +286,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dracula_spectrum_walk_down_sheet_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 346
-        height: 533
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1b99b102443fad4f9df84e8562ea710
-      internalID: -1859511093
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dracula_spectrum_walk_down_sheet_13
-      rect:
-        serializedVersion: 2
-        x: 346
-        y: 0
-        width: 346
-        height: 533
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32d42d35e7044254fadeb891f7898344
-      internalID: -1128472771
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: dracula_spectrum_walk_down_sheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1599
-        width: 346
-        height: 533
+        y: 648
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -355,10 +311,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_1
       rect:
         serializedVersion: 2
-        x: 346
-        y: 1599
-        width: 346
-        height: 533
+        x: 208
+        y: 648
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -377,10 +333,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_2
       rect:
         serializedVersion: 2
-        x: 692
-        y: 1599
-        width: 346
-        height: 533
+        x: 416
+        y: 648
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -399,10 +355,10 @@ TextureImporter:
       name: dracula_spectrum_walk_down_sheet_3
       rect:
         serializedVersion: 2
-        x: 1038
-        y: 1599
-        width: 346
-        height: 533
+        x: 624
+        y: 648
+        width: 208
+        height: 324
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -413,50 +369,6 @@ TextureImporter:
       bones: []
       spriteID: e9fc7d2014325bf46b1afb867afee97b
       internalID: 2147164209
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dracula_spectrum_walk_down_sheet_14
-      rect:
-        serializedVersion: 2
-        x: 692
-        y: 0
-        width: 346
-        height: 533
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6af7bed96ba12d34bab8a7a4eacbced5
-      internalID: -187747247
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dracula_spectrum_walk_down_sheet_15
-      rect:
-        serializedVersion: 2
-        x: 1038
-        y: 0
-        width: 346
-        height: 533
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 79ed136a0c041ce4d8f8004d85e1e088
-      internalID: 813035454
       vertices: []
       indices: 
       edges: []
@@ -475,16 +387,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":4.0},"gridSpriteSize":{"x":346.0,"y":533.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":3.0},"gridSpriteSize":{"x":208.0,"y":324.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       dracula_spectrum_walk_down_sheet_0: -1617341775
       dracula_spectrum_walk_down_sheet_1: -1324748535
       dracula_spectrum_walk_down_sheet_10: -961936656
       dracula_spectrum_walk_down_sheet_11: 651146493
-      dracula_spectrum_walk_down_sheet_12: -1859511093
-      dracula_spectrum_walk_down_sheet_13: -1128472771
-      dracula_spectrum_walk_down_sheet_14: -187747247
-      dracula_spectrum_walk_down_sheet_15: 813035454
       dracula_spectrum_walk_down_sheet_2: -702763312
       dracula_spectrum_walk_down_sheet_3: 2147164209
       dracula_spectrum_walk_down_sheet_4: 1814005592
