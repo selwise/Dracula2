@@ -10,13 +10,15 @@ public static class CastleHorizontalRowPrototypeBuilder
     private const string ScenePath = "Assets/Scenes/CastleProperEastGalleryPrototype.unity";
     private const string PrototypeFolder = "Assets/Art/Castle/Prototype";
     private const string PixelPath = PrototypeFolder + "/castle_blockout_pixel.png";
+    private const string ObliqueDoorwaySpritePath = PrototypeFolder + "/castle_gallery_oblique_doorway_candidate.png";
     private const string CastleWallTilePath = "Assets/Art/Castle/Tiles/wall_castle_gray_block_tile.png";
     private const string RenfieldSpritePath = "Assets/Art/Characters/Renfield/Renfield.png";
     private const string WallSconcePrefabPath = "Assets/Prefabs/Castle/WallSconceCandle.prefab";
     private const string SpriteLitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
     private const string SpriteUnlitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
     private const float CastleWallTilePpu = 240f;
-    private const float RenfieldPpu = 380f;
+    private const float ObliqueDoorwayPpu = 128f;
+    private const float RenfieldPpu = 220f;
     private const int SpriteAlignmentCenter = 0;
     private const int SpriteAlignmentCustom = 9;
 
@@ -27,6 +29,7 @@ public static class CastleHorizontalRowPrototypeBuilder
     {
         Sprite pixel = EnsureBlockoutPixel();
         Sprite castleWallTile = LoadCastleWallTile();
+        Sprite obliqueDoorwaySprite = LoadObliqueDoorwaySprite();
         Sprite renfieldSprite = LoadRenfieldSprite();
         CastleWallSconcePrefabBuilder.EnsurePrefabExists();
         Material litMaterial = AssetDatabase.LoadAssetAtPath<Material>(SpriteLitMaterialPath);
@@ -47,7 +50,7 @@ public static class CastleHorizontalRowPrototypeBuilder
         Transform props = CreateChild(row.transform, "Segment Detail Props");
 
         BuildCorridorBase(pixel, castleWallTile, background, litMaterial);
-        BuildSegmentBreak(pixel, background, props, litMaterial, unlitMaterial);
+        BuildSegmentBreak(pixel, obliqueDoorwaySprite, background, props, litMaterial, unlitMaterial);
         BuildWallSconceRun(props);
         BuildEastEndStop(pixel, background, props, litMaterial);
 
@@ -75,10 +78,10 @@ public static class CastleHorizontalRowPrototypeBuilder
 
         CreateTiledSprite("Hallway Castle Gray Block Wall Tile", castleWallTile, new Vector3(-4.95f, 0.88f, 0f), new Vector2(26.4f, 4.12f), Color.white, -27, parent, litMaterial);
 
-        CreateRect("Hallway Floor Base", pixel, new Vector3(1.1f, -2.26f, 0f), new Vector2(20.7f, 2.08f), new Color(0.25f, 0.2f, 0.13f, 1f), -30, parent, litMaterial);
+        CreateRect("Hallway Floor Base", pixel, new Vector3(1.1f, -2.78f, 0f), new Vector2(20.7f, 3.12f), new Color(0.25f, 0.2f, 0.13f, 1f), -30, parent, litMaterial);
         CreateRect("Hallway Floor Back Shadow", pixel, new Vector3(1.1f, -1.55f, 0f), new Vector2(20.7f, 0.32f), new Color(0.16f, 0.18f, 0.14f, 1f), -29, parent, litMaterial);
-        CreateRect("Hallway Front Floor Lip", pixel, new Vector3(1.1f, -3.22f, 0f), new Vector2(20.7f, 0.34f), new Color(0.17f, 0.14f, 0.09f, 1f), 40, parent, litMaterial);
-        CreateRect("Hallway Near Black Groove", pixel, new Vector3(1.1f, -2.96f, 0f), new Vector2(20.7f, 0.07f), new Color(0.055f, 0.048f, 0.038f, 1f), 38, parent, null);
+        CreateRect("Hallway Front Floor Lip", pixel, new Vector3(1.1f, -4.17f, 0f), new Vector2(20.7f, 0.38f), new Color(0.17f, 0.14f, 0.09f, 1f), -24, parent, litMaterial);
+        CreateRect("Hallway Near Black Groove", pixel, new Vector3(1.1f, -3.9f, 0f), new Vector2(20.7f, 0.07f), new Color(0.055f, 0.048f, 0.038f, 1f), -23, parent, null);
 
         for (int i = 0; i < 9; i++)
         {
@@ -86,15 +89,15 @@ public static class CastleHorizontalRowPrototypeBuilder
             CreateRect("Back Wall Vertical Block " + i, pixel, new Vector3(x, 1.06f, 0f), new Vector2(0.04f, 3.55f), new Color(0.16f, 0.13f, 0.1f, 0.45f), -28, parent, null);
         }
 
-        for (int i = 0; i < 11; i++)
+        for (int i = 0; i < 16; i++)
         {
-            float x = -6.6f + i * 1.45f;
-            float y = -2.34f + (i % 3) * 0.18f;
-            CreateRect("Floor Plank Break " + i, pixel, new Vector3(x, y, 0f), new Vector2(0.82f, 0.035f), new Color(0.11f, 0.095f, 0.07f, 0.72f), 39, parent, null);
+            float x = -7.18f + i * 1.12f;
+            float y = -3.62f + (i % 4) * 0.44f;
+            CreateRect("Floor Plank Break " + i, pixel, new Vector3(x, y, 0f), new Vector2(0.82f, 0.035f), new Color(0.11f, 0.095f, 0.07f, 0.72f), -22, parent, null);
         }
     }
 
-    private static void BuildSegmentBreak(Sprite pixel, Transform background, Transform props, Material litMaterial, Material unlitMaterial)
+    private static void BuildSegmentBreak(Sprite pixel, Sprite obliqueDoorwaySprite, Transform background, Transform props, Material litMaterial, Material unlitMaterial)
     {
         CreateRect("Open Arch Interior Depth Shadow", pixel, new Vector3(-3.32f, -1.45f, 0f), new Vector2(0.72f, 5.7f), new Color(0.012f, 0.016f, 0.014f, 0.34f), 9, background, null);
         CreateRect("Open Arch Left Return", pixel, new Vector3(-3.86f, 0.2f, 0f), new Vector2(0.42f, 5.7f), new Color(0.12f, 0.21f, 0.19f, 1f), 10, background, litMaterial);
@@ -103,15 +106,12 @@ public static class CastleHorizontalRowPrototypeBuilder
         CreateRect("Open Arch Inner Top Shadow", pixel, new Vector3(-3.31f, 1.66f, 0f), new Vector2(0.82f, 0.15f), new Color(0.035f, 0.055f, 0.05f, 0.72f), 17, background, null);
         CreateRect("Open Arch Inner Amber Edge", pixel, new Vector3(-2.96f, -0.28f, 0f), new Vector2(0.08f, 3.68f), new Color(0.57f, 0.37f, 0.17f, 1f), 18, background, litMaterial);
         CreateRect("Open Arch Outer Dark Edge", pixel, new Vector3(-3.66f, -0.28f, 0f), new Vector2(0.08f, 3.85f), new Color(0.035f, 0.062f, 0.058f, 1f), 18, background, null);
-        CreateRect("Open Arch Left Foreground Continuation", pixel, new Vector3(-3.88f, -3.58f, 0f), new Vector2(0.58f, 1.9f), new Color(0.24f, 0.19f, 0.13f, 1f), 64, background, litMaterial);
-        CreateRect("Open Arch Right Foreground Continuation", pixel, new Vector3(-2.76f, -3.58f, 0f), new Vector2(0.58f, 1.9f), new Color(0.27f, 0.2f, 0.13f, 1f), 64, background, litMaterial);
-        CreateRect("Open Arch Lower Interior Depth", pixel, new Vector3(-3.32f, -3.58f, 0f), new Vector2(0.62f, 1.9f), new Color(0.012f, 0.016f, 0.014f, 0.56f), 63, background, null);
-        CreateRect("Open Arch Front Threshold Shadow", pixel, new Vector3(-3.32f, -2.88f, 0f), new Vector2(1.42f, 0.11f), new Color(0.07f, 0.06f, 0.045f, 0.72f), 66, background, null);
+        BuildObliqueGalleryReturn(obliqueDoorwaySprite, background, litMaterial);
+    }
 
-        CreateRect("Segment Wall Step Shadow 0", pixel, new Vector3(-1.88f, 1.5f, 0f), new Vector2(1.1f, 0.24f), new Color(0.48f, 0.3f, 0.14f, 1f), -20, background, litMaterial);
-        CreateRect("Segment Wall Step Shadow 1", pixel, new Vector3(-1.55f, 1.22f, 0f), new Vector2(1.32f, 0.22f), new Color(0.6f, 0.36f, 0.16f, 1f), -19, background, litMaterial);
-        CreateRect("Segment Wall Step Shadow 2", pixel, new Vector3(-1.72f, 0.48f, 0f), new Vector2(1.18f, 0.22f), new Color(0.56f, 0.34f, 0.15f, 1f), -19, background, litMaterial);
-        CreateRect("Segment Wall Step Shadow 3", pixel, new Vector3(-1.98f, 0.18f, 0f), new Vector2(0.9f, 0.18f), new Color(0.69f, 0.43f, 0.19f, 1f), -18, background, litMaterial);
+    private static void BuildObliqueGalleryReturn(Sprite obliqueDoorwaySprite, Transform background, Material litMaterial)
+    {
+        CreateSprite("Open Arch Oblique Doorway Candidate", obliqueDoorwaySprite, new Vector3(-3.06f, -0.83f, 0f), Vector3.one, Color.white, 22, background, litMaterial);
     }
 
     private static void BuildWallSconceRun(Transform props)
@@ -334,6 +334,23 @@ public static class CastleHorizontalRowPrototypeBuilder
         return sprite;
     }
 
+    private static Sprite LoadObliqueDoorwaySprite()
+    {
+        if (!File.Exists(ObliqueDoorwaySpritePath))
+        {
+            throw new FileNotFoundException("Missing required oblique doorway prototype sprite.", ObliqueDoorwaySpritePath);
+        }
+
+        ConfigureSpriteImporter(ObliqueDoorwaySpritePath, new Vector2(0.5f, 0.5f), ObliqueDoorwayPpu);
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(ObliqueDoorwaySpritePath);
+        if (sprite == null)
+        {
+            throw new FileNotFoundException("Unity failed to import the oblique doorway prototype sprite.", ObliqueDoorwaySpritePath);
+        }
+
+        return sprite;
+    }
+
     private static Transform CreateChild(Transform parent, string name)
     {
         GameObject child = new GameObject(name);
@@ -372,6 +389,26 @@ public static class CastleHorizontalRowPrototypeBuilder
         renderer.sprite = sprite;
         renderer.drawMode = SpriteDrawMode.Tiled;
         renderer.size = size;
+        renderer.color = color;
+        renderer.sortingLayerName = "Default";
+        renderer.sortingOrder = sortingOrder;
+        if (material != null)
+        {
+            renderer.sharedMaterial = material;
+        }
+
+        return obj;
+    }
+
+    private static GameObject CreateSprite(string name, Sprite sprite, Vector3 position, Vector3 scale, Color color, int sortingOrder, Transform parent, Material material)
+    {
+        GameObject obj = new GameObject(name);
+        obj.transform.SetParent(parent);
+        obj.transform.position = position;
+        obj.transform.localScale = scale;
+
+        SpriteRenderer renderer = obj.AddComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
         renderer.color = color;
         renderer.sortingLayerName = "Default";
         renderer.sortingOrder = sortingOrder;

@@ -346,9 +346,9 @@ Source sprite:
 
 Current import setting in the castle gallery builder:
 
-- `RenfieldPpu = 380f`
-- This makes Renfield roughly `1.95` world units tall.
-- Previous value was `250f`, making him roughly `2.96` world units tall, which was not a useful baseline.
+- `RenfieldPpu = 220f`
+- This matches the manually approved Renfield scale in the current saved sprite importer.
+- Previous generated value was `380f`, which made Renfield too small after the manual scale review.
 
 Implementation:
 
@@ -358,7 +358,7 @@ Implementation:
 
 Current screenshot for judgement:
 
-- `Assets/Screenshots/castle_gallery_renfield_ppu380_sconces_scale094.png`
+- `Assets/Screenshots/codex_study_castle_gallery_current.png`
 
 Current caveat:
 
@@ -549,7 +549,7 @@ Current useful screenshots:
 - `Assets/Screenshots/castle_gallery_wall_sconces_flame_y050.png`
 - `Assets/Screenshots/castle_gallery_wall_sconces_80pct_width.png`
 - `Assets/Screenshots/castle_gallery_wall_sconces_scale_102.png`
-- `Assets/Screenshots/castle_gallery_renfield_ppu380_sconces_scale094.png`
+- `Assets/Screenshots/codex_study_castle_gallery_current.png`
 
 ### Normal Map Direction
 
@@ -575,7 +575,7 @@ Verified:
   - `Dracula/Build Castle East Gallery Prototype`
 - Scene contains 4 `Prototype Wall Sconce` instances.
 - Final screenshot captured:
-  - `Assets/Screenshots/castle_gallery_renfield_ppu380_sconces_scale094.png`
+  - `Assets/Screenshots/codex_study_castle_gallery_current.png`
 - Unity console reported no compile/game errors after the final rebuild.
 
 Recurring non-game error observed in one earlier check:
@@ -588,10 +588,61 @@ This appeared to be a Unity MCP transport/client issue, not a project compile er
 
 Recommended next order:
 
-1. Decide whether `RenfieldPpu = 380f` feels correct in Unity play view.
-2. Only after actor scale feels right, tune sconce scale/height one final time.
+1. Treat `RenfieldPpu = 220f` as the manually approved actor scale baseline.
+2. Tune sconce scale/height one final time against that actor scale.
 3. Decide if the wall brick tile should stay as a pitch placeholder or be replaced by a more coherent authored wall/floor module set.
 4. Replace the remaining plain floor/arch/endcap blockout pieces with authored modules one at a time.
 5. Update `CryptPrototypeBuilder.cs` so it no longer depends on deleted/deprecated SpectrumPrototype assets.
 6. Keep all future generated/source variants under `Docs/ArtReferences/...` and keep only final active runtime art under `Assets/Art/...`.
+
+## Later 2026-06-30 Pass - Oblique Return Angle Correction
+
+The first AI room-candidate attempt drifted into the wrong full-room/elevation angle. Selene clarified the intended angle with a cropped reference: a black void beside a warm, oblique stone wall return with vertical gothic columns.
+
+Reference/check files:
+
+- User-provided angle reference: `C:/Users/selwi/AppData/Local/Temp/codex-clipboard-42de059c-57f6-4d4b-9119-c183d8b6ca97.png`
+- Previous tile-backed blockout screenshot: `Assets/Screenshots/castle_gallery_integrated_return_walltile.png`
+- Current doorway/floor verification screenshot: `Assets/Screenshots/castle_gallery_doorwall_ratio_tile_match_test.png`
+- Previous full-height doorwall screenshot: `Assets/Screenshots/castle_gallery_try_user_doorwall.png`
+- Y-only squash comparison screenshot: `Assets/Screenshots/castle_gallery_doorwall_y78_tile_match_test.png`
+- Previous top-aligned doorway screenshot: `Assets/Screenshots/castle_gallery_oblique_return_top_aligned.png`
+- Previous floor-edge verification screenshot: `Assets/Screenshots/castle_gallery_floor_reaches_screen_edge.png`
+- Prior doorway-only verification screenshots:
+  - `Assets/Screenshots/castle_gallery_oblique_doorway_user_transparency_integrated.png`
+  - `Assets/Screenshots/castle_gallery_oblique_doorway_user_transparency_scaled_integrated.png`
+- Active runtime doorway art: `Assets/Art/Castle/Prototype/castle_gallery_oblique_doorway_candidate.png`
+- User-supplied full rectangular wall/floor source copy: `Docs/ArtReferences/Candidates/castle_gallery_oblique_doorway_user_doorwall_20260630.png`
+- User-supplied doorway source copy: `Docs/ArtReferences/Candidates/castle_gallery_oblique_doorway_user_transparency_20260630.png`
+- Generated source/candidate sheets:
+  - `Docs/ArtReferences/Candidates/castle_oblique_wall_doorway_sheet_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_wall_doorway_sheet_20260630.png`
+- Cropped reference candidates kept out of runtime:
+  - `Docs/ArtReferences/Candidates/castle_gallery_oblique_doorway_tight_candidate_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_gallery_oblique_doorway_regen_full_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_gallery_oblique_doorway_regen_normalized_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_gallery_oblique_doorway_regen_below_door_alpha_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_gallery_oblique_wall_return_candidate_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_gallery_wall_continuation_candidate_20260630.png`
+  - `Docs/ArtReferences/Candidates/castle_gallery_doorway_candidate_20260630.png`
+
+Builder change:
+
+- `Assets/Editor/CastleHorizontalRowPrototypeBuilder.cs`
+- `BuildSegmentBreak()` now calls `BuildObliqueGalleryReturn()` for the left visual segment/opening.
+- The return now uses Selene's supplied `doorwall.png` full rectangular wall/floor panel, copied into the project as `castle_gallery_oblique_doorway_candidate.png`.
+- This newest panel is opaque RGB, not an alpha cutout. It should be treated as a full rectangular art module for the current test.
+- The doorway is imported as a point-filtered, uncompressed sprite at `267` PPU with `alphaIsTransparency = true`.
+- The earlier straight-on doorway, plain wall continuation, transparent doorway test, and failed generated/cutout candidates were saved only under `Docs/ArtReferences/Candidates`; the builder currently uses the user-supplied opaque `doorwall.png` panel.
+- The latest floor correction extends the visual floor to the bottom edge of the game view. In the current generated scene, the camera bottom is `y = -4.36`, `Hallway Floor Base` reaches `y = -4.34`, and `Hallway Front Floor Lip` reaches `y = -4.36`.
+- The latest oblique return test uses non-uniform scale so the panel reads less vertically stretched and better approaches the front-facing wall tile course ratio. Current module position is `(-3.5, -0.42, 0)` and local scale is `(1.12, 0.92, 1)`.
+- Current measured bounds: facing wall tile top `y = 2.940`, panel top `y = 2.943`, panel bottom `y = -3.783`, and panel size `9.002 x 6.726` world units. The right edge is kept near `x = 1.001` for the join into the existing front-facing wall.
+
+Important direction:
+
+- Use this oblique wall-return angle for arch/endcap/architectural slice candidates.
+- Do not introduce standalone generated-image cutouts for this pass; any generated wall or doorway must be derived from and visually matched to the same gray block tile/material language as the back wall.
+- Do not alpha-mask the wall/doorway module into a silhouette. Keep the upper-left/side area filled with matching masonry; alpha belongs only below/through the doorway where the opening continues.
+- Do not ask imagegen for full head-on room elevations or full-room corridor concepts when the target is this kind of return detail.
+- Continue one module at a time; the current oblique return should be judged before applying the same language to the east end stop or floor.
 
