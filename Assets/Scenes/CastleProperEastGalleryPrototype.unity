@@ -6111,13 +6111,14 @@ GameObject:
   m_Component:
   - component: {fileID: 962843205}
   - component: {fileID: 962843206}
+  - component: {fileID: 962843207}
   m_Layer: 0
   m_Name: Directional Light - Reference Only
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &962843205
 Transform:
   m_ObjectHideFlags: 0
@@ -6198,6 +6199,35 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &962843207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962843204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &981857032
 GameObject:
   m_ObjectHideFlags: 0
@@ -6744,7 +6774,7 @@ MonoBehaviour:
     rid: 4616631205108121793
   m_FalloffIntensity: 0.68
   m_Color: {r: 0.5294118, g: 0.38431373, b: 0.27450982, a: 1}
-  m_Intensity: 0.58
+  m_Intensity: 1.29
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -6791,7 +6821,11 @@ MonoBehaviour:
         m_SelectedSource:
           rid: -2
         m_Provider2DCache:
-          rid: -2
+          rid: 7029206466432860227
+    - rid: 7029206466432860227
+      type: {class: 'Provider2DCache`1[[UnityEngine.Rendering.Universal.Light2DProvider, Unity.RenderPipelines.Universal.2D.Runtime]]', ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data:
+        m_Cache: []
 --- !u!1 &1021201413
 GameObject:
   m_ObjectHideFlags: 0
@@ -7505,7 +7539,7 @@ MonoBehaviour:
     rid: 4616631205108121798
   m_FalloffIntensity: 0.22
   m_Color: {r: 0.68235296, g: 0.7058824, b: 0.72156864, a: 1}
-  m_Intensity: 0.95
+  m_Intensity: 0.73
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -7552,7 +7586,11 @@ MonoBehaviour:
         m_SelectedSource:
           rid: -2
         m_Provider2DCache:
-          rid: -2
+          rid: 7029206466432860229
+    - rid: 7029206466432860229
+      type: {class: 'Provider2DCache`1[[UnityEngine.Rendering.Universal.Light2DProvider, Unity.RenderPipelines.Universal.2D.Runtime]]', ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data:
+        m_Cache: []
 --- !u!1 &1222945214
 GameObject:
   m_ObjectHideFlags: 0
@@ -7671,13 +7709,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254667188}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.32, y: 0, z: 0.008}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.14946043, w: 0.9887677}
+  m_LocalPosition: {x: 0.294, y: -0.039, z: 0.008}
+  m_LocalScale: {x: 1.0319662, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1293764407}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 17.191}
 --- !u!114 &1254667190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7753,7 +7791,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 57
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -3382961045296186790, guid: 4593c1ca0a39a4c418dca94993b2b377, type: 3}
+  m_Sprite: {fileID: -8188579225982651932, guid: 4593c1ca0a39a4c418dca94993b2b377, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.95}
   m_FlipX: 0
   m_FlipY: 0
@@ -7990,8 +8028,8 @@ MonoBehaviour:
   m_SelectionSources:
     rid: 4616631205108121724
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.654902, g: 0.6666667, b: 0.67058825, a: 1}
-  m_Intensity: 0.62
+  m_Color: {r: 0.9764151, g: 0.7269382, b: 0.17962356, a: 1}
+  m_Intensity: 0.51
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -8575,7 +8613,7 @@ MonoBehaviour:
     rid: 4616631205108121799
   m_FalloffIntensity: 0.2
   m_Color: {r: 0.7490196, g: 0.7607843, b: 0.7607843, a: 1}
-  m_Intensity: 1.35
+  m_Intensity: 0.06
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -8622,7 +8660,11 @@ MonoBehaviour:
         m_SelectedSource:
           rid: -2
         m_Provider2DCache:
-          rid: -2
+          rid: 7029206466432860228
+    - rid: 7029206466432860228
+      type: {class: 'Provider2DCache`1[[UnityEngine.Rendering.Universal.Light2DProvider, Unity.RenderPipelines.Universal.2D.Runtime]]', ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data:
+        m_Cache: []
 --- !u!1 &1464154091
 GameObject:
   m_ObjectHideFlags: 0
@@ -11107,7 +11149,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 28
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -740575417, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  m_Sprite: {fileID: -966925968, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
