@@ -186,6 +186,7 @@ public sealed class AdventureLoopController : MonoBehaviour
 
         Vector3 desiredPosition = activeActor.CameraPosition + cameraOffset;
         desiredPosition.z = cameraOffset.z;
+        desiredPosition = ClampCameraPosition(activeActor, desiredPosition);
         sceneCamera.transform.position = Vector3.Lerp(
             sceneCamera.transform.position,
             desiredPosition,
@@ -323,6 +324,13 @@ public sealed class AdventureLoopController : MonoBehaviour
         {
             minBounds = CastleRoomLayout.ServantWingMinBounds;
             maxBounds = CastleRoomLayout.ServantWingMaxBounds;
+            return;
+        }
+
+        if (roomName == CastleRoomLayout.CastleProperEastGalleryRoomName)
+        {
+            minBounds = CastleRoomLayout.CastleProperEastGalleryMinBounds;
+            maxBounds = CastleRoomLayout.CastleProperEastGalleryMaxBounds;
             return;
         }
 
@@ -569,7 +577,25 @@ public sealed class AdventureLoopController : MonoBehaviour
 
         Vector3 desiredPosition = activeActor.CameraPosition + cameraOffset;
         desiredPosition.z = cameraOffset.z;
+        desiredPosition = ClampCameraPosition(activeActor, desiredPosition);
         sceneCamera.transform.position = desiredPosition;
+    }
+
+    private static Vector3 ClampCameraPosition(AdventureActor actor, Vector3 desiredPosition)
+    {
+        if (actor != null && actor.roomName == CastleRoomLayout.CastleProperEastGalleryRoomName)
+        {
+            desiredPosition.x = Mathf.Clamp(
+                desiredPosition.x,
+                CastleRoomLayout.CastleProperEastGalleryCameraMin.x,
+                CastleRoomLayout.CastleProperEastGalleryCameraMax.x);
+            desiredPosition.y = Mathf.Clamp(
+                desiredPosition.y,
+                CastleRoomLayout.CastleProperEastGalleryCameraMin.y,
+                CastleRoomLayout.CastleProperEastGalleryCameraMax.y);
+        }
+
+        return desiredPosition;
     }
 
     public void SetContextualPrompt(string text)

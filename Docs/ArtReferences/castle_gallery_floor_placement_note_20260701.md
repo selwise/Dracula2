@@ -44,10 +44,12 @@ Preferred next steps:
 
 1. Select `Hallway Deep Background`.
 2. In `CastleGalleryFloorTiler`, set `Tiles Right` / `Tiles Left`.
-3. Press `Rebuild Tiles`.
-4. Do not change the existing source plate's size, scale, rotation, sprite, or draw mode just to increase coverage.
-5. Keep the existing floor object as the reference sample until the replacement is visibly better.
-6. Avoid uniform square tile grids; the floor needs irregular medieval/gothic stone slabs matching the wall detail level.
+3. Leave `Live Update In Edit Mode` enabled when you want generated copies to follow the source tile as it moves, rotates, scales, or changes renderer settings.
+4. Press `Sync / Rebuild Tiles` only when you want to force a refresh.
+5. Disable `Live Update In Edit Mode` only if you intentionally want to hand-adjust a generated tile, then use `Capture Step From R01` to store that custom offset.
+6. Do not change the existing source plate's size, scale, rotation, sprite, or draw mode just to increase coverage.
+7. Keep the existing floor object as the reference sample until the replacement is visibly better.
+8. Avoid uniform square tile grids; the floor needs irregular medieval/gothic stone slabs matching the wall detail level.
 
 ## Current Continuation Tile
 
@@ -63,6 +65,7 @@ Inspector component:
 - Tile Name Prefix: `Hallway Deep Background Tile`
 - Effective Step: `(12.11, 0.00, 0.00)`
 - Step override: `(0.00, 0.00, 0.00)` means derive the step from the source sprite width and source local scale.
+- Live Update In Edit Mode: enabled. Generated tiles are inspector-managed and should follow the source tile automatically in edit mode.
 
 - Source object: `Hallway Deep Background`
 - Continuation object: `Hallway Deep Background Tile R01`
