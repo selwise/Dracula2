@@ -31,8 +31,8 @@ public static class CastleRoomLayout
     public const string CastleProperEastGalleryRoomName = "Castle Proper - East Gallery";
     public static readonly Vector2 CastleProperEastGalleryMinBounds = new Vector2(-17.35f, -4.2f);
     public static readonly Vector2 CastleProperEastGalleryMaxBounds = new Vector2(20.75f, -1.58f);
-    public static readonly Vector2 CastleProperEastGalleryCameraMin = new Vector2(-11.5f, -0.2f);
-    public static readonly Vector2 CastleProperEastGalleryCameraMax = new Vector2(14.5f, -0.2f);
+    public static readonly Vector2 CastleProperEastGalleryCameraMin = new Vector2(-11.5f, -0.5f);
+    public static readonly Vector2 CastleProperEastGalleryCameraMax = new Vector2(14.5f, -0.5f);
     public static readonly Vector2 CastleProperEastGalleryStart = new Vector2(1.25f, -1.78f);
     public static readonly Vector2 CastleProperEastGalleryEndStart = new Vector2(4.9f, -1.93f);
 
