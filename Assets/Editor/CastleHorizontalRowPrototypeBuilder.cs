@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -10,19 +11,21 @@ public static class CastleHorizontalRowPrototypeBuilder
     private const string ScenePath = "Assets/Scenes/CastleProperEastGalleryPrototype.unity";
     private const string PrototypeFolder = "Assets/Art/Castle/Prototype";
     private const string PixelPath = PrototypeFolder + "/castle_blockout_pixel.png";
-    private const string ObliqueDoorwaySpritePath = PrototypeFolder + "/castle_gallery_oblique_doorway_candidate.png";
+    private const string ObliqueDoorwaySpritePath = PrototypeFolder + "/castle_gallery_oblique_doorwall_user_exact.png";
     private const string CastleWallTilePath = "Assets/Art/Castle/Tiles/wall_castle_gray_block_tile.png";
     private const string RenfieldSpritePath = "Assets/Art/Characters/Renfield/Renfield.png";
     private const string WallSconcePrefabPath = "Assets/Prefabs/Castle/WallSconceCandle.prefab";
     private const string SpriteLitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
     private const string SpriteUnlitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
     private const float CastleWallTilePpu = 240f;
-    private const float ObliqueDoorwayPpu = 128f;
+    private const float ObliqueDoorwayPpu = 264f;
     private const float RenfieldPpu = 220f;
     private const int SpriteAlignmentCenter = 0;
     private const int SpriteAlignmentCustom = 9;
 
     private static readonly Vector3 CameraOffset = new Vector3(-3.72f, 1.32f, -10f);
+    private static readonly CastleObliqueWallPlacementRule ObliqueDoorwayPlacementRule =
+        CastleObliqueWallPlacementRule.CastleProperEastGalleryLeftReturn();
 
     [MenuItem("Dracula/Build Castle East Gallery Prototype")]
     public static void BuildCastleEastGalleryPrototype()
@@ -50,13 +53,14 @@ public static class CastleHorizontalRowPrototypeBuilder
         Transform props = CreateChild(row.transform, "Segment Detail Props");
 
         BuildCorridorBase(pixel, castleWallTile, background, litMaterial);
-        BuildSegmentBreak(pixel, obliqueDoorwaySprite, background, props, litMaterial, unlitMaterial);
+        BuildSegmentBreak(obliqueDoorwaySprite, background, litMaterial);
         BuildWallSconceRun(props);
         BuildEastEndStop(pixel, background, props, litMaterial);
 
         GameObject renfield = CreateRenfield(renfieldSprite, litMaterial, unlitMaterial, root.transform);
         CreateGameOptions(renfield.GetComponent<AdventureActor>(), cameraObject.GetComponent<Camera>(), root.transform);
         SnapCameraToActor(cameraObject.transform, renfield.GetComponent<AdventureActor>());
+        ConfigureLayoutInspector(root.transform);
 
         Selection.activeGameObject = root;
         EditorSceneManager.SaveScene(scene, ScenePath);
@@ -97,21 +101,31 @@ public static class CastleHorizontalRowPrototypeBuilder
         }
     }
 
-    private static void BuildSegmentBreak(Sprite pixel, Sprite obliqueDoorwaySprite, Transform background, Transform props, Material litMaterial, Material unlitMaterial)
+    private static void BuildSegmentBreak(Sprite obliqueDoorwaySprite, Transform background, Material litMaterial)
     {
-        CreateRect("Open Arch Interior Depth Shadow", pixel, new Vector3(-3.32f, -1.45f, 0f), new Vector2(0.72f, 5.7f), new Color(0.012f, 0.016f, 0.014f, 0.34f), 9, background, null);
-        CreateRect("Open Arch Left Return", pixel, new Vector3(-3.86f, 0.2f, 0f), new Vector2(0.42f, 5.7f), new Color(0.12f, 0.21f, 0.19f, 1f), 10, background, litMaterial);
-        CreateRect("Open Arch Right Return", pixel, new Vector3(-2.76f, 0.2f, 0f), new Vector2(0.42f, 5.7f), new Color(0.14f, 0.22f, 0.19f, 1f), 10, background, litMaterial);
-        CreateRect("Open Arch Top Return", pixel, new Vector3(-3.31f, 2.06f, 0f), new Vector2(1.18f, 0.42f), new Color(0.1f, 0.18f, 0.16f, 1f), 12, background, litMaterial);
-        CreateRect("Open Arch Inner Top Shadow", pixel, new Vector3(-3.31f, 1.66f, 0f), new Vector2(0.82f, 0.15f), new Color(0.035f, 0.055f, 0.05f, 0.72f), 17, background, null);
-        CreateRect("Open Arch Inner Amber Edge", pixel, new Vector3(-2.96f, -0.28f, 0f), new Vector2(0.08f, 3.68f), new Color(0.57f, 0.37f, 0.17f, 1f), 18, background, litMaterial);
-        CreateRect("Open Arch Outer Dark Edge", pixel, new Vector3(-3.66f, -0.28f, 0f), new Vector2(0.08f, 3.85f), new Color(0.035f, 0.062f, 0.058f, 1f), 18, background, null);
         BuildObliqueGalleryReturn(obliqueDoorwaySprite, background, litMaterial);
     }
 
     private static void BuildObliqueGalleryReturn(Sprite obliqueDoorwaySprite, Transform background, Material litMaterial)
     {
-        CreateSprite("Open Arch Oblique Doorway Candidate", obliqueDoorwaySprite, new Vector3(-3.06f, -0.83f, 0f), Vector3.one, Color.white, 22, background, litMaterial);
+        GameObject doorway = CreateSprite(
+            "Open Arch Oblique Doorway Candidate",
+            obliqueDoorwaySprite,
+            CalculateObliqueDoorwayPosition(obliqueDoorwaySprite),
+            ObliqueDoorwayPlacementRule.perspectiveScale,
+            Color.white,
+            22,
+            background,
+            litMaterial);
+
+        ObliqueDoorwayPlacementRule.ApplyTo(doorway.transform, obliqueDoorwaySprite);
+        CastleObliqueWallPlacement placement = doorway.AddComponent<CastleObliqueWallPlacement>();
+        placement.Configure(doorway.GetComponent<SpriteRenderer>(), ObliqueDoorwayPlacementRule);
+    }
+
+    private static Vector3 CalculateObliqueDoorwayPosition(Sprite obliqueDoorwaySprite)
+    {
+        return ObliqueDoorwayPlacementRule.CalculatePosition(obliqueDoorwaySprite);
     }
 
     private static void BuildWallSconceRun(Transform props)
@@ -443,6 +457,88 @@ public static class CastleHorizontalRowPrototypeBuilder
         instance.transform.SetParent(parent);
         instance.transform.position = position;
         instance.transform.localScale = Vector3.one * scale;
+    }
+
+    private static void ConfigureLayoutInspector(Transform root)
+    {
+        CastleGalleryPrototypeLayout layout = root.gameObject.AddComponent<CastleGalleryPrototypeLayout>();
+        List<CastleGalleryPrototypeLayout.Placement> placements = new List<CastleGalleryPrototypeLayout.Placement>();
+
+        AddPlacement(placements, root, "Door wall plate", "Open Arch Oblique Doorway Candidate", true, true);
+        AddPlacement(placements, root, "Back wall tile field", "Hallway Castle Gray Block Wall Tile", true);
+        AddPlacement(placements, root, "Floor base", "Hallway Floor Base", true);
+        AddPlacement(placements, root, "Floor back shadow", "Hallway Floor Back Shadow", true);
+        AddPlacement(placements, root, "Front floor lip", "Hallway Front Floor Lip", true);
+        AddPlacement(placements, root, "Near black floor groove", "Hallway Near Black Groove", true);
+
+        AddPlacement(placements, root, "East end dark wall face", "East End Dark Wall Face", true);
+        AddPlacement(placements, root, "East end brown return", "East End Inner Brown Return", true);
+        AddPlacement(placements, root, "East end black side shadow", "East End Black Side Shadow", true);
+        AddPlacement(placements, root, "East end top return block", "East End Top Return Block", true);
+        AddPlacement(placements, root, "East end lower return block", "East End Lower Return Block", true);
+        AddPlacement(placements, root, "East end floor stop shadow", "East End Floor Stop Shadow", true);
+
+        AddPlacement(placements, root, "Renfield position", "Renfield Placeholder", false);
+        AddPlacement(placements, root, "Renfield ground shadow", "Renfield Ground Shadow", true);
+
+        AddRepeatedPlacements(placements, root, "Wall sconce", "Prototype Wall Sconce", false);
+        AddRepeatedPlacements(placements, root, "Back wall vertical block", "Back Wall Vertical Block", true);
+        AddRepeatedPlacements(placements, root, "Floor plank break", "Floor Plank Break", true);
+
+        layout.SetPlacements(placements.ToArray());
+    }
+
+    private static void AddPlacement(List<CastleGalleryPrototypeLayout.Placement> placements, Transform root, string label, string exactName, bool editScale, bool editRotation = false)
+    {
+        Transform target = FindDescendant(root, exactName);
+        if (target != null)
+        {
+            placements.Add(new CastleGalleryPrototypeLayout.Placement(label, target, editScale, editRotation));
+        }
+    }
+
+    private static void AddRepeatedPlacements(List<CastleGalleryPrototypeLayout.Placement> placements, Transform root, string labelPrefix, string namePrefix, bool editScale)
+    {
+        List<Transform> matches = new List<Transform>();
+        CollectDescendants(root, namePrefix, matches);
+
+        for (int i = 0; i < matches.Count; i++)
+        {
+            placements.Add(new CastleGalleryPrototypeLayout.Placement(labelPrefix + " " + i, matches[i], editScale));
+        }
+    }
+
+    private static Transform FindDescendant(Transform parent, string exactName)
+    {
+        if (parent.name == exactName)
+        {
+            return parent;
+        }
+
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform result = FindDescendant(parent.GetChild(i), exactName);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    private static void CollectDescendants(Transform parent, string namePrefix, List<Transform> matches)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            if (child.name.StartsWith(namePrefix, StringComparison.Ordinal))
+            {
+                matches.Add(child);
+            }
+
+            CollectDescendants(child, namePrefix, matches);
+        }
     }
 
     private static void ConfigureSpriteImporter(string path, Vector2 pivot, float pixelsPerUnit, TextureWrapMode wrapMode = TextureWrapMode.Clamp, bool alphaIsTransparency = true)

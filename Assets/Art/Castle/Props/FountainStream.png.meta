@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6ca2ca4a86014704f8d3463c04ac1940
+guid: ff9d692d9076bda4b8d6bb44acc14745
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 90
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,353 +110,265 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Flame-anim_0
+      name: FountainStream_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 681
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 352
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7668465812b6aaf489d1c1d3e8a8d6c5
-      internalID: -923658932
+      spriteID: eed47f1824e6a07488dba4ef01a1fec4
+      internalID: -1982463668
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_1
+      name: FountainStream_1
       rect:
         serializedVersion: 2
-        x: 217
-        y: 681
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 560
+        y: 352
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4c1d996b2211a848b822cbf0e57005e
-      internalID: 1350339945
+      spriteID: a02b30dbf492d58419bd817377d8fc5d
+      internalID: -1687472785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_2
+      name: FountainStream_2
       rect:
         serializedVersion: 2
-        x: 434
-        y: 681
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 1120
+        y: 352
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a97d93aa6b31a442b3b5d73f4ab1223
-      internalID: -1530220853
+      spriteID: 004f968c690d3984d9d900585c581af4
+      internalID: 1660249186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_3
+      name: FountainStream_3
       rect:
         serializedVersion: 2
-        x: 651
-        y: 681
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 1680
+        y: 352
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab59255a05926d54cb9509f70fda6445
-      internalID: -947808322
+      spriteID: a0d8dd6adfa9bad45a055ea42c3d9454
+      internalID: -1673131876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 453
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 569f2d2669ded7041af5340e794eaa43
-      internalID: -355466123
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flame-anim_5
-      rect:
-        serializedVersion: 2
-        x: 217
-        y: 454
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a135b69c9b11c643b8edddcbb181607
-      internalID: -966925968
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flame-anim_6
-      rect:
-        serializedVersion: 2
-        x: 435
-        y: 452
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4042e2f70e30e5548a690a9fb317e4bc
-      internalID: -740575417
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flame-anim_7
-      rect:
-        serializedVersion: 2
-        x: 651
-        y: 454
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37543f83a5081464c986a9a80ddc1f22
-      internalID: 706032225
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flame-anim_8
+      name: FountainStream_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 226
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 176
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ea622fd7668be64a89f9c6838382911
-      internalID: 523632771
+      spriteID: 1a9715d3be823a44c8280729f82128d0
+      internalID: 893917589
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_9
+      name: FountainStream_5
       rect:
         serializedVersion: 2
-        x: 217
-        y: 227
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 560
+        y: 176
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f75b3ec2fac9ce48aa0606681e000e7
-      internalID: 37383863
+      spriteID: bb0a5f83e055d444ca996c50de15c461
+      internalID: 542649264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_10
+      name: FountainStream_6
       rect:
         serializedVersion: 2
-        x: 434
-        y: 227
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 1120
+        y: 176
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15f00c8e0692516478eb89d6d0b3ed70
-      internalID: -568794037
+      spriteID: fce100a823036b74790d0dfca381f178
+      internalID: 952855128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_11
+      name: FountainStream_7
       rect:
         serializedVersion: 2
-        x: 651
-        y: 223
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 1680
+        y: 176
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3240d2db4b380c643b3b8ff93a3827f7
-      internalID: -119045449
+      spriteID: b40b5d01d25168a48b9f603a6946f75b
+      internalID: -1573368884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_12
+      name: FountainStream_8
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da68d522245ffa54c937aba53a66d7cd
-      internalID: 1075009620
+      spriteID: 201f86901c422cb478f06e2ccdc94def
+      internalID: 2016047588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_13
+      name: FountainStream_9
       rect:
         serializedVersion: 2
-        x: 217
+        x: 560
         y: 0
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 952326c413908ad43af4f63209bb1875
-      internalID: 839050059
+      spriteID: a909f90665c00054f99b7a24e605c084
+      internalID: -2105494079
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_14
+      name: FountainStream_10
       rect:
         serializedVersion: 2
-        x: 433
+        x: 1120
         y: 0
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 249089dd10f07ca4a8d5b01b44bb4821
-      internalID: 243972181
+      spriteID: ca010a4c55503f048850bf531b52e6ae
+      internalID: -269902328
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flame-anim_15
+      name: FountainStream_11
       rect:
         serializedVersion: 2
-        x: 651
+        x: 1680
         y: 0
-        width: 217
-        height: 227
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 560
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac3dc9cb8f8f3d4498102e12f3446a16
-      internalID: 1799241216
+      spriteID: 3aec5431f9604ed43ad8c5adf648c681
+      internalID: -847264528
       vertices: []
       indices: 
       edges: []
@@ -465,7 +377,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 83303d4a086e47447b29b394241e41d9
+    spriteID: 7de4901ce2eaa5842bbbfb417ba1a05a
     internalID: 0
     vertices: []
     indices: 
@@ -475,24 +387,20 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":4.0},"gridSpriteSize":{"x":217.0,"y":227.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":3.0},"gridSpriteSize":{"x":560.0,"y":176.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Flame-anim_0: -923658932
-      Flame-anim_1: 1350339945
-      Flame-anim_10: -568794037
-      Flame-anim_11: -119045449
-      Flame-anim_12: 1075009620
-      Flame-anim_13: 839050059
-      Flame-anim_14: 243972181
-      Flame-anim_15: 1799241216
-      Flame-anim_2: -1530220853
-      Flame-anim_3: -947808322
-      Flame-anim_4: -355466123
-      Flame-anim_5: -966925968
-      Flame-anim_6: -740575417
-      Flame-anim_7: 706032225
-      Flame-anim_8: 523632771
-      Flame-anim_9: 37383863
+      FountainStream_0: -1982463668
+      FountainStream_1: -1687472785
+      FountainStream_10: -269902328
+      FountainStream_11: -847264528
+      FountainStream_2: 1660249186
+      FountainStream_3: -1673131876
+      FountainStream_4: 893917589
+      FountainStream_5: 542649264
+      FountainStream_6: 952855128
+      FountainStream_7: -1573368884
+      FountainStream_8: 2016047588
+      FountainStream_9: -2105494079
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
