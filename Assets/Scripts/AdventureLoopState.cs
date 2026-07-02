@@ -23,7 +23,8 @@ public enum RenfieldAction
     MoveCoffin,
     EraseSigns,
     PrepareArtifact,
-    ReleaseVermin
+    ReleaseVermin,
+    LureVictim
 }
 
 public sealed class AdventureLoopState

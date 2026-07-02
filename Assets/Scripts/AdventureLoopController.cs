@@ -334,6 +334,20 @@ public sealed class AdventureLoopController : MonoBehaviour
             return;
         }
 
+        if (roomName == CastleRoomLayout.UpperEastGalleryRoomName)
+        {
+            minBounds = CastleRoomLayout.UpperEastGalleryMinBounds;
+            maxBounds = CastleRoomLayout.UpperEastGalleryMaxBounds;
+            return;
+        }
+
+        if (roomName == CastleRoomLayout.VillageRoadRoomName)
+        {
+            minBounds = CastleRoomLayout.VillageRoadMinBounds;
+            maxBounds = CastleRoomLayout.VillageRoadMaxBounds;
+            return;
+        }
+
         minBounds = CastleRoomLayout.CastleMapMinBounds;
         maxBounds = CastleRoomLayout.CastleMapMaxBounds;
     }
@@ -415,6 +429,10 @@ public sealed class AdventureLoopController : MonoBehaviour
         if (state.TryPerformRenfieldAction(nearestStation.action))
         {
             ShowFeedback("Renfield: " + nearestStation.displayName + ".");
+            if (state.RenfieldActionsRemaining <= 0)
+            {
+                ShowPhaseCard("PREPARATIONS SET", "Return to the castle and press N for dusk.");
+            }
         }
 
         RefreshStationState();
@@ -442,23 +460,23 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
         else if (WasKeyPressed(keyboard, Key.Digit4, Key.Numpad4))
         {
-            TryPerformPlaytestPrep(RenfieldAction.RepairGrandHall);
+            TryPerformPlaytestPrep(RenfieldAction.MoveCoffin);
         }
         else if (WasKeyPressed(keyboard, Key.Digit5, Key.Numpad5))
         {
-            TryPerformPlaytestPrep(RenfieldAction.EraseSigns);
+            TryPerformPlaytestPrep(RenfieldAction.LureVictim);
         }
         else if (WasKeyPressed(keyboard, Key.Digit6, Key.Numpad6))
         {
-            TryPerformPlaytestPrep(RenfieldAction.PrepareArtifact);
+            TryPerformPlaytestPrep(RenfieldAction.EraseSigns);
         }
         else if (WasKeyPressed(keyboard, Key.Digit7, Key.Numpad7))
         {
-            TryPerformPlaytestPrep(RenfieldAction.ReleaseVermin);
+            TryPerformPlaytestPrep(RenfieldAction.PrepareArtifact);
         }
         else if (WasKeyPressed(keyboard, Key.Digit8, Key.Numpad8))
         {
-            TryPerformPlaytestPrep(RenfieldAction.MoveCoffin);
+            TryPerformPlaytestPrep(RenfieldAction.ReleaseVermin);
         }
     }
 
@@ -593,6 +611,28 @@ public sealed class AdventureLoopController : MonoBehaviour
                 desiredPosition.y,
                 CastleRoomLayout.CastleProperEastGalleryCameraMin.y,
                 CastleRoomLayout.CastleProperEastGalleryCameraMax.y);
+        }
+        else if (actor != null && actor.roomName == CastleRoomLayout.UpperEastGalleryRoomName)
+        {
+            desiredPosition.x = Mathf.Clamp(
+                desiredPosition.x,
+                CastleRoomLayout.UpperEastGalleryCameraMin.x,
+                CastleRoomLayout.UpperEastGalleryCameraMax.x);
+            desiredPosition.y = Mathf.Clamp(
+                desiredPosition.y,
+                CastleRoomLayout.UpperEastGalleryCameraMin.y,
+                CastleRoomLayout.UpperEastGalleryCameraMax.y);
+        }
+        else if (actor != null && actor.roomName == CastleRoomLayout.VillageRoadRoomName)
+        {
+            desiredPosition.x = Mathf.Clamp(
+                desiredPosition.x,
+                CastleRoomLayout.VillageRoadCameraMin.x,
+                CastleRoomLayout.VillageRoadCameraMax.x);
+            desiredPosition.y = Mathf.Clamp(
+                desiredPosition.y,
+                CastleRoomLayout.VillageRoadCameraMin.y,
+                CastleRoomLayout.VillageRoadCameraMax.y);
         }
 
         return desiredPosition;
@@ -828,12 +868,41 @@ public sealed class AdventureLoopController : MonoBehaviour
     private void OnGUI()
     {
         float uiScale = Mathf.Clamp(Screen.height / 1080f, uiScaleMin, uiScaleMax);
-        Rect panel = new Rect(18f * uiScale, 18f * uiScale, 430f * uiScale, 184f * uiScale);
+        Rect panel = new Rect(18f * uiScale, 18f * uiScale, 314f * uiScale, 118f * uiScale);
 
         int previousDepth = GUI.depth;
         Color previousColor = GUI.color;
         GUI.depth = -80;
 
+        DrawHudPanel(panel, uiScale);
+
+        float x = panel.x + 14f * uiScale;
+        float y = panel.y + 10f * uiScale;
+        float width = panel.width - 36f * uiScale;
+        GUI.color = Color.white;
+        GUI.Label(new Rect(x, y, width, 24f * uiScale), "DAY " + state.DayNumber + "  " + state.Phase.ToString().ToUpperInvariant(), HeaderStyle(uiScale));
+
+        y += 28f * uiScale;
+        AdventureActor activeActor = GetActiveActor();
+        string room = activeActor != null ? activeActor.roomName : "Unknown Room";
+        GUI.Label(new Rect(x, y, width, 22f * uiScale), GetCharacterName(state.ActiveCharacter).ToUpperInvariant() + " / " + room.ToUpperInvariant(), BodyStyle(uiScale));
+
+        DrawActionSeals(new Rect(x, y + 28f * uiScale, 94f * uiScale, 34f * uiScale), uiScale);
+
+        if (state.Phase == AdventurePhase.Day)
+        {
+            GUI.Label(new Rect(x + 110f * uiScale, y + 29f * uiScale, width - 110f * uiScale, 32f * uiScale), GetDayHudText(), HintStyle(uiScale));
+        }
+
+        GUI.color = previousColor;
+        GUI.depth = previousDepth;
+
+        DrawBottomPrompt(uiScale);
+        DrawPhaseCard(uiScale);
+    }
+
+    private void DrawHudPanel(Rect panel, float uiScale)
+    {
         if (panelTexture != null)
         {
             GUI.color = Color.white;
@@ -841,35 +910,63 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
         else
         {
-            GUI.color = new Color(0.025f, 0.018f, 0.022f, 0.86f);
+            GUI.color = new Color(0.012f, 0.014f, 0.018f, 0.78f);
             GUI.DrawTexture(panel, Texture2D.whiteTexture);
+            GUI.color = new Color(0.54f, 0.48f, 0.34f, 0.95f);
+            GUI.DrawTexture(new Rect(panel.x, panel.y, panel.width, 2f * uiScale), Texture2D.whiteTexture);
+            GUI.DrawTexture(new Rect(panel.x, panel.yMax - 2f * uiScale, panel.width, 2f * uiScale), Texture2D.whiteTexture);
+            GUI.color = new Color(0.08f, 0.75f, 0.84f, 0.28f);
+            GUI.DrawTexture(new Rect(panel.x + 8f * uiScale, panel.y + 31f * uiScale, panel.width - 16f * uiScale, 1f * uiScale), Texture2D.whiteTexture);
+        }
+    }
+
+    private void DrawActionSeals(Rect rect, float uiScale)
+    {
+        int filled = AdventureLoopState.RenfieldActionsPerDay - state.RenfieldActionsRemaining;
+        for (int i = 0; i < AdventureLoopState.RenfieldActionsPerDay; i++)
+        {
+            Rect seal = new Rect(rect.x + i * 42f * uiScale, rect.y, 32f * uiScale, 32f * uiScale);
+            bool isFilled = i < filled;
+            GUI.color = isFilled ? new Color(0.85f, 0.68f, 0.24f, 0.96f) : new Color(0.14f, 0.18f, 0.2f, 0.86f);
+            GUI.DrawTexture(seal, Texture2D.whiteTexture);
+            GUI.color = new Color(0.012f, 0.014f, 0.018f, 0.92f);
+            GUI.DrawTexture(new Rect(seal.x + 3f * uiScale, seal.y + 3f * uiScale, seal.width - 6f * uiScale, seal.height - 6f * uiScale), Texture2D.whiteTexture);
+            GUI.color = isFilled ? new Color(0.96f, 0.84f, 0.28f, 1f) : new Color(0.34f, 0.43f, 0.46f, 1f);
+            GUI.Label(seal, isFilled ? "X" : "O", SealStyle(uiScale));
+        }
+    }
+
+    private string GetDayHudText()
+    {
+        if (state.RenfieldActionsRemaining <= 0)
+        {
+            return "Preparations set";
         }
 
-        float x = panel.x + 18f * uiScale;
-        float y = panel.y + 14f * uiScale;
-        float width = panel.width - 36f * uiScale;
-        GUI.color = Color.white;
-        GUI.Label(new Rect(x, y, width, 28f * uiScale), "Day " + state.DayNumber + " / " + state.Phase, HeaderStyle(uiScale));
+        return state.RenfieldActionsRemaining + " prep left";
+    }
 
-        y += 34f * uiScale;
-        AdventureActor activeActor = GetActiveActor();
-        string room = activeActor != null ? activeActor.roomName : "Unknown Room";
-        GUI.Label(new Rect(x, y, width, 24f * uiScale), "Active: " + GetCharacterName(state.ActiveCharacter) + " / " + room, BodyStyle(uiScale));
-
-        y += 27f * uiScale;
-        GUI.Label(new Rect(x, y, width, 24f * uiScale), "Renfield actions: " + state.RenfieldActionsRemaining + " / " + AdventureLoopState.RenfieldActionsPerDay, BodyStyle(uiScale));
-
-        y += 29f * uiScale;
-        GUI.Label(new Rect(x, y, width, 24f * uiScale), "E/A use   N phase   J threat   R reset   M map", HintStyle(uiScale));
-
-        y += 26f * uiScale;
+    private void DrawBottomPrompt(float uiScale)
+    {
         string prompt = GetPromptText();
-        GUI.Label(new Rect(x, y, width, 44f * uiScale), prompt, BodyStyle(uiScale));
+        if (string.IsNullOrEmpty(prompt))
+        {
+            return;
+        }
 
-        GUI.color = previousColor;
-        GUI.depth = previousDepth;
+        Rect promptRect = new Rect(
+            (Screen.width - 620f * uiScale) * 0.5f,
+            Screen.height - 86f * uiScale,
+            620f * uiScale,
+            52f * uiScale);
 
-        DrawPhaseCard(uiScale);
+        GUI.color = new Color(0.012f, 0.014f, 0.018f, 0.78f);
+        GUI.DrawTexture(promptRect, Texture2D.whiteTexture);
+        GUI.color = new Color(0.54f, 0.48f, 0.34f, 0.95f);
+        GUI.DrawTexture(new Rect(promptRect.x, promptRect.y, promptRect.width, 2f * uiScale), Texture2D.whiteTexture);
+        GUI.DrawTexture(new Rect(promptRect.x, promptRect.yMax - 2f * uiScale, promptRect.width, 2f * uiScale), Texture2D.whiteTexture);
+        GUI.color = new Color(0.92f, 0.88f, 0.78f, 1f);
+        GUI.Label(new Rect(promptRect.x + 18f * uiScale, promptRect.y + 8f * uiScale, promptRect.width - 36f * uiScale, promptRect.height - 12f * uiScale), prompt.ToUpperInvariant(), PromptStyle(uiScale));
     }
 
     private string GetPromptText()
@@ -937,19 +1034,21 @@ public sealed class AdventureLoopController : MonoBehaviour
         switch (action)
         {
             case RenfieldAction.ResetChandelier:
-                return "Chandelier Trap";
+                return "Gallery Trap";
             case RenfieldAction.RepairGrandHall:
                 return "Repair Hall";
             case RenfieldAction.ScoutVillage:
-                return "Scout Village";
+                return "Threat Rumors";
             case RenfieldAction.PrepareBlackCandles:
                 return "Black Candles";
             case RenfieldAction.MoveCoffin:
-                return "Move Coffin";
+                return "Demeter Crate";
             case RenfieldAction.EraseSigns:
                 return "Erase Signs";
             case RenfieldAction.PrepareArtifact:
                 return "Prepare Artifact";
+            case RenfieldAction.LureVictim:
+                return "Lure Victim";
             default:
                 return "Release Vermin";
         }
@@ -1018,8 +1117,29 @@ public sealed class AdventureLoopController : MonoBehaviour
     private static GUIStyle HintStyle(float uiScale)
     {
         GUIStyle style = BodyStyle(uiScale);
-        style.fontSize = Mathf.RoundToInt(14f * uiScale);
+        style.fontSize = Mathf.RoundToInt(13f * uiScale);
         style.normal.textColor = new Color(0.74f, 0.76f, 0.82f, 1f);
+        return style;
+    }
+
+    private static GUIStyle SealStyle(float uiScale)
+    {
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
+        style.fontSize = Mathf.RoundToInt(14f * uiScale);
+        style.fontStyle = FontStyle.Bold;
+        style.normal.textColor = new Color(0.96f, 0.84f, 0.28f, 1f);
+        return style;
+    }
+
+    private static GUIStyle PromptStyle(float uiScale)
+    {
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
+        style.fontSize = Mathf.RoundToInt(15f * uiScale);
+        style.fontStyle = FontStyle.Bold;
+        style.wordWrap = true;
+        style.normal.textColor = new Color(0.92f, 0.88f, 0.78f, 1f);
         return style;
     }
 

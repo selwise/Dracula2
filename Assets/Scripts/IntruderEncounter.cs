@@ -228,6 +228,14 @@ public sealed class IntruderEncounter : AdventureInteractionReceiver
 
         if (kind == IntruderKind.AngryPeasant)
         {
+            if (HasPrep(RenfieldAction.LureVictim))
+            {
+                return Resolve(
+                    "Fed before nightfall, Dracula has the patience to make the angry peasant vanish quietly.",
+                    IntruderOutcomeKind.Clean,
+                    "Peasant vanished after Dracula fed.");
+            }
+
             if (HasPrep(RenfieldAction.ResetChandelier))
             {
                 return Resolve(
@@ -287,6 +295,17 @@ public sealed class IntruderEncounter : AdventureInteractionReceiver
 
         if (breached)
         {
+            if (HasPrep(RenfieldAction.LureVictim))
+            {
+                return Resolve(
+                    "Dracula's stolen strength carries him through the holy pain. The priest escapes shaken, not victorious.",
+                    IntruderOutcomeKind.Messy,
+                    "Priest repelled after Dracula fed.",
+                    0,
+                    1,
+                    0);
+            }
+
             return Resolve(
                 "Dracula forces the priest back at the crypt door, but the holy wound will matter later.",
                 IntruderOutcomeKind.WoundedDracula,

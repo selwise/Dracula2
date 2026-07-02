@@ -30,11 +30,35 @@ public static class CastleRoomLayout
 
     public const string CastleProperEastGalleryRoomName = "Castle Proper - East Gallery";
     public static readonly Vector2 CastleProperEastGalleryMinBounds = new Vector2(-17.35f, -4.2f);
-    public static readonly Vector2 CastleProperEastGalleryMaxBounds = new Vector2(20.75f, -1.58f);
+    public static readonly Vector2 CastleProperEastGalleryMaxBounds = new Vector2(18.85f, -1.58f);
     public static readonly Vector2 CastleProperEastGalleryCameraMin = new Vector2(-11.5f, -0.5f);
-    public static readonly Vector2 CastleProperEastGalleryCameraMax = new Vector2(14.5f, -0.5f);
+    public static readonly Vector2 CastleProperEastGalleryCameraMax = new Vector2(14.55f, -0.5f);
     public static readonly Vector2 CastleProperEastGalleryStart = new Vector2(1.25f, -1.78f);
-    public static readonly Vector2 CastleProperEastGalleryEndStart = new Vector2(4.9f, -1.93f);
+    public static readonly Vector2 CastleProperEastGalleryEndStart = new Vector2(15.35f, -1.93f);
+    public static readonly float CastleProperEastGalleryWestBayDividerX = -8.5f;
+    public static readonly float CastleProperEastGalleryMiddleBayDividerX = 0.7f;
+    public static readonly float CastleProperEastGalleryRenfieldRoomDividerX = 10.2f;
+    public static readonly float CastleProperEastGalleryEastEndWallX = 19.35f;
+    public static readonly Vector2 RenfieldPrivateRoomArchDoorwallCenter = new Vector2(10.2f, -0.46f);
+    public static readonly Vector2 EastGalleryCentralStairTrigger = new Vector2(0.7f, -2.1f);
+    public static readonly Vector2 EastGalleryEntryFromUpper = new Vector2(0.7f, -2.1f);
+
+    public const string UpperEastGalleryRoomName = "Castle Proper - Upper East Gallery";
+    public static readonly Vector2 UpperEastGalleryRowOffset = new Vector2(0f, 8.25f);
+    public static readonly Vector2 UpperEastGalleryMinBounds = CastleProperEastGalleryMinBounds + UpperEastGalleryRowOffset;
+    public static readonly Vector2 UpperEastGalleryMaxBounds = CastleProperEastGalleryMaxBounds + UpperEastGalleryRowOffset;
+    public static readonly Vector2 UpperEastGalleryCameraMin = CastleProperEastGalleryCameraMin + UpperEastGalleryRowOffset;
+    public static readonly Vector2 UpperEastGalleryCameraMax = CastleProperEastGalleryCameraMax + UpperEastGalleryRowOffset;
+    public static readonly Vector2 UpperEastGalleryEntryFromLower = EastGalleryCentralStairTrigger + UpperEastGalleryRowOffset;
+
+    public const string VillageRoadRoomName = "Village Road";
+    public static readonly Vector2 VillageRoadCenter = new Vector2(-31.5f, -0.78f);
+    public static readonly Vector2 VillageRoadMinBounds = new Vector2(-37.2f, -3.68f);
+    public static readonly Vector2 VillageRoadMaxBounds = new Vector2(-25.4f, -1.7f);
+    public static readonly Vector2 VillageRoadCameraMin = new Vector2(-33.6f, -0.72f);
+    public static readonly Vector2 VillageRoadCameraMax = new Vector2(-28.65f, -0.72f);
+    public static readonly Vector2 VillageRoadEntryFromCastle = new Vector2(-26.05f, -2.18f);
+    public static readonly Vector2 CastleEntryFromVillage = new Vector2(-16.35f, -2.14f);
 
     public static readonly Vector2 CastleMapCenter = new Vector2(21.5f, -12f);
     public static readonly Vector2 CastleMapSize = new Vector2(1600f / CastleMapPpu, 900f / CastleMapPpu);

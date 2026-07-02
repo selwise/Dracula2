@@ -125,6 +125,8 @@ public sealed class IntruderEncounterTests
             .SetName("Dracula_Hall_Peasant_Clean");
         yield return new TestCaseData(RenfieldAction.PrepareBlackCandles, IntruderKind.AngryPeasant, AdventureCharacter.Dracula, true, 0, 0, 0)
             .SetName("Dracula_Candles_Peasant_Clean");
+        yield return new TestCaseData(RenfieldAction.LureVictim, IntruderKind.AngryPeasant, AdventureCharacter.Dracula, true, 0, 0, 0)
+            .SetName("Dracula_Fed_Peasant_Clean");
         yield return new TestCaseData(RenfieldAction.PrepareBlackCandles, IntruderKind.Priest, AdventureCharacter.Dracula, true, 0, 0, 0)
             .SetName("Dracula_Candles_Priest_Clean");
         yield return new TestCaseData(RenfieldAction.EraseSigns, IntruderKind.Priest, AdventureCharacter.Dracula, true, 0, 0, 0)
@@ -175,6 +177,22 @@ public sealed class IntruderEncounterTests
         Assert.AreEqual(0, intruder.CastleDamage, "Expected no castle damage");
         Assert.AreEqual(1, intruder.VillageSuspicion, "Expected village suspicion");
         Assert.AreEqual(1, intruder.DraculaWounds, "Expected Dracula wound");
+    }
+
+    [Test]
+    public void Dracula_Fed_Breached_Priest_AvoidsWound()
+    {
+        intruder.kind = IntruderKind.Priest;
+        IntruderBreachedField.SetValue(intruder, true);
+        ApplyPrep(RenfieldAction.LureVictim);
+        AdvanceTo(AdventurePhase.Night);
+
+        string message = InteractAs(draculaActor);
+
+        Assert.IsTrue(intruder.IsResolved, "Expected resolution. Message: " + message);
+        Assert.AreEqual(0, intruder.CastleDamage, "Expected no castle damage");
+        Assert.AreEqual(1, intruder.VillageSuspicion, "Expected village suspicion from messy fed resolution");
+        Assert.AreEqual(0, intruder.DraculaWounds, "Fed Dracula should avoid the holy wound");
     }
 
     [Test]

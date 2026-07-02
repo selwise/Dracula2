@@ -16,6 +16,8 @@ public sealed class AdventureDayReport : MonoBehaviour
     private int castleDamage;
     private int villageSuspicion;
     private int draculaWounds;
+    private int demeterProgress;
+    private int hungerDebt;
 
     private void Awake()
     {
@@ -49,6 +51,8 @@ public sealed class AdventureDayReport : MonoBehaviour
             castleDamage = 0;
             villageSuspicion = 0;
             draculaWounds = 0;
+            demeterProgress = 0;
+            hungerDebt = 0;
             BuildPanelForPhase(loopController.State.Phase);
         }
 
@@ -111,31 +115,71 @@ public sealed class AdventureDayReport : MonoBehaviour
     private void BuildDayPlan()
     {
         lines.Clear();
-        lines.Add("DAY " + loopController.State.DayNumber + " PLAN");
+        lines.Add("RENFIELD'S DAY " + loopController.State.DayNumber);
         if (loopController.State.RenfieldActionsRemaining > 0)
         {
-            lines.Add("Objective: choose " + loopController.State.RenfieldActionsRemaining + " prep.");
+            lines.Add("Choose " + loopController.State.RenfieldActionsRemaining + " preparations.");
         }
         else
         {
-            lines.Add("Objective: press N for dusk.");
+            lines.Add("Preparations spent. Press N for dusk.");
         }
 
-        lines.Add("1-8 quick prep  R reset  N phase");
-        lines.Add(GetPrepStatus(RenfieldAction.ScoutVillage, "1 Scout Village"));
-        lines.Add(GetPrepStatus(RenfieldAction.PrepareBlackCandles, "2 Black Candles"));
-        lines.Add(GetPrepStatus(RenfieldAction.ResetChandelier, "3 Chandelier Trap"));
-        lines.Add(GetPrepStatus(RenfieldAction.RepairGrandHall, "4 Repair Hall"));
-        lines.Add(GetPrepStatus(RenfieldAction.EraseSigns, "5 Erase Signs"));
-        lines.Add(GetPrepStatus(RenfieldAction.PrepareArtifact, "6 Prepare Artifact"));
-        lines.Add(GetPrepStatus(RenfieldAction.ReleaseVermin, "7 Release Vermin"));
-        lines.Add(GetPrepStatus(RenfieldAction.MoveCoffin, "8 Move Coffin"));
-        lines.Add("Dusk reveals what your choices bought.");
+        lines.Add("Castle work");
+        lines.Add(GetPrepStatus(RenfieldAction.PrepareBlackCandles, "Black Candles"));
+        lines.Add(GetPrepStatus(RenfieldAction.ResetChandelier, "Gallery Trap"));
+        lines.Add(GetPrepStatus(RenfieldAction.MoveCoffin, "Demeter Crate"));
+        lines.Add("Village work");
+        lines.Add(GetPrepStatus(RenfieldAction.ScoutVillage, "Threat Rumors"));
+        lines.Add(GetPrepStatus(RenfieldAction.LureVictim, "Lure Victim"));
+        lines.Add(GetDayLoopHint());
     }
 
     private string GetPrepStatus(RenfieldAction action, string label)
     {
-        return (loopController.State.HasPerformedRenfieldAction(action) ? "DONE  " : "OPEN  ") + label;
+        return (loopController.State.HasPerformedRenfieldAction(action) ? "DONE  " : "OPEN  ") + label + " - " + GetPrepRole(action);
+    }
+
+    private static string GetPrepRole(RenfieldAction action)
+    {
+        switch (action)
+        {
+            case RenfieldAction.PrepareBlackCandles:
+                return "priest answer";
+            case RenfieldAction.ResetChandelier:
+                return "peasant answer";
+            case RenfieldAction.MoveCoffin:
+                return "Act 2 cargo";
+            case RenfieldAction.ScoutVillage:
+                return "threat labels";
+            case RenfieldAction.LureVictim:
+                return "Dracula fed";
+            default:
+                return "fallback";
+        }
+    }
+
+    private string GetDayLoopHint()
+    {
+        bool demeter = loopController.State.HasPerformedRenfieldAction(RenfieldAction.MoveCoffin);
+        bool fed = loopController.State.HasPerformedRenfieldAction(RenfieldAction.LureVictim);
+
+        if (demeter && fed)
+        {
+            return "Route: cargo and hunger covered.";
+        }
+
+        if (demeter)
+        {
+            return "Route: cargo ready, hunger open.";
+        }
+
+        if (fed)
+        {
+            return "Route: hunger covered, cargo open.";
+        }
+
+        return "Route: threats, cargo, hunger compete.";
     }
 
     private void BuildThreatStatus(string title)
@@ -178,8 +222,32 @@ public sealed class AdventureDayReport : MonoBehaviour
         }
         else
         {
+            lines.Add(GetLogisticsLine());
             lines.Add("J jump threat  N begins night.");
         }
+    }
+
+    private string GetLogisticsLine()
+    {
+        bool demeter = loopController.State.HasPerformedRenfieldAction(RenfieldAction.MoveCoffin);
+        bool fed = loopController.State.HasPerformedRenfieldAction(RenfieldAction.LureVictim);
+
+        if (demeter && fed)
+        {
+            return "Demeter cargo ready. Dracula fed.";
+        }
+
+        if (demeter)
+        {
+            return "Demeter cargo ready. Hunger unsolved.";
+        }
+
+        if (fed)
+        {
+            return "Dracula fed. Demeter cargo neglected.";
+        }
+
+        return "Demeter and hunger both neglected.";
     }
 
     private void BuildDawnReport()
@@ -192,6 +260,8 @@ public sealed class AdventureDayReport : MonoBehaviour
         castleDamage = 0;
         villageSuspicion = 0;
         draculaWounds = 0;
+        demeterProgress = HasDemeterCrate ? 1 : 0;
+        hungerDebt = HasFedDracula ? 0 : 1;
 
         if (intruders != null)
         {
@@ -211,26 +281,56 @@ public sealed class AdventureDayReport : MonoBehaviour
             }
         }
 
-        lines.Add("Castle Damage +" + castleDamage);
-        lines.Add("Village Suspicion +" + villageSuspicion);
-        lines.Add("Dracula Wounds +" + draculaWounds);
-        lines.Add(GetDawnMoodLine());
+        lines.Add("THREATS  Damage +" + castleDamage + "  Suspicion +" + villageSuspicion + "  Wounds +" + draculaWounds);
+        lines.Add(GetDemeterOutcomeLine());
+        lines.Add(GetHungerOutcomeLine());
+        lines.Add(GetDawnMoodLine(castleDamage, villageSuspicion, draculaWounds, HasDemeterCrate, HasFedDracula));
     }
 
-    private string GetDawnMoodLine()
+    private string GetDemeterOutcomeLine()
     {
-        int trouble = castleDamage + villageSuspicion + draculaWounds;
+        if (demeterProgress > 0)
+        {
+            return "DEMETER  Cargo ready. Act 2 route +1.";
+        }
+
+        return "DEMETER  Cargo neglected. Act 2 route +0.";
+    }
+
+    private string GetHungerOutcomeLine()
+    {
+        if (hungerDebt <= 0)
+        {
+            return "HUNGER  Dracula fed before nightfall.";
+        }
+
+        return "HUNGER  Dracula enters night unfed.";
+    }
+
+    private bool HasDemeterCrate
+    {
+        get { return loopController.State.HasPerformedRenfieldAction(RenfieldAction.MoveCoffin); }
+    }
+
+    private bool HasFedDracula
+    {
+        get { return loopController.State.HasPerformedRenfieldAction(RenfieldAction.LureVictim); }
+    }
+
+    public static string GetDawnMoodLine(int damage, int suspicion, int wounds, bool demeterReady, bool fed)
+    {
+        int trouble = damage + suspicion + wounds + (demeterReady ? 0 : 1) + (fed ? 0 : 1);
         if (trouble <= 0)
         {
-            return "Clean night. Next day can be greedier.";
+            return "Perfect night. Renfield can risk greedier plans.";
         }
 
         if (trouble <= 2)
         {
-            return "Survived, but tomorrow has teeth.";
+            return demeterReady ? "Survived. The Demeter plan can advance." : "Survived, but the voyage is slipping.";
         }
 
-        return "Messy survival. Renfield must plan better.";
+        return "Messy survival. Day 2 starts under pressure.";
     }
 
     private void OnGUI()
@@ -241,8 +341,9 @@ public sealed class AdventureDayReport : MonoBehaviour
         }
 
         float uiScale = Mathf.Clamp(Screen.height / 1080f, 0.85f, 1.35f);
-        float width = panelWidth * uiScale;
-        float rowHeight = 19f * uiScale;
+        bool dayPanel = loopController.State.Phase == AdventurePhase.Day;
+        float width = (dayPanel ? 386f : panelWidth) * uiScale;
+        float rowHeight = (dayPanel ? 18f : 19f) * uiScale;
         float height = Mathf.Max(116f * uiScale, 34f * uiScale + lines.Count * rowHeight);
         Rect panel = new Rect(
             Screen.width - width - panelRightOffset * uiScale,
