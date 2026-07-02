@@ -81,4 +81,33 @@ public sealed class AdventureLoopStateTests
         Assert.AreEqual(2, state.RenfieldActionsRemaining);
         Assert.AreEqual(2, state.DayNumber);
     }
+
+    [Test]
+    public void ScholomanceConsultationRequiresDraculaAtNight()
+    {
+        AdventureLoopState state = new AdventureLoopState();
+
+        Assert.IsFalse(state.TryConsultScholomance(AdventureCharacter.Renfield));
+        Assert.IsFalse(state.TryConsultScholomance(AdventureCharacter.Dracula));
+
+        state.AdvancePhase();
+        state.AdvancePhase();
+
+        Assert.AreEqual(AdventurePhase.Night, state.Phase);
+        Assert.IsTrue(state.TryConsultScholomance(AdventureCharacter.Dracula));
+        Assert.IsTrue(state.HasConsultedScholomance);
+        Assert.AreEqual(1, state.ScholomanceInsight);
+    }
+
+    [Test]
+    public void ScholomanceConsultationCanOnlyHappenOncePerNight()
+    {
+        AdventureLoopState state = new AdventureLoopState();
+        state.AdvancePhase();
+        state.AdvancePhase();
+
+        Assert.IsTrue(state.TryConsultScholomance(AdventureCharacter.Dracula));
+        Assert.IsFalse(state.TryConsultScholomance(AdventureCharacter.Dracula));
+        Assert.AreEqual(1, state.ScholomanceInsight);
+    }
 }

@@ -37,6 +37,8 @@ public sealed class AdventureLoopState
     public AdventurePhase Phase { get; private set; } = AdventurePhase.Day;
     public int RenfieldActionsRemaining { get; private set; } = RenfieldActionsPerDay;
     public int DayNumber { get; private set; } = 1;
+    public bool HasConsultedScholomance { get; private set; }
+    public int ScholomanceInsight { get; private set; }
 
     public void SwitchActiveCharacter()
     {
@@ -56,6 +58,8 @@ public sealed class AdventureLoopState
         Phase = AdventurePhase.Day;
         DayNumber = 1;
         RenfieldActionsRemaining = RenfieldActionsPerDay;
+        HasConsultedScholomance = false;
+        ScholomanceInsight = 0;
         performedRenfieldActions.Clear();
     }
 
@@ -76,6 +80,7 @@ public sealed class AdventureLoopState
                 Phase = AdventurePhase.Day;
                 DayNumber++;
                 RenfieldActionsRemaining = RenfieldActionsPerDay;
+                HasConsultedScholomance = false;
                 performedRenfieldActions.Clear();
                 break;
         }
@@ -96,5 +101,17 @@ public sealed class AdventureLoopState
     public bool HasPerformedRenfieldAction(RenfieldAction action)
     {
         return performedRenfieldActions.Contains(action);
+    }
+
+    public bool TryConsultScholomance(AdventureCharacter character)
+    {
+        if (character != AdventureCharacter.Dracula || Phase != AdventurePhase.Night || HasConsultedScholomance)
+        {
+            return false;
+        }
+
+        HasConsultedScholomance = true;
+        ScholomanceInsight++;
+        return true;
     }
 }

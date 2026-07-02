@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 37203304}
   - component: {fileID: 37203305}
   m_Layer: 0
-  m_Name: Renfield Private Room Floor Rug
+  m_Name: Haunted Mirror Room Floor Rune Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -329,8 +329,8 @@ Transform:
   m_GameObject: {fileID: 37203303}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.075, y: -2.86, z: 0}
-  m_LocalScale: {x: 2, y: 0.34, z: 1}
+  m_LocalPosition: {x: 14.995, y: -2.84, z: 0}
+  m_LocalScale: {x: 2.2, y: 0.28, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1559674299}
@@ -385,7 +385,7 @@ SpriteRenderer:
   m_SortingOrder: 48
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.12, g: 0.025, b: 0.035, a: 0.78}
+  m_Color: {r: 0.045, g: 0.18, b: 0.2, a: 0.62}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1075,7 +1075,7 @@ GameObject:
   - component: {fileID: 103298374}
   - component: {fileID: 103298375}
   m_Layer: 0
-  m_Name: Upper Gallery Landing Brass Line
+  m_Name: Deeper Gallery South Return Sightline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1977,7 +1977,7 @@ GameObject:
   - component: {fileID: 167686185}
   - component: {fileID: 167686186}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Left Jamb
+  m_Name: Lower Gallery Rear Wall Archway Left Jamb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2198,7 +2198,7 @@ GameObject:
   - component: {fileID: 196249895}
   - component: {fileID: 196249896}
   m_Layer: 0
-  m_Name: Upper Gallery Cold Floor Glaze
+  m_Name: Deeper Gallery Cold Floor Glaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2918,12 +2918,12 @@ GameObject:
   - component: {fileID: 255668439}
   - component: {fileID: 255668440}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Stair Step 0
+  m_Name: Hidden Lower Rear Arch Legacy Strip 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &255668439
 Transform:
   m_ObjectHideFlags: 0
@@ -3011,7 +3011,7 @@ GameObject:
   - component: {fileID: 264379726}
   - component: {fileID: 264379725}
   m_Layer: 0
-  m_Name: Central Stair Down To East Gallery
+  m_Name: South Return Archway To East Gallery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4682,7 +4682,7 @@ Transform:
   m_GameObject: {fileID: 458802214}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.97, y: 2.673, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4708,8 +4708,8 @@ MonoBehaviour:
   m_SelectionSources:
     rid: 7029206466432860238
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.09907884, g: 0.23843494, b: 0.28773582, a: 1}
+  m_Intensity: 34.7
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -4733,7 +4733,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightOuterRadius: 1.9
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -4772,7 +4772,7 @@ GameObject:
   - component: {fileID: 461422224}
   - component: {fileID: 461422225}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Wall Mouth
+  m_Name: Deeper Gallery South Return Archway South Black Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4956,7 +4956,7 @@ GameObject:
   - component: {fileID: 475864230}
   - component: {fileID: 475864231}
   m_Layer: 0
-  m_Name: Renfield Room Threshold Shadow
+  m_Name: Haunted Mirror Room Threshold Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5794,7 +5794,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -29
+  m_SortingOrder: -25
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
   m_Color: {r: 0.16, g: 0.18, b: 0.14, a: 1}
@@ -7383,7 +7383,7 @@ GameObject:
   - component: {fileID: 624300792}
   - component: {fileID: 624300793}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Right Jamb
+  m_Name: Deeper Gallery South Return Archway Right Rim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7549,7 +7549,7 @@ GameObject:
   - component: {fileID: 639405364}
   - component: {fileID: 639405365}
   m_Layer: 0
-  m_Name: Upper Gallery Moon Wash
+  m_Name: Deeper Gallery Moon Wash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7825,7 +7825,7 @@ GameObject:
   - component: {fileID: 683287613}
   - component: {fileID: 683287614}
   m_Layer: 0
-  m_Name: Renfield Private Room Ledger Table
+  m_Name: Magic Mirror Gold Outer Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7840,8 +7840,8 @@ Transform:
   m_GameObject: {fileID: 683287612}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.155, y: -2.18, z: 0}
-  m_LocalScale: {x: 1.18, y: 0.24, z: 1}
+  m_LocalPosition: {x: 15.115, y: 0.58, z: 0}
+  m_LocalScale: {x: 1.44, y: 2.32, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1559674299}
@@ -7893,10 +7893,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 103
+  m_SortingOrder: 92
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.13, g: 0.08, b: 0.052, a: 1}
+  m_Color: {r: 0.6, g: 0.45, b: 0.18, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8009,7 +8009,7 @@ GameObject:
   - component: {fileID: 689801766}
   - component: {fileID: 689801767}
   m_Layer: 0
-  m_Name: Renfield Private Room Ledger Page
+  m_Name: Magic Mirror Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8024,8 +8024,8 @@ Transform:
   m_GameObject: {fileID: 689801765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.355, y: -2.01, z: 0}
-  m_LocalScale: {x: 0.42, y: 0.08, z: 1}
+  m_LocalPosition: {x: 15.115, y: 0.62, z: 0}
+  m_LocalScale: {x: 0.82, y: 1.52, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1559674299}
@@ -8077,10 +8077,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 104
+  m_SortingOrder: 94
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.78, g: 0.68, b: 0.42, a: 0.95}
+  m_Color: {r: 0.25, g: 0.48, b: 0.62, a: 0.68}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8193,12 +8193,12 @@ GameObject:
   - component: {fileID: 691685673}
   - component: {fileID: 691685674}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Stair Step 3
+  m_Name: Hidden Lower Rear Arch Legacy Strip 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &691685673
 Transform:
   m_ObjectHideFlags: 0
@@ -8745,12 +8745,12 @@ GameObject:
   - component: {fileID: 763218874}
   - component: {fileID: 763218875}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Stair Step 2
+  m_Name: Hidden Deeper South Return Legacy Strip 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &763218874
 Transform:
   m_ObjectHideFlags: 0
@@ -9595,7 +9595,7 @@ GameObject:
   - component: {fileID: 823144815}
   - component: {fileID: 823144816}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Wall Mouth
+  m_Name: Lower Gallery Rear Wall Archway Back Wall Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9870,6 +9870,7 @@ GameObject:
   m_Component:
   - component: {fileID: 830335905}
   - component: {fileID: 830335906}
+  - component: {fileID: 830335907}
   m_Layer: 0
   m_Name: Grim Reaper Torch Flame
   m_TagString: Untagged
@@ -9941,7 +9942,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 28
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -923658932, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  m_Sprite: {fileID: -947808322, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9952,6 +9953,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &830335907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830335904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae9089fe31e0f343b3c7898b607a098, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Dracula2.Runtime::SpriteFrameAnimator
+  spriteRenderer: {fileID: 830335906}
+  frames:
+  - {fileID: -923658932, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 1350339945, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -1530220853, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -947808322, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -355466123, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -966925968, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -740575417, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 706032225, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 523632771, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 37383863, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -568794037, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: -119045449, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 1075009620, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 839050059, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 243972181, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  - {fileID: 1799241216, guid: 6ca2ca4a86014704f8d3463c04ac1940, type: 3}
+  framesPerSecond: 12
+  playOnEnable: 1
+  loop: 1
+  animateInEditMode: 1
 --- !u!1 &837877677
 GameObject:
   m_ObjectHideFlags: 0
@@ -10055,12 +10090,12 @@ GameObject:
   - component: {fileID: 840535178}
   - component: {fileID: 840535179}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Stair Step 1
+  m_Name: Hidden Deeper South Return Legacy Strip 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &840535178
 Transform:
   m_ObjectHideFlags: 0
@@ -10147,12 +10182,12 @@ GameObject:
   - component: {fileID: 840974935}
   - component: {fileID: 840974936}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Stair Step 1
+  m_Name: Hidden Lower Rear Arch Legacy Strip 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &840974935
 Transform:
   m_ObjectHideFlags: 0
@@ -11370,7 +11405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 948488887}
   m_Layer: 0
-  m_Name: Upper Gallery Entry From Lower
+  m_Name: Deeper Gallery Entry From Rear Archway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11402,7 +11437,7 @@ GameObject:
   - component: {fileID: 948589558}
   - component: {fileID: 948589559}
   m_Layer: 0
-  m_Name: Renfield Private Room Wall Wash
+  m_Name: Haunted Mirror Room Wall Wash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11473,7 +11508,7 @@ SpriteRenderer:
   m_SortingOrder: -21
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.13, g: 0.09, b: 0.105, a: 0.56}
+  m_Color: {r: 0.055, g: 0.09, b: 0.135, a: 0.68}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -11585,7 +11620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952430151}
   m_Layer: 0
-  m_Name: Upper Row Travel Test
+  m_Name: Deeper Row Travel Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11606,6 +11641,7 @@ Transform:
   m_Children:
   - {fileID: 948488887}
   - {fileID: 264379724}
+  - {fileID: 2099000002}
   m_Father: {fileID: 1662353367}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &953979379
@@ -11812,7 +11848,7 @@ GameObject:
   - component: {fileID: 964454308}
   - component: {fileID: 964454309}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Right Jamb
+  m_Name: Lower Gallery Rear Wall Archway Right Jamb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12156,7 +12192,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -30
+  m_SortingOrder: -26
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
   m_Color: {r: 0.25, g: 0.2, b: 0.13, a: 1}
@@ -12272,12 +12308,12 @@ GameObject:
   - component: {fileID: 998294529}
   - component: {fileID: 998294530}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Stair Step 4
+  m_Name: Hidden Lower Rear Arch Legacy Strip 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &998294529
 Transform:
   m_ObjectHideFlags: 0
@@ -13152,7 +13188,7 @@ GameObject:
   - component: {fileID: 1051704390}
   - component: {fileID: 1051704389}
   m_Layer: 0
-  m_Name: Central Stair Up To Upper Gallery
+  m_Name: Rear Archway To Deeper Gallery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13187,9 +13223,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dracula2.Runtime::CastleRoomPortal
   loopController: {fileID: 2005881630}
   destination: {fileID: 948488887}
-  destinationRoomName: Castle Proper - Upper East Gallery
-  destinationMinBounds: {x: -17.35, y: 4.05}
-  destinationMaxBounds: {x: 18.85, y: 6.67}
+  destinationRoomName: Castle Proper - Deeper East Gallery
+  destinationMinBounds: {x: -17.35, y: 8.3}
+  destinationMaxBounds: {x: 18.85, y: 10.92}
   requireActiveActor: 1
   snapCamera: 1
   portalCooldown: 0.45
@@ -13343,7 +13379,7 @@ GameObject:
   - component: {fileID: 1070131821}
   - component: {fileID: 1070131820}
   m_Layer: 0
-  m_Name: Renfield Private Room Arch Doorwall
+  m_Name: Haunted Mirror Room Arch Doorwall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13378,7 +13414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dracula2.Runtime::CastleObliqueWallPlacement
   spriteRenderer: {fileID: 1070131821}
   rule:
-    ruleName: Renfield Private Room Arch Doorwall
+    ruleName: Haunted Mirror Room Arch Doorwall
     perspectiveScale: {x: 1.22, y: 0.94, z: 1}
     yawDegrees: -66.0494
     z: 1.12
@@ -13438,7 +13474,7 @@ SpriteRenderer:
   m_SortingOrder: 27
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: eb3705a8cf5587542a3f92d154c9d338, type: 3}
-  m_Color: {r: 0.9, g: 0.92, b: 0.84, a: 1}
+  m_Color: {r: 0.64, g: 0.7, b: 0.92, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -13643,7 +13679,7 @@ GameObject:
   - component: {fileID: 1089043001}
   - component: {fileID: 1089043002}
   m_Layer: 0
-  m_Name: Renfield Private Room Back Window Night
+  m_Name: Haunted Mirror Room Cold Back Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13658,8 +13694,8 @@ Transform:
   m_GameObject: {fileID: 1089043000}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.3949995, y: 1, z: 0}
-  m_LocalScale: {x: 1.34, y: 2.06, z: 1}
+  m_LocalPosition: {x: 15.115, y: 1.02, z: 0}
+  m_LocalScale: {x: 2.32, y: 2.42, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1842869441}
@@ -13714,7 +13750,7 @@ SpriteRenderer:
   m_SortingOrder: -14
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.015, g: 0.04, b: 0.085, a: 0.64}
+  m_Color: {r: 0.035, g: 0.055, b: 0.09, a: 0.76}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -15949,6 +15985,7 @@ Transform:
   - {fileID: 1223747355}
   - {fileID: 2005881632}
   - {fileID: 600394883}
+  - {fileID: 2146000002}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1149785610
@@ -18700,12 +18737,12 @@ GameObject:
   - component: {fileID: 1282424468}
   - component: {fileID: 1282424469}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Stair Step 2
+  m_Name: Hidden Lower Rear Arch Legacy Strip 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1282424468
 Transform:
   m_ObjectHideFlags: 0
@@ -19146,12 +19183,12 @@ GameObject:
   - component: {fileID: 1317550234}
   - component: {fileID: 1317550235}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Stair Step 0
+  m_Name: Hidden Deeper South Return Legacy Strip 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1317550234
 Transform:
   m_ObjectHideFlags: 0
@@ -19513,7 +19550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1331929901}
   m_Layer: 0
-  m_Name: Lower Gallery Entry From Upper
+  m_Name: Lower Gallery Entry From South Return
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20375,7 +20412,7 @@ GameObject:
   - component: {fileID: 1417025556}
   - component: {fileID: 1417025557}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Top Lintel
+  m_Name: Deeper Gallery South Return Archway South Rim Lip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21001,7 +21038,7 @@ GameObject:
   - component: {fileID: 1461179293}
   - component: {fileID: 1461179294}
   m_Layer: 0
-  m_Name: Renfield Private Room Window Right Mullion
+  m_Name: Haunted Mirror Room Side Drape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21016,8 +21053,8 @@ Transform:
   m_GameObject: {fileID: 1461179292}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.764999, y: 1, z: 0}
-  m_LocalScale: {x: 0.06, y: 2.08, z: 1}
+  m_LocalPosition: {x: 16.855, y: 0.62, z: 0}
+  m_LocalScale: {x: 0.36, y: 2.96, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1842869441}
@@ -21072,7 +21109,7 @@ SpriteRenderer:
   m_SortingOrder: -13
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.035, g: 0.038, b: 0.035, a: 0.88}
+  m_Color: {r: 0.08, g: 0.025, b: 0.04, a: 0.82}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -21553,7 +21590,7 @@ GameObject:
   - component: {fileID: 1485861345}
   - component: {fileID: 1485861346}
   m_Layer: 0
-  m_Name: Hallway Castle Gray Block Wall Tile
+  m_Name: Deeper Gallery Blue Gold Wall Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21623,7 +21660,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -27
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: a3e49f49a1244465bb2e00214269fe9b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ed345f7045c744b6bf38ed46ec61d3ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -22105,7 +22142,7 @@ GameObject:
   - component: {fileID: 1530248989}
   - component: {fileID: 1530248990}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Left Jamb
+  m_Name: Deeper Gallery South Return Archway Left Rim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22197,7 +22234,7 @@ GameObject:
   - component: {fileID: 1531694218}
   - component: {fileID: 1531694219}
   m_Layer: 0
-  m_Name: Renfield Private Room Window Left Mullion
+  m_Name: Magic Mirror Pale Glint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22212,8 +22249,8 @@ Transform:
   m_GameObject: {fileID: 1531694217}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.025, y: 1, z: 0}
-  m_LocalScale: {x: 0.06, y: 2.08, z: 1}
+  m_LocalPosition: {x: 15.375, y: 1.18, z: 0}
+  m_LocalScale: {x: 0.08, y: 0.72, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1842869441}
@@ -22265,10 +22302,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -13
+  m_SortingOrder: 96
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
-  m_Color: {r: 0.035, g: 0.038, b: 0.035, a: 0.88}
+  m_Color: {r: 0.68, g: 0.9, b: 0.95, a: 0.72}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -22676,7 +22713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1559674299}
   m_Layer: 0
-  m_Name: Upper Segment Detail Props
+  m_Name: Deeper Segment Detail Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22731,6 +22768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566980574}
   - component: {fileID: 1566980573}
+  - component: {fileID: 1566980575}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -22789,6 +22827,14 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &1566980575
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566980572}
+  m_Enabled: 1
 --- !u!4 &1566980574
 Transform:
   m_ObjectHideFlags: 0
@@ -23648,7 +23694,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 57
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7221890412857847150, guid: 4593c1ca0a39a4c418dca94993b2b377, type: 3}
+  m_Sprite: {fileID: -7296435742908280987, guid: 4593c1ca0a39a4c418dca94993b2b377, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.95}
   m_FlipX: 0
   m_FlipY: 0
@@ -23853,7 +23899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662353367}
   m_Layer: 0
-  m_Name: Upper East Gallery Hallway - Prototype Duplicate
+  m_Name: Deeper East Gallery Hallway - Prototype Duplicate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23868,7 +23914,7 @@ Transform:
   m_GameObject: {fileID: 1662353366}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.25, z: 0}
+  m_LocalPosition: {x: 0, y: 12.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24815,7 +24861,7 @@ GameObject:
   - component: {fileID: 1725250968}
   - component: {fileID: 1725250969}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Floor Shadow
+  m_Name: Deeper Gallery South Return Archway South Inner Void
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25435,7 +25481,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -29
+  m_SortingOrder: -25
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
   m_Color: {r: 0.16, g: 0.18, b: 0.14, a: 1}
@@ -25551,12 +25597,12 @@ GameObject:
   - component: {fileID: 1782073767}
   - component: {fileID: 1782073768}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Stair Step 3
+  m_Name: Hidden Deeper South Return Legacy Strip 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1782073767
 Transform:
   m_ObjectHideFlags: 0
@@ -25711,7 +25757,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -30
+  m_SortingOrder: -26
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
   m_Color: {r: 0.25, g: 0.2, b: 0.13, a: 1}
@@ -26306,7 +26352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1842869441}
   m_Layer: 0
-  m_Name: Upper Painted Corridor Blockout
+  m_Name: Deeper Painted Corridor Blockout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26803,7 +26849,7 @@ GameObject:
   - component: {fileID: 1872988738}
   - component: {fileID: 1872988739}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Top Lintel
+  m_Name: Lower Gallery Rear Wall Archway Top Lintel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27472,7 +27518,7 @@ GameObject:
   - component: {fileID: 1949649681}
   - component: {fileID: 1949649682}
   m_Layer: 0
-  m_Name: Lower Gallery Central Stair Opening Floor Shadow
+  m_Name: Lower Gallery Rear Wall Archway Threshold Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27564,12 +27610,12 @@ GameObject:
   - component: {fileID: 1964060573}
   - component: {fileID: 1964060574}
   m_Layer: 0
-  m_Name: Upper Gallery Central Stair Opening Stair Step 4
+  m_Name: Hidden Deeper South Return Legacy Strip 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1964060573
 Transform:
   m_ObjectHideFlags: 0
@@ -28058,6 +28104,7 @@ MonoBehaviour:
   - {fileID: 1237017196}
   - {fileID: 1532442450}
   - {fileID: 237089013}
+  scholomanceMirrorStation: {fileID: 2099000004}
   sceneCamera: {fileID: 1566980573}
   cameraOffset: {x: -3.72, y: 1.32, z: -10}
   cameraFollowSpeed: 13
@@ -29275,6 +29322,117 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &2099000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2099000002}
+  - component: {fileID: 2099000003}
+  - component: {fileID: 2099000004}
+  m_Layer: 0
+  m_Name: Scholomance Mirror Station
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2099000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.115, y: 0.62, z: 0}
+  m_LocalScale: {x: 0.82, y: 1.52, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 952430151}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2099000003
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099000001}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 97
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: 1250adca53621284bbe2511df12f2289, type: 3}
+  m_Color: {r: 0.28, g: 0.68, b: 0.78, a: 0.18}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
+--- !u!114 &2099000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c242d50d4da41e58e76b8fb96f10225, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Dracula2.Runtime::ScholomanceMirrorStation
+  displayName: Scholomance Mirror
+  description: Dracula communes with Scholomance for route counsel.
+  interactRadius: 1.2
+  spriteRenderer: {fileID: 2099000003}
+  dormantTint: {r: 0.28, g: 0.68, b: 0.78, a: 0.18}
+  consultedTint: {r: 0.64, g: 0.92, b: 0.96, a: 0.36}
 --- !u!1 &2102783905
 GameObject:
   m_ObjectHideFlags: 0
@@ -29827,6 +29985,98 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &2146000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2146000002}
+  - component: {fileID: 2146000003}
+  m_Layer: 0
+  m_Name: Castle Prototype Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2146000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1136449206}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2146000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09b73a8e3da0e14e963ee96acad4197, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Dracula2.Runtime::MusicPlayer
+  loopController: {fileID: 2005881630}
+  useActiveActorRoom: 0
+  contextRefreshSeconds: 0.25
+  musicSource: {fileID: 0}
+  musicTracks:
+  - label: Dorian Toccata
+    enabled: 1
+    clip: {fileID: 8300000, guid: 9c56965778b57354bb9cfcc4a95835b6, type: 3}
+    volume: 0.42
+    loop: 1
+    playWhenMatched: 1
+    priority: 0
+    rule:
+      sceneNameOrPath:
+      roomName:
+      restrictToPhase: 0
+      phase: 0
+  loopingAmbience:
+  - label: Window Rain
+    enabled: 1
+    clip: {fileID: 8300000, guid: 4f220df739c316448821912c8fb64705, type: 3}
+    volume: 0.18
+    stopWhenUnmatched: 0
+    source: {fileID: 0}
+    rule:
+      sceneNameOrPath:
+      roomName:
+      restrictToPhase: 0
+      phase: 0
+  oneShotSource: {fileID: 0}
+  randomOneShotGroups:
+  - label: Distant Thunder
+    enabled: 1
+    volume: 0.68
+    pauseRange: {x: 9, y: 24}
+    avoidImmediateRepeat: 1
+    clips:
+    - clip: {fileID: 8300000, guid: 6eb348e00b4f8784aa14002e64504327, type: 3}
+      volume: 0.85
+    - clip: {fileID: 8300000, guid: 583542a860f2080468f7560286d8568e, type: 3}
+      volume: 0.75
+    - clip: {fileID: 8300000, guid: a267171365a5b8e40bd25a977c38ae91, type: 3}
+      volume: 0.9
+    rule:
+      sceneNameOrPath:
+      roomName:
+      restrictToPhase: 0
+      phase: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

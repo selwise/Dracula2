@@ -132,6 +132,8 @@ public sealed class AdventureDayReport : MonoBehaviour
         lines.Add("Village work");
         lines.Add(GetPrepStatus(RenfieldAction.ScoutVillage, "Threat Rumors"));
         lines.Add(GetPrepStatus(RenfieldAction.LureVictim, "Lure Victim"));
+        lines.Add("Dracula night work");
+        lines.Add(GetScholomanceStatus());
         lines.Add(GetDayLoopHint());
     }
 
@@ -218,6 +220,7 @@ public sealed class AdventureDayReport : MonoBehaviour
 
         if (loopController.State.Phase == AdventurePhase.Night)
         {
+            lines.Add(GetScholomanceStatus());
             lines.Add("J jump threat  M map if lost.");
         }
         else
@@ -261,6 +264,11 @@ public sealed class AdventureDayReport : MonoBehaviour
         villageSuspicion = 0;
         draculaWounds = 0;
         demeterProgress = HasDemeterCrate ? 1 : 0;
+        if (HasScholomanceInsight)
+        {
+            demeterProgress++;
+        }
+
         hungerDebt = HasFedDracula ? 0 : 1;
 
         if (intruders != null)
@@ -283,18 +291,41 @@ public sealed class AdventureDayReport : MonoBehaviour
 
         lines.Add("THREATS  Damage +" + castleDamage + "  Suspicion +" + villageSuspicion + "  Wounds +" + draculaWounds);
         lines.Add(GetDemeterOutcomeLine());
+        lines.Add(GetScholomanceOutcomeLine());
         lines.Add(GetHungerOutcomeLine());
         lines.Add(GetDawnMoodLine(castleDamage, villageSuspicion, draculaWounds, HasDemeterCrate, HasFedDracula));
     }
 
     private string GetDemeterOutcomeLine()
     {
+        if (demeterProgress > 1)
+        {
+            return "DEMETER  Cargo ready. Scholomance route insight +1.";
+        }
+
         if (demeterProgress > 0)
         {
             return "DEMETER  Cargo ready. Act 2 route +1.";
         }
 
         return "DEMETER  Cargo neglected. Act 2 route +0.";
+    }
+
+    private string GetScholomanceStatus()
+    {
+        return HasScholomanceInsight
+            ? "DONE  Scholomance Mirror - plot counsel"
+            : "OPEN  Scholomance Mirror - Dracula only";
+    }
+
+    private string GetScholomanceOutcomeLine()
+    {
+        if (HasScholomanceInsight)
+        {
+            return "SCHOOL  Dracula drew forbidden counsel from Scholomance.";
+        }
+
+        return "SCHOOL  Mirror unconsulted. Plot solutions stay narrow.";
     }
 
     private string GetHungerOutcomeLine()
@@ -315,6 +346,11 @@ public sealed class AdventureDayReport : MonoBehaviour
     private bool HasFedDracula
     {
         get { return loopController.State.HasPerformedRenfieldAction(RenfieldAction.LureVictim); }
+    }
+
+    private bool HasScholomanceInsight
+    {
+        get { return loopController.State.HasConsultedScholomance; }
     }
 
     public static string GetDawnMoodLine(int damage, int suspicion, int wounds, bool demeterReady, bool fed)

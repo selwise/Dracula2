@@ -18,6 +18,7 @@ public sealed class AdventureLoopController : MonoBehaviour
 
     [Header("Day Support")]
     public AdventureActionStation[] renfieldStations;
+    public ScholomanceMirrorStation scholomanceMirrorStation;
 
     [Header("Camera")]
     public Camera sceneCamera;
@@ -31,6 +32,7 @@ public sealed class AdventureLoopController : MonoBehaviour
 
     private readonly AdventureLoopState state = new AdventureLoopState();
     private AdventureActionStation nearestStation;
+    private ScholomanceMirrorStation nearestScholomanceMirror;
     private string feedbackText;
     private float feedbackTimer;
     private string contextualPrompt;
@@ -127,9 +129,9 @@ public sealed class AdventureLoopController : MonoBehaviour
             if (keyboard.eKey.wasPressedThisFrame)
             {
                 if (interactionConsumedFrame != Time.frameCount
-                    && (state.ActiveCharacter == AdventureCharacter.Renfield || nearestStation != null))
+                    && (state.ActiveCharacter == AdventureCharacter.Renfield || nearestStation != null || nearestScholomanceMirror != null))
                 {
-                    TryUseNearestStation();
+                    TryUseNearestInteraction();
                 }
             }
         }
@@ -164,6 +166,7 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
 
         nearestStation = FindNearestStation();
+        nearestScholomanceMirror = FindNearestScholomanceMirror();
         TickEmergencyWake();
         RefreshStationState();
         TickPhaseCard();
@@ -394,6 +397,47 @@ public sealed class AdventureLoopController : MonoBehaviour
         ShowFeedback("Emergency wake: Dracula rises weakly in daylight.");
     }
 
+    private void TryUseNearestInteraction()
+    {
+        if (nearestScholomanceMirror != null)
+        {
+            TryUseScholomanceMirror();
+            return;
+        }
+
+        TryUseNearestStation();
+    }
+
+    private void TryUseScholomanceMirror()
+    {
+        if (state.ActiveCharacter != AdventureCharacter.Dracula)
+        {
+            ShowFeedback("The mirror will not answer Renfield.");
+            return;
+        }
+
+        if (state.Phase != AdventurePhase.Night)
+        {
+            ShowFeedback("The Scholomance mirror is dark until Dracula's hour.");
+            return;
+        }
+
+        if (state.HasConsultedScholomance)
+        {
+            ShowFeedback("Scholomance has given its counsel for tonight.");
+            return;
+        }
+
+        if (state.TryConsultScholomance(state.ActiveCharacter))
+        {
+            ShowFeedback("Scholomance answers: old lessons bend the Demeter plot.");
+            ShowPhaseCard("SCHOLOMANCE", "Forbidden counsel gained for Dracula's route.");
+        }
+
+        RefreshStationState();
+        RefreshDayReport();
+    }
+
     private void TryUseNearestStation()
     {
         if (state.ActiveCharacter != AdventureCharacter.Renfield)
@@ -534,6 +578,17 @@ public sealed class AdventureLoopController : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    private ScholomanceMirrorStation FindNearestScholomanceMirror()
+    {
+        AdventureActor actor = GetActiveActor();
+        if (actor == null || scholomanceMirrorStation == null || !scholomanceMirrorStation.IsInRange(actor.transform))
+        {
+            return null;
+        }
+
+        return scholomanceMirrorStation;
     }
 
     private void ApplyControlState()
@@ -791,18 +846,21 @@ public sealed class AdventureLoopController : MonoBehaviour
 
     private void RefreshStationState()
     {
-        if (renfieldStations == null)
+        if (renfieldStations != null)
         {
-            return;
+            for (int i = 0; i < renfieldStations.Length; i++)
+            {
+                AdventureActionStation station = renfieldStations[i];
+                if (station != null)
+                {
+                    station.SetCompleted(state.HasPerformedRenfieldAction(station.action));
+                }
+            }
         }
 
-        for (int i = 0; i < renfieldStations.Length; i++)
+        if (scholomanceMirrorStation != null)
         {
-            AdventureActionStation station = renfieldStations[i];
-            if (station != null)
-            {
-                station.SetCompleted(state.HasPerformedRenfieldAction(station.action));
-            }
+            scholomanceMirrorStation.SetConsulted(state.HasConsultedScholomance);
         }
     }
 
@@ -981,6 +1039,11 @@ public sealed class AdventureLoopController : MonoBehaviour
             return IsEmergencyDayWakeActive ? "Daylight weakens Dracula. Time is short." : GetEmergencyWakeHint();
         }
 
+        if (nearestScholomanceMirror != null)
+        {
+            return "E: " + nearestScholomanceMirror.displayName + " - " + GetScholomanceMirrorPrompt();
+        }
+
         if (nearestStation != null)
         {
             return "E: " + nearestStation.displayName + " - " + nearestStation.description;
@@ -1027,6 +1090,21 @@ public sealed class AdventureLoopController : MonoBehaviour
             default:
                 return "Read outcomes. Press R to replay Day 1.";
         }
+    }
+
+    private string GetScholomanceMirrorPrompt()
+    {
+        if (state.ActiveCharacter != AdventureCharacter.Dracula)
+        {
+            return "Renfield cannot command it.";
+        }
+
+        if (state.Phase != AdventurePhase.Night)
+        {
+            return "it wakes in Dracula's hour.";
+        }
+
+        return state.HasConsultedScholomance ? "counsel already taken." : nearestScholomanceMirror.description;
     }
 
     private static string GetRenfieldActionName(RenfieldAction action)

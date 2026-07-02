@@ -13,6 +13,7 @@ public static class CastleHorizontalRowPrototypeBuilder
     private const string PixelPath = PrototypeFolder + "/castle_blockout_pixel.png";
     private const string ObliqueDoorwaySpritePath = PrototypeFolder + "/castle_gallery_oblique_doorwall_user_exact.png";
     private const string CastleWallTilePath = "Assets/Art/Castle/Tiles/wall_castle_gray_block_tile.png";
+    private const string DeeperGalleryWallTilePath = "Assets/Art/Castle/Tiles/wall_ornate_green_bronze_panel_tile.png";
     private const string RenfieldSpritePath = "Assets/Art/Characters/Renfield/Renfield.png";
     private const string DraculaSheetPath = "Assets/Art/Characters/Dracula/Sheets/dracula_spectrum_walk_down_sheet.png";
     private const string GrimReaperStatuePath = "Assets/Art/Castle/Props/GrimReaperStatue.png";
@@ -21,10 +22,16 @@ public static class CastleHorizontalRowPrototypeBuilder
     private const string GalleryWindowNightPanePath = "Assets/Art/Castle/Props/WindowNightPane.png";
     private const string GalleryWindowRainOverlayPath = "Assets/Art/Castle/Props/WindowRainOverlay.png";
     private const string FlameAnimationPath = "Assets/Art/Effects/Flame-anim.png";
+    private const string DorianToccataPath = "Assets/Audio/Music/DorianToccata.mp3";
+    private const string RainLoopPath = "Assets/Audio/SFX/Rain.mp3";
+    private const string ThunderOnePath = "Assets/Audio/SFX/Thunder1.mp3";
+    private const string ThunderTwoPath = "Assets/Audio/SFX/Thunder2.mp3";
+    private const string ThunderThreePath = "Assets/Audio/SFX/Thunder3.mp3";
     private const string WallSconcePrefabPath = "Assets/Prefabs/Castle/WallSconceCandle.prefab";
     private const string SpriteLitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
     private const string SpriteUnlitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
     private const float CastleWallTilePpu = 240f;
+    private const float DeeperGalleryWallTilePpu = 260f;
     private const float ObliqueDoorwayPpu = 264f;
     private const float RenfieldPpu = 220f;
     private const int SpriteAlignmentCenter = 0;
@@ -41,6 +48,7 @@ public static class CastleHorizontalRowPrototypeBuilder
     {
         Sprite pixel = EnsureBlockoutPixel();
         Sprite castleWallTile = LoadCastleWallTile();
+        Sprite deeperGalleryWallTile = LoadDeeperGalleryWallTile();
         Sprite obliqueDoorwaySprite = LoadObliqueDoorwaySprite();
         Sprite renfieldSprite = LoadRenfieldSprite();
         Sprite[] draculaFrames = LoadDraculaFrames();
@@ -49,10 +57,15 @@ public static class CastleHorizontalRowPrototypeBuilder
         Sprite galleryWindow = LoadSingleSprite(GalleryWindowPath, "gallery window");
         Sprite galleryWindowNightPane = LoadSingleSprite(GalleryWindowNightPanePath, "gallery window night pane");
         Sprite[] galleryWindowRainOverlayFrames = LoadSpriteRepresentations(GalleryWindowRainOverlayPath, "gallery window rain overlay");
-        Sprite reaperTorchFlame = LoadFirstSpriteFrame(FlameAnimationPath, "Grim Reaper torch flame");
+        Sprite[] reaperTorchFlameFrames = LoadSpriteRepresentations(FlameAnimationPath, "Grim Reaper torch flame");
         CastleWallSconcePrefabBuilder.EnsurePrefabExists();
         Material litMaterial = AssetDatabase.LoadAssetAtPath<Material>(SpriteLitMaterialPath);
         Material unlitMaterial = AssetDatabase.LoadAssetAtPath<Material>(SpriteUnlitMaterialPath);
+        AudioClip dorianToccata = AssetDatabase.LoadAssetAtPath<AudioClip>(DorianToccataPath);
+        AudioClip rainLoop = AssetDatabase.LoadAssetAtPath<AudioClip>(RainLoopPath);
+        AudioClip thunderOne = AssetDatabase.LoadAssetAtPath<AudioClip>(ThunderOnePath);
+        AudioClip thunderTwo = AssetDatabase.LoadAssetAtPath<AudioClip>(ThunderTwoPath);
+        AudioClip thunderThree = AssetDatabase.LoadAssetAtPath<AudioClip>(ThunderThreePath);
 
         Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         scene.name = "CastleProperEastGalleryPrototype";
@@ -68,16 +81,16 @@ public static class CastleHorizontalRowPrototypeBuilder
         Transform background = CreateChild(row.transform, "Painted Corridor Blockout");
         Transform props = CreateChild(row.transform, "Segment Detail Props");
 
-        BuildCorridorBase(pixel, castleWallTile, background, litMaterial);
+        BuildCorridorBase(pixel, castleWallTile, "Hallway Castle Gray Block Wall Tile", background, litMaterial);
         BuildSegmentBreak(obliqueDoorwaySprite, background, litMaterial);
-        BuildGalleryRoomDivisions(pixel, obliqueDoorwaySprite, background, props, litMaterial);
+        BuildGalleryRoomDivisions(pixel, obliqueDoorwaySprite, background, props, litMaterial, false);
         BuildWallSconceRun(props);
         BuildEastEndStop(pixel, background, props, litMaterial);
-        BuildCentralStairOpening("Lower Gallery Central Stair Opening", pixel, props, litMaterial, false);
+        BuildCentralDepthArchway("Lower Gallery Rear Wall Archway", pixel, props, litMaterial, false);
         BuildLowerGallerySetDressing(
             pixel,
             grimReaperStatue,
-            reaperTorchFlame,
+            reaperTorchFlameFrames,
             fountain,
             galleryWindow,
             galleryWindowNightPane,
@@ -87,17 +100,17 @@ public static class CastleHorizontalRowPrototypeBuilder
             litMaterial,
             unlitMaterial);
 
-        GameObject upperRow = new GameObject("Upper East Gallery Hallway - Prototype Duplicate");
+        GameObject upperRow = new GameObject("Deeper East Gallery Hallway - Prototype Duplicate");
         upperRow.transform.SetParent(root.transform);
-        Transform upperBackground = CreateChild(upperRow.transform, "Upper Painted Corridor Blockout");
-        Transform upperProps = CreateChild(upperRow.transform, "Upper Segment Detail Props");
-        BuildCorridorBase(pixel, castleWallTile, upperBackground, litMaterial);
+        Transform upperBackground = CreateChild(upperRow.transform, "Deeper Painted Corridor Blockout");
+        Transform upperProps = CreateChild(upperRow.transform, "Deeper Segment Detail Props");
+        BuildCorridorBase(pixel, deeperGalleryWallTile, "Deeper Gallery Blue Gold Wall Tile", upperBackground, litMaterial);
         BuildSegmentBreak(obliqueDoorwaySprite, upperBackground, litMaterial);
-        BuildGalleryRoomDivisions(pixel, obliqueDoorwaySprite, upperBackground, upperProps, litMaterial);
+        BuildGalleryRoomDivisions(pixel, obliqueDoorwaySprite, upperBackground, upperProps, litMaterial, true);
         BuildWallSconceRun(upperProps);
         BuildEastEndStop(pixel, upperBackground, upperProps, litMaterial);
-        BuildCentralStairOpening("Upper Gallery Central Stair Opening", pixel, upperProps, litMaterial, true);
-        BuildUpperGalleryIdentityOverlay(pixel, upperBackground, upperProps, litMaterial);
+        BuildCentralDepthArchway("Deeper Gallery South Return Archway", pixel, upperProps, litMaterial, true);
+        BuildDeeperGalleryIdentityOverlay(pixel, upperBackground, upperProps, litMaterial);
 
         GameObject renfield = CreateRenfield(renfieldSprite, litMaterial, unlitMaterial, root.transform);
         GameObject dracula = CreateDracula(draculaFrames, litMaterial, unlitMaterial, root.transform);
@@ -110,6 +123,7 @@ public static class CastleHorizontalRowPrototypeBuilder
         loopController.renfieldStations = stations;
         IntruderEncounter[] intruders = BuildDayOneThreats(pixel, row.transform, loopController);
         CreateAdventureSystems(loopController, root.transform, intruders);
+        CreateSceneAudio(loopController, root.transform, dorianToccata, rainLoop, thunderOne, thunderTwo, thunderThree);
         upperRow.transform.position = new Vector3(CastleRoomLayout.UpperEastGalleryRowOffset.x, CastleRoomLayout.UpperEastGalleryRowOffset.y, 0f);
         SnapCameraToActor(cameraObject.transform, renfield.GetComponent<AdventureActor>());
         ConfigureLayoutInspector(root.transform);
@@ -119,7 +133,7 @@ public static class CastleHorizontalRowPrototypeBuilder
         Debug.Log("Built castle horizontal row prototype at " + ScenePath + ".");
     }
 
-    private static void BuildCorridorBase(Sprite pixel, Sprite castleWallTile, Transform parent, Material litMaterial)
+    private static void BuildCorridorBase(Sprite pixel, Sprite wallTile, string wallTileName, Transform parent, Material litMaterial)
     {
         float visualEastX = CastleRoomLayout.CastleProperEastGalleryEastEndWallX + GalleryVisualEastPadding;
         float visualWidth = visualEastX - GalleryVisualWestX;
@@ -136,10 +150,10 @@ public static class CastleHorizontalRowPrototypeBuilder
         CreateRect("Hallway Lower Dark Rail", pixel, new Vector3(visualCenterX, -1.18f, 0f), new Vector2(visualWidth, 0.16f), new Color(0.07f, 0.06f, 0.06f, 1f), -32, parent, litMaterial);
         CreateRect("Hallway Red Rail Hairline", pixel, new Vector3(visualCenterX, -1.05f, 0f), new Vector2(visualWidth, 0.035f), new Color(0.26f, 0.1f, 0.07f, 1f), -31, parent, litMaterial);
 
-        CreateTiledSprite("Hallway Castle Gray Block Wall Tile", castleWallTile, new Vector3(visualCenterX, 0.88f, 0f), new Vector2(visualWidth, 4.12f), Color.white, -27, parent, litMaterial);
+        CreateTiledSprite(wallTileName, wallTile, new Vector3(visualCenterX, 0.88f, 0f), new Vector2(visualWidth, 4.12f), Color.white, -27, parent, litMaterial);
 
-        CreateRect("Hallway Floor Base", pixel, new Vector3(visualCenterX, -2.78f, 0f), new Vector2(visualWidth, 3.12f), new Color(0.25f, 0.2f, 0.13f, 1f), -30, parent, litMaterial);
-        CreateRect("Hallway Floor Back Shadow", pixel, new Vector3(visualCenterX, -1.55f, 0f), new Vector2(visualWidth, 0.32f), new Color(0.16f, 0.18f, 0.14f, 1f), -29, parent, litMaterial);
+        CreateRect("Hallway Floor Base", pixel, new Vector3(visualCenterX, -2.78f, 0f), new Vector2(visualWidth, 3.12f), new Color(0.25f, 0.2f, 0.13f, 1f), -26, parent, litMaterial);
+        CreateRect("Hallway Floor Back Shadow", pixel, new Vector3(visualCenterX, -1.55f, 0f), new Vector2(visualWidth, 0.32f), new Color(0.16f, 0.18f, 0.14f, 1f), -25, parent, litMaterial);
         CreateRect("Hallway Front Floor Lip", pixel, new Vector3(visualCenterX, -4.17f, 0f), new Vector2(visualWidth, 0.38f), new Color(0.17f, 0.14f, 0.09f, 1f), -24, parent, litMaterial);
         CreateRect("Hallway Near Black Groove", pixel, new Vector3(visualCenterX, -3.9f, 0f), new Vector2(visualWidth, 0.07f), new Color(0.055f, 0.048f, 0.038f, 1f), -23, parent, null);
 
@@ -181,7 +195,8 @@ public static class CastleHorizontalRowPrototypeBuilder
         Sprite obliqueDoorwaySprite,
         Transform background,
         Transform props,
-        Material litMaterial)
+        Material litMaterial,
+        bool hauntedMirrorRoom)
     {
         CreateWindowwallDivider(
             "Gallery West Windowwall Divider",
@@ -196,25 +211,60 @@ public static class CastleHorizontalRowPrototypeBuilder
             background,
             litMaterial);
 
-        CreateRenfieldPrivateRoomBay(pixel, background, props, litMaterial);
+        if (hauntedMirrorRoom)
+        {
+            CreateHauntedMirrorRoomBay(pixel, background, props, litMaterial);
+            CreateRightRoomDoorwall(
+                "Haunted Mirror Room Arch Doorwall",
+                "Haunted Mirror Room Threshold Shadow",
+                obliqueDoorwaySprite,
+                pixel,
+                background,
+                props,
+                litMaterial,
+                new Color(0.64f, 0.7f, 0.92f, 1f));
+            return;
+        }
 
-        CastleObliqueWallPlacementRule renfieldArchRule = ObliqueDoorwayPlacementRule.Clone();
-        renfieldArchRule.ruleName = "Renfield Private Room Arch Doorwall";
-        renfieldArchRule.backWallCenterX = CastleRoomLayout.CastleProperEastGalleryRenfieldRoomDividerX;
-        renfieldArchRule.backWallOffsetX = 0f;
-        renfieldArchRule.perspectiveScale = new Vector3(1.22f, 0.94f, 1f);
-        renfieldArchRule.bottomOverscan = 0.13f;
-        CreateObliqueDoorwall(
+        CreateRenfieldPrivateRoomBay(pixel, background, props, litMaterial);
+        CreateRightRoomDoorwall(
             "Renfield Private Room Arch Doorwall",
+            "Renfield Room Threshold Shadow",
             obliqueDoorwaySprite,
-            renfieldArchRule,
-            new Color(0.9f, 0.92f, 0.84f, 1f),
+            pixel,
+            background,
+            props,
+            litMaterial,
+            new Color(0.9f, 0.92f, 0.84f, 1f));
+    }
+
+    private static void CreateRightRoomDoorwall(
+        string doorwallName,
+        string thresholdName,
+        Sprite obliqueDoorwaySprite,
+        Sprite pixel,
+        Transform background,
+        Transform props,
+        Material litMaterial,
+        Color color)
+    {
+        CastleObliqueWallPlacementRule roomArchRule = ObliqueDoorwayPlacementRule.Clone();
+        roomArchRule.ruleName = doorwallName;
+        roomArchRule.backWallCenterX = CastleRoomLayout.CastleProperEastGalleryRenfieldRoomDividerX;
+        roomArchRule.backWallOffsetX = 0f;
+        roomArchRule.perspectiveScale = new Vector3(1.22f, 0.94f, 1f);
+        roomArchRule.bottomOverscan = 0.13f;
+        CreateObliqueDoorwall(
+            doorwallName,
+            obliqueDoorwaySprite,
+            roomArchRule,
+            color,
             27,
             background,
             litMaterial);
 
         CreateRect(
-            "Renfield Room Threshold Shadow",
+            thresholdName,
             pixel,
             new Vector3(CastleRoomLayout.CastleProperEastGalleryRenfieldRoomDividerX + 0.12f, -2.26f, 0f),
             new Vector2(0.34f, 1.38f),
@@ -283,6 +333,30 @@ public static class CastleHorizontalRowPrototypeBuilder
         CreateRect("Renfield Private Room Floor Rug", pixel, new Vector3(roomCenterX + 0.3f, -2.86f, 0f), new Vector2(2.0f, 0.34f), new Color(0.12f, 0.025f, 0.035f, 0.78f), 48, props, null);
     }
 
+    private static void CreateHauntedMirrorRoomBay(Sprite pixel, Transform background, Transform props, Material litMaterial)
+    {
+        float roomCenterX = (CastleRoomLayout.CastleProperEastGalleryRenfieldRoomDividerX + CastleRoomLayout.CastleProperEastGalleryEastEndWallX) * 0.5f;
+        float roomWidth = CastleRoomLayout.CastleProperEastGalleryEastEndWallX - CastleRoomLayout.CastleProperEastGalleryRenfieldRoomDividerX;
+        float mirrorX = roomCenterX + 0.34f;
+
+        CreateRect("Haunted Mirror Room Wall Wash", pixel, new Vector3(roomCenterX, 0.9f, 0f), new Vector2(roomWidth, 3.55f), new Color(0.055f, 0.09f, 0.135f, 0.68f), -21, background, litMaterial);
+        CreateRect("Haunted Mirror Room Cold Back Panel", pixel, new Vector3(mirrorX, 1.02f, 0f), new Vector2(2.32f, 2.42f), new Color(0.035f, 0.055f, 0.09f, 0.76f), -14, background, null);
+        CreateRect("Haunted Mirror Room Side Drape", pixel, new Vector3(roomCenterX + 2.08f, 0.62f, 0f), new Vector2(0.36f, 2.96f), new Color(0.08f, 0.025f, 0.04f, 0.82f), -13, background, litMaterial);
+
+        CreateRect("Magic Mirror Back Shadow", pixel, new Vector3(mirrorX + 0.08f, 0.48f, 0f), new Vector2(1.72f, 2.48f), new Color(0.002f, 0.003f, 0.006f, 0.74f), 91, props, null);
+        CreateRect("Magic Mirror Gold Outer Frame", pixel, new Vector3(mirrorX, 0.58f, 0f), new Vector2(1.44f, 2.32f), new Color(0.6f, 0.45f, 0.18f, 1f), 92, props, litMaterial);
+        CreateRect("Magic Mirror Dark Frame Cutout", pixel, new Vector3(mirrorX, 0.58f, 0f), new Vector2(1.08f, 1.92f), new Color(0.025f, 0.018f, 0.024f, 1f), 93, props, null);
+        CreateRect("Magic Mirror Glass", pixel, new Vector3(mirrorX, 0.62f, 0f), new Vector2(0.82f, 1.52f), new Color(0.25f, 0.48f, 0.62f, 0.68f), 94, props, null);
+        CreateRect("Magic Mirror Black Reflection", pixel, new Vector3(mirrorX - 0.1f, 0.5f, 0f), new Vector2(0.42f, 1.18f), new Color(0.004f, 0.006f, 0.012f, 0.72f), 95, props, null);
+        CreateRect("Magic Mirror Pale Glint", pixel, new Vector3(mirrorX + 0.26f, 1.18f, 0f), new Vector2(0.08f, 0.72f), new Color(0.68f, 0.9f, 0.95f, 0.72f), 96, props, null);
+
+        CreateRect("Haunted Mirror Room Covered Shape", pixel, new Vector3(roomCenterX - 1.72f, -2.18f, 0f), new Vector2(1.24f, 0.72f), new Color(0.1f, 0.08f, 0.075f, 1f), 103, props, litMaterial);
+        CreateRect("Haunted Mirror Room Dust Cloth", pixel, new Vector3(roomCenterX - 1.62f, -1.88f, 0f), new Vector2(1.08f, 0.22f), new Color(0.48f, 0.47f, 0.42f, 0.72f), 104, props, null);
+        CreateRect("Haunted Mirror Room Candle Placeholder A", pixel, new Vector3(roomCenterX + 1.82f, -1.86f, 0f), new Vector2(0.16f, 0.58f), new Color(0.74f, 0.64f, 0.42f, 1f), 104, props, litMaterial);
+        CreateRect("Haunted Mirror Room Candle Flame A", pixel, new Vector3(roomCenterX + 1.82f, -1.46f, 0f), new Vector2(0.12f, 0.18f), new Color(1f, 0.54f, 0.18f, 0.88f), 105, props, null);
+        CreateRect("Haunted Mirror Room Floor Rune Placeholder", pixel, new Vector3(roomCenterX + 0.22f, -2.84f, 0f), new Vector2(2.2f, 0.28f), new Color(0.045f, 0.18f, 0.2f, 0.62f), 48, props, null);
+    }
+
     private static void BuildWallSconceRun(Transform props)
     {
         const float sconceY = 1.12f;
@@ -309,45 +383,41 @@ public static class CastleHorizontalRowPrototypeBuilder
         CreateRect("Renfield Ground Shadow", pixel, new Vector3(CastleRoomLayout.CastleProperEastGalleryEndStart.x + 0.08f, -2.86f, 0f), new Vector2(0.95f, 0.13f), new Color(0.02f, 0.018f, 0.014f, 0.65f), 55, props, null);
     }
 
-    private static void BuildCentralStairOpening(string name, Sprite pixel, Transform props, Material litMaterial, bool upperLanding)
+    private static void BuildCentralDepthArchway(string name, Sprite pixel, Transform props, Material litMaterial, bool southReturn)
     {
-        Vector2 stair = CastleRoomLayout.EastGalleryCentralStairTrigger;
-        Color throat = upperLanding
-            ? new Color(0.015f, 0.02f, 0.038f, 0.92f)
-            : new Color(0.006f, 0.008f, 0.012f, 0.94f);
-        Color rim = upperLanding
-            ? new Color(0.36f, 0.45f, 0.52f, 0.86f)
-            : new Color(0.28f, 0.23f, 0.16f, 0.86f);
-
-        CreateRect(name + " Wall Mouth", pixel, new Vector3(stair.x, -0.78f, 0f), new Vector2(1.72f, 1.72f), throat, 52, props, null);
-        CreateRect(name + " Top Lintel", pixel, new Vector3(stair.x, 0.13f, 0f), new Vector2(1.92f, 0.16f), rim, 53, props, litMaterial);
-        CreateRect(name + " Left Jamb", pixel, new Vector3(stair.x - 0.92f, -0.72f, 0f), new Vector2(0.16f, 1.78f), rim, 53, props, litMaterial);
-        CreateRect(name + " Right Jamb", pixel, new Vector3(stair.x + 0.92f, -0.72f, 0f), new Vector2(0.16f, 1.78f), rim, 53, props, litMaterial);
-        CreateRect(name + " Floor Shadow", pixel, new Vector3(stair.x, stair.y - 0.22f, 0f), new Vector2(1.78f, 0.56f), new Color(0.012f, 0.011f, 0.01f, 0.78f), 54, props, null);
-
-        for (int i = 0; i < 5; i++)
+        Vector2 archway = CastleRoomLayout.EastGalleryRearArchwayTrigger;
+        if (southReturn)
         {
-            float y = stair.y + 0.1f + i * 0.22f;
-            float width = 1.34f - i * 0.16f;
-            CreateRect(name + " Stair Step " + i, pixel, new Vector3(stair.x, y, 0f), new Vector2(width, 0.045f), new Color(0.48f, 0.42f, 0.32f, 0.72f), 55 + i, props, null);
+            CreateRect(name + " South Black Square", pixel, new Vector3(archway.x, archway.y - 0.08f, 0f), new Vector2(1.16f, 0.92f), new Color(0.002f, 0.002f, 0.003f, 0.96f), 54, props, null);
+            CreateRect(name + " South Inner Void", pixel, new Vector3(archway.x, archway.y - 0.03f, 0f), new Vector2(0.78f, 0.58f), new Color(0f, 0f, 0f, 1f), 55, props, null);
+            CreateRect(name + " South Rim Lip", pixel, new Vector3(archway.x, archway.y + 0.42f, 0f), new Vector2(1.24f, 0.09f), new Color(0.2f, 0.22f, 0.24f, 0.82f), 56, props, litMaterial);
+            CreateRect(name + " South Floor Pull", pixel, new Vector3(archway.x, archway.y - 0.58f, 0f), new Vector2(1.34f, 0.14f), new Color(0.015f, 0.014f, 0.013f, 0.82f), 53, props, null);
+            return;
         }
+
+        CreateRect(name + " Back Wall Mouth", pixel, new Vector3(archway.x, -0.78f, 0f), new Vector2(1.62f, 1.68f), new Color(0.006f, 0.008f, 0.012f, 0.94f), 52, props, null);
+        CreateRect(name + " Top Lintel", pixel, new Vector3(archway.x, 0.13f, 0f), new Vector2(1.92f, 0.16f), new Color(0.28f, 0.23f, 0.16f, 0.86f), 53, props, litMaterial);
+        CreateRect(name + " Left Jamb", pixel, new Vector3(archway.x - 0.9f, -0.72f, 0f), new Vector2(0.16f, 1.74f), new Color(0.28f, 0.23f, 0.16f, 0.86f), 53, props, litMaterial);
+        CreateRect(name + " Right Jamb", pixel, new Vector3(archway.x + 0.9f, -0.72f, 0f), new Vector2(0.16f, 1.74f), new Color(0.28f, 0.23f, 0.16f, 0.86f), 53, props, litMaterial);
+        CreateRect(name + " Inner Back Wall Shadow", pixel, new Vector3(archway.x, -0.24f, 0f), new Vector2(1.1f, 0.56f), new Color(0.012f, 0.012f, 0.02f, 0.62f), 54, props, null);
+        CreateRect(name + " Threshold Shadow", pixel, new Vector3(archway.x, archway.y - 0.08f, 0f), new Vector2(1.48f, 0.24f), new Color(0.012f, 0.011f, 0.01f, 0.78f), 54, props, null);
     }
 
-    private static void BuildUpperGalleryIdentityOverlay(Sprite pixel, Transform background, Transform props, Material litMaterial)
+    private static void BuildDeeperGalleryIdentityOverlay(Sprite pixel, Transform background, Transform props, Material litMaterial)
     {
         float visualEastX = CastleRoomLayout.CastleProperEastGalleryEastEndWallX + GalleryVisualEastPadding;
         float visualWidth = visualEastX - GalleryVisualWestX;
         float visualCenterX = (GalleryVisualWestX + visualEastX) * 0.5f;
 
-        CreateRect("Upper Gallery Moon Wash", pixel, new Vector3(visualCenterX, 0.34f, 0f), new Vector2(visualWidth, 6.9f), new Color(0.08f, 0.17f, 0.26f, 0.24f), -12, background, null);
-        CreateRect("Upper Gallery Cold Floor Glaze", pixel, new Vector3(visualCenterX, -2.86f, 0f), new Vector2(visualWidth, 2.42f), new Color(0.08f, 0.16f, 0.2f, 0.22f), 50, props, null);
-        CreateRect("Upper Gallery Landing Brass Line", pixel, new Vector3(CastleRoomLayout.EastGalleryCentralStairTrigger.x, -1.46f, 0f), new Vector2(2.28f, 0.08f), new Color(0.78f, 0.66f, 0.34f, 0.88f), 67, props, litMaterial);
+        CreateRect("Deeper Gallery Moon Wash", pixel, new Vector3(visualCenterX, 0.34f, 0f), new Vector2(visualWidth, 6.9f), new Color(0.08f, 0.17f, 0.26f, 0.24f), -12, background, null);
+        CreateRect("Deeper Gallery Cold Floor Glaze", pixel, new Vector3(visualCenterX, -2.86f, 0f), new Vector2(visualWidth, 2.42f), new Color(0.08f, 0.16f, 0.2f, 0.22f), 50, props, null);
+        CreateRect("Deeper Gallery South Return Sightline", pixel, new Vector3(CastleRoomLayout.EastGalleryRearArchwayTrigger.x, -1.46f, 0f), new Vector2(1.58f, 0.08f), new Color(0.18f, 0.2f, 0.22f, 0.78f), 67, props, litMaterial);
     }
 
     private static void BuildLowerGallerySetDressing(
         Sprite pixel,
         Sprite grimReaperStatue,
-        Sprite reaperTorchFlame,
+        Sprite[] reaperTorchFlameFrames,
         Sprite fountain,
         Sprite galleryWindow,
         Sprite galleryWindowNightPane,
@@ -358,7 +428,12 @@ public static class CastleHorizontalRowPrototypeBuilder
         Material unlitMaterial)
     {
         GameObject grimReaper = CreateEmpty("GrimReaper", new Vector3(-0.93097746f, -0.67f, 0f), Vector3.one, props);
-        CreateLocalSprite("Grim Reaper Torch Flame", reaperTorchFlame, grimReaper.transform, new Vector3(0.7f, 0.79f, 0.64f), Vector3.one * 0.652f, Quaternion.identity, Color.white, 28, unlitMaterial);
+        GameObject torchFlame = CreateLocalSprite("Grim Reaper Torch Flame", FirstFrameOrNull(reaperTorchFlameFrames), grimReaper.transform, new Vector3(0.7f, 0.79f, 0.64f), Vector3.one * 0.652f, Quaternion.identity, Color.white, 28, unlitMaterial);
+        SpriteFrameAnimator torchAnimator = torchFlame.AddComponent<SpriteFrameAnimator>();
+        torchAnimator.playOnEnable = true;
+        torchAnimator.loop = true;
+        torchAnimator.animateInEditMode = true;
+        torchAnimator.Configure(torchFlame.GetComponent<SpriteRenderer>(), reaperTorchFlameFrames, 12f);
         CreateLocalSprite("GrimReaperStatue", grimReaperStatue, grimReaper.transform, new Vector3(1f, 1f, -0.43f), Vector3.one, Quaternion.identity, new Color(0.45403165f, 0.5241622f, 0.5377358f, 1f), 29, litMaterial);
         CreateLocalRect("Grim Reaper Back Shadow A", pixel, grimReaper.transform, new Vector3(-0.16f, 1.05f, 0f), new Vector3(0.71982425f, 2.9380257f, 1f), Quaternion.identity, new Color(0f, 0f, 0f, 0.6509804f), 24, null);
         CreateLocalRect("Grim Reaper Back Shadow B", pixel, grimReaper.transform, new Vector3(0.6f, 1.79f, 0f), new Vector3(1.3035566f, 2.0345743f, 1f), Quaternion.Euler(0f, 0f, -153.67f), new Color(0f, 0f, 0f, 0.2784314f), 24, null);
@@ -394,14 +469,14 @@ public static class CastleHorizontalRowPrototypeBuilder
         AdventureLoopController loopController)
     {
         Transform gameplay = CreateChild(row, "Day 1 Gameplay Test");
-        Transform upperGameplay = CreateChild(upperRow, "Upper Row Travel Test");
+        Transform upperGameplay = CreateChild(upperRow, "Deeper Row Travel Test");
         Transform village = CreateChild(row, "Delimited Village Road");
         BuildVillageRoad(pixel, village, litMaterial);
 
         Transform castleDestination = CreateMarker("Castle Entry From Village", CastleRoomLayout.CastleEntryFromVillage, gameplay);
         Transform villageDestination = CreateMarker("Village Entry From Castle", CastleRoomLayout.VillageRoadEntryFromCastle, gameplay);
-        Transform lowerGalleryDestination = CreateMarker("Lower Gallery Entry From Upper", CastleRoomLayout.EastGalleryEntryFromUpper, gameplay);
-        Transform upperGalleryDestination = CreateMarker("Upper Gallery Entry From Lower", CastleRoomLayout.EastGalleryCentralStairTrigger, upperGameplay);
+        Transform lowerGalleryDestination = CreateMarker("Lower Gallery Entry From South Return", CastleRoomLayout.EastGalleryEntryFromUpper, gameplay);
+        Transform upperGalleryDestination = CreateMarker("Deeper Gallery Entry From Rear Archway", CastleRoomLayout.EastGalleryRearArchwayTrigger, upperGameplay);
 
         CreatePortal(
             "Gate To Village Road",
@@ -426,8 +501,8 @@ public static class CastleHorizontalRowPrototypeBuilder
             gameplay);
 
         CreatePortal(
-            "Central Stair Up To Upper Gallery",
-            new Vector3(CastleRoomLayout.EastGalleryCentralStairTrigger.x, CastleRoomLayout.EastGalleryCentralStairTrigger.y, 0f),
+            "Rear Archway To Deeper Gallery",
+            new Vector3(CastleRoomLayout.EastGalleryRearArchwayTrigger.x, CastleRoomLayout.EastGalleryRearArchwayTrigger.y, 0f),
             new Vector2(1.08f, 0.86f),
             upperGalleryDestination,
             CastleRoomLayout.UpperEastGalleryRoomName,
@@ -437,8 +512,8 @@ public static class CastleHorizontalRowPrototypeBuilder
             gameplay);
 
         CreatePortal(
-            "Central Stair Down To East Gallery",
-            new Vector3(CastleRoomLayout.EastGalleryCentralStairTrigger.x, CastleRoomLayout.EastGalleryCentralStairTrigger.y, 0f),
+            "South Return Archway To East Gallery",
+            new Vector3(CastleRoomLayout.EastGalleryRearArchwayTrigger.x, CastleRoomLayout.EastGalleryRearArchwayTrigger.y, 0f),
             new Vector2(1.08f, 0.86f),
             lowerGalleryDestination,
             CastleRoomLayout.CastleProperEastGalleryRoomName,
@@ -446,6 +521,8 @@ public static class CastleHorizontalRowPrototypeBuilder
             CastleRoomLayout.CastleProperEastGalleryMaxBounds,
             loopController,
             upperGameplay);
+
+        loopController.scholomanceMirrorStation = CreateScholomanceMirrorStation(pixel, upperGameplay);
 
         List<AdventureActionStation> stations = new List<AdventureActionStation>();
         stations.Add(CreateActionStation(
@@ -505,6 +582,29 @@ public static class CastleHorizontalRowPrototypeBuilder
             81));
 
         return stations.ToArray();
+    }
+
+    private static ScholomanceMirrorStation CreateScholomanceMirrorStation(Sprite pixel, Transform parent)
+    {
+        float roomCenterX = (CastleRoomLayout.CastleProperEastGalleryRenfieldRoomDividerX + CastleRoomLayout.CastleProperEastGalleryEastEndWallX) * 0.5f;
+        float mirrorX = roomCenterX + 0.34f;
+        GameObject stationObject = CreateRect(
+            "Scholomance Mirror Station",
+            pixel,
+            new Vector3(mirrorX, 0.62f, 0f),
+            new Vector2(0.82f, 1.52f),
+            new Color(0.28f, 0.68f, 0.78f, 0.18f),
+            97,
+            parent,
+            null);
+        ScholomanceMirrorStation station = stationObject.AddComponent<ScholomanceMirrorStation>();
+        station.displayName = "Scholomance Mirror";
+        station.description = "Dracula communes with Scholomance for route counsel.";
+        station.interactRadius = 1.2f;
+        station.spriteRenderer = stationObject.GetComponent<SpriteRenderer>();
+        station.dormantTint = new Color(0.28f, 0.68f, 0.78f, 0.18f);
+        station.consultedTint = new Color(0.64f, 0.92f, 0.96f, 0.36f);
+        return station;
     }
 
     private static void BuildVillageRoad(Sprite pixel, Transform parent, Material litMaterial)
@@ -600,6 +700,7 @@ public static class CastleHorizontalRowPrototypeBuilder
         camera.orthographicSize = 3.75f;
         camera.clearFlags = CameraClearFlags.SolidColor;
         camera.backgroundColor = Color.black;
+        cameraObject.AddComponent<AudioListener>();
         return cameraObject;
     }
 
@@ -812,6 +913,81 @@ public static class CastleHorizontalRowPrototypeBuilder
         AdventureDayReport report = systems.AddComponent<AdventureDayReport>();
         report.loopController = loopController;
         report.intruders = intruders;
+    }
+
+    private static void CreateSceneAudio(
+        AdventureLoopController loopController,
+        Transform parent,
+        AudioClip music,
+        AudioClip rainLoop,
+        AudioClip thunderOne,
+        AudioClip thunderTwo,
+        AudioClip thunderThree)
+    {
+        GameObject audioObject = new GameObject("Castle Prototype Audio");
+        audioObject.transform.SetParent(parent);
+
+        MusicPlayer musicPlayer = audioObject.AddComponent<MusicPlayer>();
+        musicPlayer.loopController = loopController;
+        musicPlayer.useActiveActorRoom = false;
+        musicPlayer.contextRefreshSeconds = 0.25f;
+
+        if (music != null)
+        {
+            musicPlayer.musicTracks.Add(new MusicPlayer.MusicTrack
+            {
+                label = "Dorian Toccata",
+                enabled = true,
+                clip = music,
+                volume = 0.42f,
+                loop = true,
+                playWhenMatched = true,
+                priority = 0
+            });
+        }
+
+        if (rainLoop != null)
+        {
+            musicPlayer.loopingAmbience.Add(new MusicPlayer.LoopingAmbience
+            {
+                label = "Window Rain",
+                enabled = true,
+                clip = rainLoop,
+                volume = 0.18f,
+                stopWhenUnmatched = false
+            });
+        }
+
+        MusicPlayer.RandomOneShotGroup thunder = new MusicPlayer.RandomOneShotGroup
+        {
+            label = "Distant Thunder",
+            enabled = true,
+            volume = 0.68f,
+            pauseRange = new Vector2(9f, 24f),
+            avoidImmediateRepeat = true
+        };
+
+        AddRandomClip(thunder, thunderOne, 0.85f);
+        AddRandomClip(thunder, thunderTwo, 0.75f);
+        AddRandomClip(thunder, thunderThree, 0.9f);
+        if (thunder.HasPlayableClip)
+        {
+            musicPlayer.randomOneShotGroups.Add(thunder);
+        }
+    }
+
+    private static void AddRandomClip(MusicPlayer.RandomOneShotGroup group, AudioClip clip, float volume)
+    {
+        if (group == null || clip == null)
+        {
+            return;
+        }
+
+        group.clips.Add(new MusicPlayer.RandomClipSlot
+        {
+            clip = clip,
+            volume = volume
+        });
     }
 
     private static IntruderEncounter[] BuildDayOneThreats(Sprite pixel, Transform row, AdventureLoopController loopController)
@@ -1098,6 +1274,23 @@ public static class CastleHorizontalRowPrototypeBuilder
         return sprite;
     }
 
+    private static Sprite LoadDeeperGalleryWallTile()
+    {
+        if (!File.Exists(DeeperGalleryWallTilePath))
+        {
+            throw new FileNotFoundException("Missing required deeper gallery wall tile.", DeeperGalleryWallTilePath);
+        }
+
+        ConfigureSpriteImporter(DeeperGalleryWallTilePath, new Vector2(0.5f, 0.5f), DeeperGalleryWallTilePpu, TextureWrapMode.Repeat, false);
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(DeeperGalleryWallTilePath);
+        if (sprite == null)
+        {
+            throw new FileNotFoundException("Unity failed to import the deeper gallery wall tile.", DeeperGalleryWallTilePath);
+        }
+
+        return sprite;
+    }
+
     private static Sprite LoadObliqueDoorwaySprite()
     {
         if (!File.Exists(ObliqueDoorwaySpritePath))
@@ -1252,6 +1445,7 @@ public static class CastleHorizontalRowPrototypeBuilder
 
         AddPlacement(placements, root, "Door wall plate", "Open Arch Oblique Doorway Candidate", true, true);
         AddPlacement(placements, root, "Back wall tile field", "Hallway Castle Gray Block Wall Tile", true);
+        AddPlacement(placements, root, "Deeper blue gold wall tile field", "Deeper Gallery Blue Gold Wall Tile", true);
         AddPlacement(placements, root, "Floor base", "Hallway Floor Base", true);
         AddPlacement(placements, root, "Floor back shadow", "Hallway Floor Back Shadow", true);
         AddPlacement(placements, root, "Front floor lip", "Hallway Front Floor Lip", true);
@@ -1262,6 +1456,9 @@ public static class CastleHorizontalRowPrototypeBuilder
         AddPlacement(placements, root, "Renfield room arch doorwall", "Renfield Private Room Arch Doorwall", true, true);
         AddPlacement(placements, root, "Renfield room wall wash", "Renfield Private Room Wall Wash", true);
         AddPlacement(placements, root, "Renfield room night window", "Renfield Private Room Back Window Night", true);
+        AddPlacement(placements, root, "Haunted mirror room arch doorwall", "Haunted Mirror Room Arch Doorwall", true, true);
+        AddPlacement(placements, root, "Haunted mirror room wall wash", "Haunted Mirror Room Wall Wash", true);
+        AddPlacement(placements, root, "Magic mirror", "Magic Mirror Gold Outer Frame", true);
         AddPlacement(placements, root, "Restored grim reaper statue", "GrimReaper", true);
         AddPlacement(placements, root, "Restored gallery window", "Window", true);
         AddPlacement(placements, root, "Restored architectural fountain", "Fountain", true);

@@ -86,7 +86,8 @@ public sealed class CastleRoomLayoutTests
         Assert.AreEqual(CastleRoomLayout.CastleProperEastGalleryMinBounds.x, CastleRoomLayout.UpperEastGalleryMinBounds.x);
         Assert.AreEqual(CastleRoomLayout.CastleProperEastGalleryMaxBounds.x, CastleRoomLayout.UpperEastGalleryMaxBounds.x);
         Assert.Greater(CastleRoomLayout.UpperEastGalleryMinBounds.y, CastleRoomLayout.CastleProperEastGalleryMaxBounds.y);
-        Assert.AreEqual(CastleRoomLayout.EastGalleryCentralStairTrigger.x, CastleRoomLayout.UpperEastGalleryEntryFromLower.x);
+        Assert.GreaterOrEqual(CastleRoomLayout.UpperEastGalleryRowOffset.y, 12f);
+        Assert.AreEqual(CastleRoomLayout.EastGalleryRearArchwayTrigger.x, CastleRoomLayout.UpperEastGalleryEntryFromLower.x);
         Assert.AreEqual(CastleRoomLayout.EastGalleryEntryFromUpper.x, CastleRoomLayout.UpperEastGalleryEntryFromLower.x);
         Assert.AreEqual(CastleRoomLayout.UpperEastGalleryRowOffset.y, CastleRoomLayout.UpperEastGalleryEntryFromLower.y - CastleRoomLayout.EastGalleryEntryFromUpper.y);
     }
